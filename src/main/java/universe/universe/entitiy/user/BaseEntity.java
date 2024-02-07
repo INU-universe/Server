@@ -26,10 +26,10 @@ public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createDate;
+    private LocalDateTime createdTime;
 
     @LastModifiedDate
-    private LocalDateTime updateDate;
+    private LocalDateTime updatedTime;
 
     public void updateRole(String role) {
         this.role = role;
