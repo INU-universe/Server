@@ -1,7 +1,7 @@
 package universe.universe.entitiy.friend;
 
 import jakarta.persistence.*;
-import universe.universe.entitiy.user.BaseEntity;
+import universe.universe.entitiy.base.BaseEntity;
 import universe.universe.entitiy.user.Status;
 
 public class Friend extends BaseEntity {
