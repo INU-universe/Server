@@ -1,5 +1,5 @@
 package universe.universe.entitiy.user;
 
-public enum Status {
+public enum UserStatus {
     SCHOOL, NOT_SCHOOL
 }
