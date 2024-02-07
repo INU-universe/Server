@@ -2,11 +2,13 @@ package universe.universe.entitiy.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.annotation.LastModifiedDate;
 import universe.universe.entitiy.location.Location;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,6 +17,7 @@ public class User extends BaseEntity {
     @GeneratedValue
     @Column(name = "user_id")
     private Long id;
+    private String role = "ROLE_USER";
     private String userEmail;
     private String userPassword;
     private String userName;
@@ -28,4 +31,15 @@ public class User extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Location location;
+
+    public void updateRole(String role) {
+        this.role = role;
+    }
+
+    public List<String> getRoleList() {
+        if (this.role.length() > 0) {
+            return Arrays.asList(this.role.split(","));
+        }
+        return new ArrayList<>();
+    }
 }
