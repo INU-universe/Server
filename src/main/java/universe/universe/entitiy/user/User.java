@@ -1,10 +1,10 @@
 package universe.universe.entitiy.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.annotation.LastModifiedDate;
+import universe.universe.entitiy.location.Location;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +19,13 @@ public class User extends BaseEntity {
     private String userPassword;
     private String userName;
     private String userImg;
+
+    @Enumerated(EnumType.STRING)
     private Status userStatus;
+
+    @LastModifiedDate
     private LocalDateTime schoolDate; // 등교 시간
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Location location;
 }
