@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
 import universe.universe.entitiy.base.BaseEntity;
-import universe.universe.entitiy.friend.FriendRelationShip;
 import universe.universe.entitiy.location.Location;
 
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ public class User extends BaseEntity {
     private String userImg;
 
     @Enumerated(EnumType.STRING)
-    private Status userStatus;
+    private UserStatus userStatus;
 
     @LastModifiedDate
     private LocalDateTime schoolDate; // 등교 시간
