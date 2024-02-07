@@ -53,8 +53,8 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
     - 각자의 깃 닉네임을 딴 branch 명을 사용한다.
     - 예시: 
     ```
-  git checkout -b feature/이슈번호 - 기능
-  git checkout -b feature/12 - 회원 기능 API
+  git checkout -b feature/이슈번호-기능
+  git checkout -b feature/12-User-API
     ```
 <br>
 
