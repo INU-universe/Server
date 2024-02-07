@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
-import universe.universe.entitiy.user.BaseEntity;
+import universe.universe.entitiy.base.BaseEntity;
 
 @Entity
 @Getter

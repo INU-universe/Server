@@ -3,6 +3,8 @@ package universe.universe.entitiy.user;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
+import universe.universe.entitiy.base.BaseEntity;
+import universe.universe.entitiy.friend.FriendRelationShip;
 import universe.universe.entitiy.location.Location;
 
 import java.time.LocalDateTime;
@@ -31,6 +33,12 @@ public class User extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Location location;
+
+//    @OneToMany(mappedBy = "fromUser")
+//    private List<FriendRelationShip> sentFriendRequests = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "toUser")
+//    private List<FriendRelationShip> receivedFriendRequests = new ArrayList<>();
 
     public void updateRole(String role) {
         this.role = role;

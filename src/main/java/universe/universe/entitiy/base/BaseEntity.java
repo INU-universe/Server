@@ -1,4 +1,4 @@
-package universe.universe.entitiy.user;
+package universe.universe.entitiy.base;
 
 import jakarta.persistence.*;
 import lombok.Getter;
