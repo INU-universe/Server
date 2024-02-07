@@ -3,6 +3,7 @@ package universe.universe.entitiy.chatRoom;
 import jakarta.persistence.*;
 import lombok.Getter;
 import universe.universe.entitiy.base.BaseEntity;
+import universe.universe.entitiy.message.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,4 +18,7 @@ public class ChatRoom extends BaseEntity {
 
     @OneToMany(mappedBy = "chatRoom")
     private List<ChatRoomRelationShip> chatRoomRelationShips = new ArrayList<>();
+
+    @OneToMany(mappedBy = "message")
+    private List<Message> message = new ArrayList<>();
 }
