@@ -1,11 +1,11 @@
 package universe.universe.entitiy.chatRoom;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import universe.universe.entitiy.base.BaseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,4 +14,7 @@ public class ChatRoom extends BaseEntity {
     @GeneratedValue
     @Column(name = "chatroom_id")
     private Long id;
+
+    @OneToMany(mappedBy = "chatRoom")
+    private List<ChatRoomRelationShip> chatRoomRelationShips = new ArrayList<>();
 }
