@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import universe.universe.common.exception.*;
-import universe.universe.common.reponse.Response;
+import universe.universe.common.reponse.ApiResponse;
 
 @Slf4j
 @RestControllerAdvice
@@ -38,7 +38,7 @@ public class MyExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> unknownServerError(Exception e){
-        Response<String> response = Response.ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "unknownServerError", e.getMessage());
+        ApiResponse<String> response = ApiResponse.ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "unknownServerError", e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

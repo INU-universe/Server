@@ -2,7 +2,7 @@ package universe.universe.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import universe.universe.common.reponse.Response;
+import universe.universe.common.reponse.ApiResponse;
 
 // 인증 안됨
 @Getter
@@ -11,8 +11,8 @@ public class Exception401 extends RuntimeException {
         super(message);
     }
 
-    public Response<?> body(){
-        return Response.FAILURE(HttpStatus.UNAUTHORIZED.value(), "unAuthorized", null);
+    public ApiResponse<?> body(){
+        return ApiResponse.FAILURE(HttpStatus.UNAUTHORIZED.value(), "unAuthorized", null);
     }
 
     public HttpStatus status(){

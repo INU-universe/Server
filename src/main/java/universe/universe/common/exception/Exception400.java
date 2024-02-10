@@ -2,7 +2,7 @@ package universe.universe.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import universe.universe.common.reponse.Response;
+import universe.universe.common.reponse.ApiResponse;
 import universe.universe.common.valid.Valid;
 
 // 유효성 검사 실패, 잘못된 파라메터 요청
@@ -18,9 +18,9 @@ public class Exception400 extends RuntimeException {
         this.value = value;
     }
 
-    public Response<?> body(){
+    public ApiResponse<?> body(){
         Valid valid = new Valid(key, value);
-        return Response.FAILURE(HttpStatus.BAD_REQUEST.value(), "badRequest", valid);
+        return ApiResponse.FAILURE(HttpStatus.BAD_REQUEST.value(), "badRequest", valid);
     }
 
     public HttpStatus status(){
