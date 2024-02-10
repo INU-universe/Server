@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 import universe.universe.dto.user.UserResponseDTO;
 import static universe.universe.entitiy.user.QUser.user;
 
-public class UserRepositoryImpl implements UserRepositoryCustom{
+public class UserRepositoryImpl implements UserRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     public UserRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);

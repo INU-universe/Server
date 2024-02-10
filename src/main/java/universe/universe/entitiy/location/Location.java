@@ -7,6 +7,10 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import universe.universe.entitiy.base.BaseEntity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Entity
 @Getter
 public class Location extends BaseEntity {
@@ -16,4 +20,19 @@ public class Location extends BaseEntity {
     private Long id;
     private double latitude;
     private double longitude;
+
+    /** ======================== 메소드 ======================== **/
+    public void updateLocation(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    /** ======================== 생성자 ======================== **/
+    public Location() {
+
+    }
+    public Location(double latitude, double longitude) {
+        this.latitude = latitude;
+        this. longitude = longitude;
+    }
 }
