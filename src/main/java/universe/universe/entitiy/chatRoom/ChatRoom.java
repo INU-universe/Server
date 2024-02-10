@@ -19,6 +19,6 @@ public class ChatRoom extends BaseEntity {
     @OneToMany(mappedBy = "chatRoom")
     private List<ChatRoomRelationShip> chatRoomRelationShips = new ArrayList<>();
 
-    @OneToMany(mappedBy = "message")
-    private List<Message> message = new ArrayList<>();
+    @OneToMany(mappedBy = "chatRoom")
+    private List<Message> messages = new ArrayList<>();
 }
