@@ -75,5 +75,26 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
         ## 📚 기타
         
         ```
+        <br>
+
+- `DTO 규칙`
+    - 엔티티명 + Response/Request + DTO
+    - 예시
+        - UserResponseDTO
+        - PostRequestDTO
+
+## 📌 API 명세서
+- 회원 API (/api/user/)
+  - 로그인
+  - 회원 가입
+  - 회원 탈퇴
+  - 회원 수정
+- 위치 API (/api/location/)
+  - 위치 저장
+  - 위치 조회
+- 채팅방 API (/api/chatRoom/)
+  - 채팅방 조회
+  - 채팅방 만들기
+  - 채팅방 삭제
 
 ---
