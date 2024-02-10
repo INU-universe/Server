@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import universe.universe.entitiy.user.User;
+import universe.universe.entitiy.user.UserStatus;
 
 @Data
 public class UserResponseDTO {
@@ -30,14 +31,16 @@ public class UserResponseDTO {
         private String userEmail;
         private String userName;
         private String role;
-        private String profileImg;
+        private String userImg;
+        private UserStatus userStatus;
 
-        public UserFindDTO(Long id, String userEmail, String userName, String role, String profileImg) {
+        public UserFindDTO(Long id, String userEmail, String userName, String role, String userImg, UserStatus userStatus) {
             this.id = id;
             this.userEmail = userEmail;
             this.userName = userName;
             this.role = role;
-            this.profileImg = profileImg;
+            this.userImg = userImg;
+            this.userStatus = userStatus;
         }
     }
 
