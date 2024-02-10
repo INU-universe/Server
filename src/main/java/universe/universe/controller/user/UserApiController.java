@@ -20,7 +20,7 @@ import universe.universe.service.user.UserServiceImpl;
 @Slf4j
 public class UserApiController {
     final private UserServiceImpl userService;
-    private final AuthenticationService authenticationService;
+    final private AuthenticationService authenticationService;
 
     // 회원 가입
     @PostMapping("/join")

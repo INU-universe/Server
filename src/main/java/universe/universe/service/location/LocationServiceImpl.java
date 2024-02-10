@@ -25,12 +25,13 @@ public class LocationServiceImpl implements LocationService {
     final private LocationRepository locationRepository;
     final private UserRepository userRepository;
     @Override
-    public LocationResponseDTO.LocationFindDTO update(LocationRequestDTO.LocationUpdateDTO locationUpdateDTO, String userEmail) {
+    @Transactional
+    public LocationResponseDTO.LocationUpdateDTO update(LocationRequestDTO.LocationUpdateDTO locationUpdateDTO, String userEmail) {
         try {
             Location findLocation = getLocation(userEmail);
             findLocation.updateLocation(locationUpdateDTO.getLatitude(), locationUpdateDTO.getLongitude());
 
-            return new LocationResponseDTO.LocationFindDTO(findLocation);
+            return new LocationResponseDTO.LocationUpdateDTO(findLocation);
         } catch (Exception e){
             throw new Exception500("위치 변경 실패 : "+e.getMessage());
         }

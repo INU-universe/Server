@@ -66,5 +66,6 @@ public class User extends BaseEntity {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userName = userName;
+        this.location = new Location();
     }
 }
