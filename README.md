@@ -51,18 +51,17 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
 
 - `branch 규칙`
     - 각자의 깃 닉네임을 딴 branch 명을 사용한다.
-    - 예시: 
-    ```
-  git checkout -b feature/이슈번호-기능
-  git checkout -b feature/12-User-API
-    ```
+    - 예시
+        - git checkout -b feature/이슈번호-기능
+        - git checkout -b feature/12-User-API
+
 <br>
 
 - `commit message 규칙`
-    - [종류] 메시지 - #이슈번호
+    - 종류: 메시지
     - 예시
-        - feat: 회원 관리 API 엔티티 구현 - #2
-        - fix: 회원 조회 서비스 에러 수정 - #2
+        - feat: 회원 관리 API 엔티티 구현
+        - fix: 회원 조회 서비스 에러 수정 
 <br>
 
 - `PR 규칙`
