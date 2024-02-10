@@ -13,7 +13,7 @@ import universe.universe.entitiy.user.User;
 import universe.universe.repository.user.UserRepository;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
