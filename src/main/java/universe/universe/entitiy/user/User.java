@@ -43,8 +43,12 @@ public class User extends BaseEntity {
 //    @OneToMany(mappedBy = "toUser")
 //    private List<FriendRelationShip> receivedFriendRequests = new ArrayList<>();
 
+    /** ======================== 메소드 ======================== **/
     public void updateRole(String role) {
         this.role = role;
+    }
+    public void updateUserImg(String userImg) {
+        this.userImg = userImg;
     }
 
     public List<String> getRoleList() {
@@ -52,5 +56,15 @@ public class User extends BaseEntity {
             return Arrays.asList(this.role.split(","));
         }
         return new ArrayList<>();
+    }
+
+    /** ======================== 생성ㅔㅕ ======================== **/
+    public User() {
+    }
+
+    public User(String userEmail, String userPassword, String userName) {
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userName = userName;
     }
 }
