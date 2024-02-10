@@ -2,7 +2,7 @@ package universe.universe.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import universe.universe.dto.response.ResponseDTO;
+import universe.universe.common.reponse.ApiResponse;
 
 // 서버 에러
 @Getter
@@ -11,8 +11,8 @@ public class Exception500 extends RuntimeException {
         super(message);
     }
 
-    public ResponseDTO<?> body(){
-        return new ResponseDTO<>(HttpStatus.INTERNAL_SERVER_ERROR, "serverError", getMessage());
+    public ApiResponse<?> body(){
+        return ApiResponse.ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "serverError", null);
     }
 
     public HttpStatus status(){

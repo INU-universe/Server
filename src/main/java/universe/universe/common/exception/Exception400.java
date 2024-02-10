@@ -2,8 +2,8 @@ package universe.universe.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import universe.universe.dto.response.ResponseDTO;
-import universe.universe.dto.valid.ValidDTO;
+import universe.universe.common.reponse.ApiResponse;
+import universe.universe.common.valid.Valid;
 
 // 유효성 검사 실패, 잘못된 파라메터 요청
 @Getter
@@ -18,9 +18,9 @@ public class Exception400 extends RuntimeException {
         this.value = value;
     }
 
-    public ResponseDTO<?> body(){
-        ValidDTO validDTO = new ValidDTO(key, value);
-        return new ResponseDTO<>(HttpStatus.BAD_REQUEST, "badRequest", validDTO);
+    public ApiResponse<?> body(){
+        Valid valid = new Valid(key, value);
+        return ApiResponse.FAILURE(HttpStatus.BAD_REQUEST.value(), "badRequest", valid);
     }
 
     public HttpStatus status(){
