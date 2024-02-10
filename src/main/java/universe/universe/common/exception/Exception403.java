@@ -2,7 +2,7 @@ package universe.universe.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import universe.universe.dto.response.ResponseDTO;
+import universe.universe.common.reponse.Response;
 
 // 권한 없음
 @Getter
@@ -11,8 +11,8 @@ public class Exception403 extends RuntimeException {
         super(message);
     }
 
-    public ResponseDTO<?> body(){
-        return new ResponseDTO<>(HttpStatus.FORBIDDEN, "forbidden", getMessage());
+    public Response<?> body(){
+        return Response.FAILURE(HttpStatus.FORBIDDEN.value(), "forbidden", null);
     }
 
     public HttpStatus status(){
