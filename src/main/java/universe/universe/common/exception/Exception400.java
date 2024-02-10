@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import universe.universe.common.reponse.Response;
 import universe.universe.common.valid.Valid;
-import universe.universe.dto.valid.ValidDTO;
 
 // 유효성 검사 실패, 잘못된 파라메터 요청
 @Getter
