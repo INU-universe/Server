@@ -19,4 +19,11 @@ public class FriendRelationShip {
     @JoinColumn(name = "to_user_id")
     private User toUser;
 
+    public FriendRelationShip() {
+
+    }
+    public FriendRelationShip(User fromUser, User toUser) {
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+    }
 }
