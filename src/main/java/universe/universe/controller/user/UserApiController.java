@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import universe.universe.common.exception.Exception400;
 import universe.universe.common.exception.Exception500;
 import universe.universe.common.reponse.ApiResponse;
@@ -23,14 +20,14 @@ import universe.universe.service.user.UserServiceImpl;
 @Slf4j
 public class UserApiController {
     final private UserServiceImpl userService;
-    private final AuthenticationService authenticationService;
+    final private AuthenticationService authenticationService;
 
     // 회원 가입
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody UserRequestDTO.UserJoinDTO userJoinDTO) {
         try {
             UserResponseDTO.UserJoinDTO joinUser = userService.join(userJoinDTO);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원가입이 완료되었습니다.", joinUser));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 가입이 완료되었습니다.", joinUser));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage(), null));
         } catch (Exception500 e) {
@@ -44,7 +41,7 @@ public class UserApiController {
         try {
             String userEmail = getUserEmail();
             userService.delete(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원탈퇴가 완료되었습니다.", null));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 탈퇴가 완료되었습니다.", null));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage(), null));
         } catch (Exception500 e) {
@@ -58,13 +55,27 @@ public class UserApiController {
         try {
             String userEmail = getUserEmail();
             UserResponseDTO.UserUpdateDTO updateUser = userService.update(userUpdateDTO, userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원수정이 완료되었습니다.", updateUser));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 수정이 완료되었습니다.", updateUser));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage(), null));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage(), null));
         }
     }
+
+    @GetMapping("/find")
+    public ResponseEntity<?> find() {
+        try {
+            String userEmail = getUserEmail();
+            UserResponseDTO.UserFindDTO findUser = userService.find(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 조회 성공입니다.", findUser));
+        } catch (Exception400 e) {
+            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage(), null));
+        } catch (Exception500 e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage(), null));
+        }
+    }
+
 
     private String getUserEmail() {
         User user = authenticationService.getCurrentAuthenticatedUser();

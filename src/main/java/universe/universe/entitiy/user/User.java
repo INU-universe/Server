@@ -23,10 +23,10 @@ public class User extends BaseEntity {
     private String userEmail;
     private String userPassword;
     private String userName;
-    private String userImg;
+    private String userImg = "img";
 
     @Enumerated(EnumType.STRING)
-    private UserStatus userStatus;
+    private UserStatus userStatus = UserStatus.NOT_SCHOOL;
 
     @LastModifiedDate
     private LocalDateTime schoolDate; // 등교 시간
@@ -66,5 +66,6 @@ public class User extends BaseEntity {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userName = userName;
+        this.location = new Location();
     }
 }

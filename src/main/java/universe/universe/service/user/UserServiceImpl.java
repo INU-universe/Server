@@ -6,11 +6,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.common.exception.Exception400;
+import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.user.UserRequestDTO;
 import universe.universe.dto.user.UserResponseDTO;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.user.UserRepository;
+import universe.universe.repository.user.UserRepositoryImpl;
 
 @Service
 @Transactional
@@ -63,8 +65,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-//    @Override
-//    public UserResponseDTO.UserFindDTO find(String userEmail) {
-//        return null;
-//    }
+    @Override
+    public UserResponseDTO.UserFindDTO find(String userEmail) {
+        try {
+            UserResponseDTO.UserFindDTO findUser = userRepository.findOne(userEmail);
+            return findUser;
+        } catch (Exception e) {
+            throw new Exception404("회원 조회 실패 : "+e.getMessage());
+        }
+    }
 }

@@ -3,7 +3,7 @@ package universe.universe.repository.user;
 import org.springframework.data.jpa.repository.JpaRepository;
 import universe.universe.entitiy.user.User;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
     User findByUserEmail(String userEmail);
     boolean existsByUserEmail(String userEmail);
 }
