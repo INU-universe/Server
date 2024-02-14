@@ -37,12 +37,6 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<ChatRoomRelationShip> chatRoomRelationShips = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "fromUser")
-//    private List<FriendRelationShip> sentFriendRequests = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "toUser")
-//    private List<FriendRelationShip> receivedFriendRequests = new ArrayList<>();
-
     /** ======================== 메소드 ======================== **/
     public void updateRole(String role) {
         this.role = role;

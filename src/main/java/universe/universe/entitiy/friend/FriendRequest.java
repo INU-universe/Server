@@ -2,11 +2,12 @@ package universe.universe.entitiy.friend;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import universe.universe.entitiy.base.BaseEntity;
 import universe.universe.entitiy.user.User;
 
 @Entity
 @Getter
-public class FriendRequest {
+public class FriendRequest extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "friend_request_id")

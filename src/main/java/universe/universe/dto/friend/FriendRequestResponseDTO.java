@@ -3,7 +3,6 @@ package universe.universe.dto.friend;
 import lombok.Getter;
 import lombok.Setter;
 import universe.universe.entitiy.friend.FriendRequest;
-import universe.universe.entitiy.friend.FriendRequestStatus;
 
 public class FriendRequestResponseDTO {
     @Setter

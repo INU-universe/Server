@@ -18,14 +18,13 @@ import universe.universe.repository.user.UserRepository;
 import java.util.Objects;
 import java.util.Optional;
 
-import static universe.universe.entitiy.friend.FriendRequestStatus.*;
 import static universe.universe.entitiy.friend.FriendStatus.NOT_FAVORITE;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class FriendRequestImpl implements FriendRequestService {
+public class FriendRequestServiceImpl implements FriendRequestService {
     final private UserRepository userRepository;
     final private FriendRepository friendRepository;
     final private FriendRequestRepository friendRequestRepository;
