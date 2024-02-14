@@ -17,9 +17,13 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom {
     @Override
     public FriendResponseDTO.FriendFindAllDTO friendFindAll(Long userId) {
         List<FriendResponseDTO.FriendFindOneDTO> friendList = queryFactory
-                .select(Projections.constructor(FriendResponseDTO.FriendFindOneDTO.class, friend.toUser))
+                .select(Projections.constructor(FriendResponseDTO.FriendFindOneDTO.class,
+                        friend.toUser.id,
+                        friend.toUser.userImg,
+                        friend.toUser.userName,
+                        friend.friendStatus
+                ))
                 .from(friend)
-                .join(friend.toUser, user)
                 .where(friend.fromUser.id.eq(userId))
                 .fetch();
 

@@ -41,10 +41,14 @@ public class FriendRequestServiceImpl implements FriendRequestService {
             }
             User toUser = findToUser.get();
 
-            Optional<FriendRequest> findExist = friendRequestRepository.findByFromUserAndToUser(fromUser, toUser);
+            Optional<FriendRequest> friendRequestExist = friendRequestRepository.findByFromUserAndToUser(fromUser, toUser);
+            Optional<Friend> friendExist = friendRepository.findByFromUserAndToUser(fromUser, toUser);
 
-            if(findExist.isPresent()) {
-                FriendRequest deleteFindExist = findExist.get();
+            if(friendExist.isPresent()) {
+                return null;
+            }
+            else if(friendRequestExist.isPresent()) {
+                FriendRequest deleteFindExist = friendRequestExist.get();
                 friendRequestRepository.delete(deleteFindExist);
                 return null;
             }
@@ -63,14 +67,16 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         try {
             User findUser = getUser(userEmail);
             Optional<FriendRequest> findExist = friendRequestRepository.findById(friendRelationShipId);
-            if(!Objects.equals(findUser.getId(), findExist.get().getFromUser().getId())) {
+            if(!Objects.equals(findUser.getId(), findExist.get().getToUser().getId())) {
                 throw new Exception401("권한이 없습니다.");
             }
 
             if(findExist.isPresent()) {
                 FriendRequest findFriendRequest = findExist.get();
-                Friend friend = new Friend(findFriendRequest.getFromUser(), findFriendRequest.getToUser(), NOT_FAVORITE);
-                friendRepository.save(friend);
+                Friend friend1 = new Friend(findFriendRequest.getFromUser(), findFriendRequest.getToUser(), NOT_FAVORITE);
+                Friend friend2 = new Friend(findFriendRequest.getToUser(), findFriendRequest.getFromUser(), NOT_FAVORITE);
+                friendRepository.save(friend1);
+                friendRepository.save(friend2);
                 friendRequestRepository.delete(findFriendRequest);
                 return new FriendRequestResponseDTO.FriendRequestAcceptDTO(findFriendRequest);
             }
@@ -87,7 +93,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         try {
             User findUser = getUser(userEmail);
             Optional<FriendRequest> findExist = friendRequestRepository.findById(friendRelationShipId);
-            if(!Objects.equals(findUser.getId(), findExist.get().getFromUser().getId())) {
+            if(!Objects.equals(findUser.getId(), findExist.get().getToUser().getId())) {
                 throw new Exception401("권한이 없습니다.");
             }
 

@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import universe.universe.common.exception.Exception400;
 import universe.universe.common.exception.Exception500;
 import universe.universe.common.reponse.ApiResponse;
@@ -27,7 +24,7 @@ public class FriendApiController {
     final private AuthenticationService authenticationService;
 
     // 친구 목록 조회
-    @PostMapping("/findAll")
+    @GetMapping("/findAll")
     public ResponseEntity<?> findAll() {
         try {
             String userEmail = getUserEmail();
