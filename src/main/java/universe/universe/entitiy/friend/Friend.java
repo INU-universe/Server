@@ -27,4 +27,14 @@ public class Friend extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private FriendStatus friendStatus;
+
+    public Friend() {
+
+    }
+
+    public Friend(User fromUser, User toUser, FriendStatus friendStatus) {
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+        this.friendStatus = friendStatus;
+    }
 }

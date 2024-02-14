@@ -8,8 +8,10 @@ import universe.universe.common.exception.Exception401;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.friend.FriendRequestResponseDTO;
+import universe.universe.entitiy.friend.Friend;
 import universe.universe.entitiy.friend.FriendRequest;
 import universe.universe.entitiy.user.User;
+import universe.universe.repository.friend.FriendRepository;
 import universe.universe.repository.friend.FriendRequestRepository;
 import universe.universe.repository.user.UserRepository;
 
@@ -17,16 +19,17 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static universe.universe.entitiy.friend.FriendRequestStatus.*;
+import static universe.universe.entitiy.friend.FriendStatus.NOT_FAVORITE;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class FriendRequestImpl implements FriendRequestService {
     final private UserRepository userRepository;
+    final private FriendRepository friendRepository;
     final private FriendRequestRepository friendRequestRepository;
     @Override
-    @Transactional
     public FriendRequestResponseDTO.FriendRequestToggleDTO toggle(String userEmail, Long toUserId) {
         try {
             User fromUser = getUser(userEmail);
@@ -47,7 +50,7 @@ public class FriendRequestImpl implements FriendRequestService {
                 return null;
             }
             else {
-                FriendRequest friendRequest = new FriendRequest(fromUser, toUser, WAIT);
+                FriendRequest friendRequest = new FriendRequest(fromUser, toUser);
                 friendRequestRepository.save(friendRequest);
                 return new FriendRequestResponseDTO.FriendRequestToggleDTO(friendRequest);
             }
@@ -67,7 +70,9 @@ public class FriendRequestImpl implements FriendRequestService {
 
             if(findExist.isPresent()) {
                 FriendRequest findFriendRequest = findExist.get();
-                findFriendRequest.updateFriendRequestStatus(ACCEPT);
+                Friend friend = new Friend(findFriendRequest.getFromUser(), findFriendRequest.getToUser(), NOT_FAVORITE);
+                friendRepository.save(friend);
+                friendRequestRepository.delete(findFriendRequest);
                 return new FriendRequestResponseDTO.FriendRequestAcceptDTO(findFriendRequest);
             }
             else {
@@ -89,7 +94,7 @@ public class FriendRequestImpl implements FriendRequestService {
 
             if(findExist.isPresent()) {
                 FriendRequest findFriendRequest = findExist.get();
-                findFriendRequest.updateFriendRequestStatus(REJECT);
+                friendRequestRepository.delete(findFriendRequest);
                 return new FriendRequestResponseDTO.FriendRequestRejectDTO(findFriendRequest);
             }
             else {

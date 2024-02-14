@@ -12,12 +12,10 @@ public class FriendRequestResponseDTO {
         private Long id;
         private Long toUserId;
         private Long fromUserId;
-        private FriendRequestStatus friendRequestStatus;
         public FriendRequestToggleDTO(FriendRequest friendRequest) {
             this.id = friendRequest.getId();
             this.toUserId = friendRequest.getToUser().getId();
             this.fromUserId = friendRequest.getFromUser().getId();
-            this.friendRequestStatus = friendRequest.getFriendRequestStatus();
         }
     }
     @Setter
@@ -26,12 +24,10 @@ public class FriendRequestResponseDTO {
         private Long id;
         private Long toUserId;
         private Long fromUserId;
-        private FriendRequestStatus friendRequestStatus;
         public FriendRequestAcceptDTO(FriendRequest friendRequest) {
             this.id = friendRequest.getId();
             this.toUserId = friendRequest.getToUser().getId();
             this.fromUserId = friendRequest.getFromUser().getId();
-            this.friendRequestStatus = friendRequest.getFriendRequestStatus();
         }
     }
     @Setter
@@ -40,12 +36,10 @@ public class FriendRequestResponseDTO {
         private Long id;
         private Long toUserId;
         private Long fromUserId;
-        private FriendRequestStatus friendRequestStatus;
         public FriendRequestRejectDTO(FriendRequest friendRequest) {
             this.id = friendRequest.getId();
             this.toUserId = friendRequest.getToUser().getId();
             this.fromUserId = friendRequest.getFromUser().getId();
-            this.friendRequestStatus = friendRequest.getFriendRequestStatus();
         }
     }
 }

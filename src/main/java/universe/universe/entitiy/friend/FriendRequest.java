@@ -20,23 +20,16 @@ public class FriendRequest {
     @JoinColumn(name = "to_user_id")
     private User toUser;
 
-    @Enumerated(EnumType.STRING)
-    private FriendRequestStatus friendRequestStatus;
-
     /** ======================== 메소드 ======================== **/
-    public void updateFriendRequestStatus(FriendRequestStatus friendRequestStatus) {
-        this.friendRequestStatus = friendRequestStatus;
-    }
 
 
     /** ======================== 생성자 ======================== **/
     public FriendRequest() {
 
     }
-    public FriendRequest(User fromUser, User toUser, FriendRequestStatus friendRequestStatus) {
+    public FriendRequest(User fromUser, User toUser) {
         this.fromUser = fromUser;
         this.toUser = toUser;
-        this.friendRequestStatus = friendRequestStatus;
     }
 }
 
