@@ -13,6 +13,12 @@ public class ApiResponse<T> {
     private ResponseStatus status;
     private T data;
 
+    public ApiResponse(Integer code, ResponseStatus status, String message) {
+        this.code = code;
+        this.status = status;
+        this.message = message;
+    }
+
     public ApiResponse(Integer code, ResponseStatus status, String message, T data) {
         this.code = code;
         this.status = status;
@@ -24,11 +30,11 @@ public class ApiResponse<T> {
         return new ApiResponse(code, ResponseStatus.SUCCESS, message, data);
     }
 
-    public static <T> ApiResponse<T> FAILURE (Integer code, String message, T data) {
-        return new ApiResponse(code, ResponseStatus.FAIL, message, data);
+    public static <T> ApiResponse<T> FAILURE (Integer code, String message) {
+        return new ApiResponse(code, ResponseStatus.FAIL, message);
     }
 
-    public static <T> ApiResponse<T> ERROR (Integer code, String message, T data) {
-        return new ApiResponse(code, ResponseStatus.ERROR, message, data);
+    public static <T> ApiResponse<T> ERROR (Integer code, String message) {
+        return new ApiResponse(code, ResponseStatus.ERROR, message);
     }
 }

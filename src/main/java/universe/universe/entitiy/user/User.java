@@ -34,9 +34,6 @@ public class User extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Location location;
 
-    @OneToMany(mappedBy = "user")
-    private List<ChatRoomRelation> chatRoomRelations = new ArrayList<>();
-
     /** ======================== 메소드 ======================== **/
     public void updateRole(String role) {
         this.role = role;

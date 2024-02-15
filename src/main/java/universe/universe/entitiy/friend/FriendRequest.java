@@ -4,17 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import universe.universe.entitiy.base.BaseEntity;
 import universe.universe.entitiy.user.User;
-import universe.universe.entitiy.user.UserStatus;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
-public class Friend extends BaseEntity {
+public class FriendRequest extends BaseEntity {
     @Id
     @GeneratedValue
-    @Column(name = "friend_id")
+    @Column(name = "friend_request_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,16 +21,16 @@ public class Friend extends BaseEntity {
     @JoinColumn(name = "to_user_id")
     private User toUser;
 
-    @Enumerated(EnumType.STRING)
-    private FriendStatus friendStatus;
+    /** ======================== 메소드 ======================== **/
 
-    public Friend() {
+
+    /** ======================== 생성자 ======================== **/
+    public FriendRequest() {
 
     }
-
-    public Friend(User fromUser, User toUser, FriendStatus friendStatus) {
+    public FriendRequest(User fromUser, User toUser) {
         this.fromUser = fromUser;
         this.toUser = toUser;
-        this.friendStatus = friendStatus;
     }
 }
+

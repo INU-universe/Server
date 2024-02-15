@@ -1,4 +1,4 @@
-package universe.universe.controller.user;
+package universe.universe.controller.friend;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,40 +8,31 @@ import org.springframework.web.bind.annotation.*;
 import universe.universe.common.exception.Exception400;
 import universe.universe.common.exception.Exception500;
 import universe.universe.common.reponse.ApiResponse;
-import universe.universe.dto.user.UserRequestDTO;
-import universe.universe.dto.user.UserResponseDTO;
+import universe.universe.dto.friend.FriendRequestResponseDTO;
 import universe.universe.entitiy.user.User;
 import universe.universe.service.auth.AuthenticationService;
-import universe.universe.service.user.UserServiceImpl;
+import universe.universe.service.friend.FriendRequestServiceImpl;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/friend")
 @RequiredArgsConstructor
 @Slf4j
-public class UserApiController {
-    final private UserServiceImpl userService;
+public class FriendRequestApiController {
+    final private FriendRequestServiceImpl friendRequestService;
     final private AuthenticationService authenticationService;
 
-    // 회원 가입
-    @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody UserRequestDTO.UserJoinDTO userJoinDTO) {
-        try {
-            UserResponseDTO.UserJoinDTO joinUser = userService.join(userJoinDTO);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 가입이 완료되었습니다.", joinUser));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-        } catch (Exception500 e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-        }
-    }
-
-    // 회원 탈퇴
-    @PostMapping("/delete")
-    public ResponseEntity<?> delete() {
+    // 친구 토글
+    @PostMapping("/toggle/{toUserId}")
+    public ResponseEntity<?> toggle(@PathVariable Long toUserId) {
         try {
             String userEmail = getUserEmail();
-            userService.delete(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 탈퇴가 완료되었습니다.", null));
+            FriendRequestResponseDTO.FriendRequestToggleDTO friendRequestToggleDTO = friendRequestService.toggle(userEmail, toUserId);
+            if(friendRequestToggleDTO == null) {
+                return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청이 취소되었습니다.", null));
+            }
+            else {
+                return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청이 완료되었습니다.", friendRequestToggleDTO));
+            }
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -49,13 +40,13 @@ public class UserApiController {
         }
     }
 
-    // 회원 수정
-    @PostMapping("/update")
-    public ResponseEntity<?> update(@RequestBody UserRequestDTO.UserUpdateDTO userUpdateDTO) {
+    // 친구 수락
+    @PostMapping("/accept/{toUserId}")
+    public ResponseEntity<?> accept(@PathVariable Long toUserId) {
         try {
             String userEmail = getUserEmail();
-            UserResponseDTO.UserUpdateDTO updateUser = userService.update(userUpdateDTO, userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 수정이 완료되었습니다.", updateUser));
+            FriendRequestResponseDTO.FriendRequestAcceptDTO friendRequestAcceptDTO = friendRequestService.accept(userEmail, toUserId);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청 수락이 완료되었습니다.", friendRequestAcceptDTO));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -63,19 +54,19 @@ public class UserApiController {
         }
     }
 
-    @GetMapping("/find")
-    public ResponseEntity<?> find() {
+    // 친구 거절
+    @PostMapping("/reject/{toUserId}")
+    public ResponseEntity<?> reject(@PathVariable Long toUserId) {
         try {
             String userEmail = getUserEmail();
-            UserResponseDTO.UserFindDTO findUser = userService.find(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 조회 성공입니다.", findUser));
+            FriendRequestResponseDTO.FriendRequestRejectDTO friendRequestRejectDTO = friendRequestService.reject(userEmail, toUserId);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청 거절이 완료되었습니다.", friendRequestRejectDTO));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
-
 
     private String getUserEmail() {
         User user = authenticationService.getCurrentAuthenticatedUser();

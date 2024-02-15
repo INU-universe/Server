@@ -20,7 +20,7 @@ public class Exception400 extends RuntimeException {
 
     public ApiResponse<?> body(){
         Valid valid = new Valid(key, value);
-        return ApiResponse.FAILURE(HttpStatus.BAD_REQUEST.value(), "badRequest", valid);
+        return ApiResponse.FAILURE(HttpStatus.BAD_REQUEST.value(), "badRequest");
     }
 
     public HttpStatus status(){

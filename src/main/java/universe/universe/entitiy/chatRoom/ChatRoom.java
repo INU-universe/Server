@@ -15,10 +15,4 @@ public class ChatRoom extends BaseEntity {
     @GeneratedValue
     @Column(name = "chatroom_id")
     private Long id;
-
-    @OneToMany(mappedBy = "chatRoom")
-    private List<ChatRoomRelation> chatRoomRelations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "chatRoom")
-    private List<Message> messages = new ArrayList<>();
 }
