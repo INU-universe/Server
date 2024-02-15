@@ -24,10 +24,11 @@ public class ChatRoomApiController {
     final private ChatRoomServiceImpl chatRoomService;
     final private AuthenticationService authenticationService;
     @PostMapping("/create")
-    public ResponseEntity<?> create(ChatRoomRequestDTO.ChatRoomRelationCreateDTO chatRoomRelationCreateDTO) {
+    public ResponseEntity<?> create(ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
         try {
+            log.info("[ChatRoomApiController]");
             String userEmail = getUserEmail();
-            ChatRoomResponseDTO.ChatRoomRelationCreateDTO createChatRoomRelation = chatRoomService.create(chatRoomRelationCreateDTO);
+            ChatRoomResponseDTO.ChatRoomCreateDTO createChatRoomRelation = chatRoomService.create(chatRoomCreateDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 생성 성공입니다.", createChatRoomRelation));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));

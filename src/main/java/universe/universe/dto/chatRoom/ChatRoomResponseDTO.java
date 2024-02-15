@@ -6,14 +6,15 @@ import lombok.Setter;
 import universe.universe.entitiy.chatRoom.ChatRoomRelation;
 import java.util.List;
 
-@Data
+@Setter
+@Getter
 public class ChatRoomResponseDTO {
     @Setter
     @Getter
-    public static class ChatRoomUserListFindDTO {
+    public static class ChatRoomUserDTO {
         private Long userId;
         private String userEmail;
-        public ChatRoomUserListFindDTO(ChatRoomRelation chatRoomRelation) {
+        public ChatRoomUserDTO(ChatRoomRelation chatRoomRelation) {
             this.userId = chatRoomRelation.getUser().getId();
             this.userEmail = chatRoomRelation.getUser().getUserEmail();
         }
@@ -21,10 +22,10 @@ public class ChatRoomResponseDTO {
 
     @Setter
     @Getter
-    public static class ChatRoomRelationCreateDTO {
+    public static class ChatRoomCreateDTO {
         private Long chatRoomId;
-        private List<ChatRoomUserListFindDTO> userList;
-        public ChatRoomRelationCreateDTO(Long chatRoomId, List<ChatRoomUserListFindDTO> userList) {
+        private List<ChatRoomUserDTO> userList;
+        public ChatRoomCreateDTO(Long chatRoomId, List<ChatRoomUserDTO> userList) {
             this.chatRoomId = chatRoomId;
             this.userList = userList;
         }

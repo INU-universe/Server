@@ -6,17 +6,18 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Setter
+@Getter
 public class ChatRoomRequestDTO {
     @Setter
     @Getter
-    public static class ChatRoomRelationCreateDTO {
-        private List<ChatRoomRelationUserCreateDTO> userList;
+    public static class ChatRoomCreateDTO {
+        private List<ChatRoomUserDTO> userList;
     }
 
     @Setter
     @Getter
-    public static class ChatRoomRelationUserCreateDTO {
+    public static class ChatRoomUserDTO {
         private Long userId;
     }
 }

@@ -19,7 +19,9 @@ public class ChatRoomRelation {
     @ManyToOne
     @JoinColumn(name = "chatroom_id")
     private ChatRoom chatRoom;
+    public ChatRoomRelation() {
 
+    }
     public ChatRoomRelation(User user, ChatRoom chatRoom) {
         this.user = user;
         this.chatRoom = chatRoom;

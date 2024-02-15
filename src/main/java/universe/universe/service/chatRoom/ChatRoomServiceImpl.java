@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.common.exception.Exception400;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.chatRoom.ChatRoomRequestDTO;
@@ -29,23 +28,22 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     final private ChatRoomRepository chatRoomRepository;
     final private ChatRoomRelationRepository chatRoomRelationRepository;
     @Override
-    public ChatRoomResponseDTO.ChatRoomRelationCreateDTO create(ChatRoomRequestDTO.ChatRoomRelationCreateDTO chatRoomRelationCreateDTO) {
+    public ChatRoomResponseDTO.ChatRoomCreateDTO create(ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
         try {
-            List<ChatRoomRequestDTO.ChatRoomRelationUserCreateDTO> userList = chatRoomRelationCreateDTO.getUserList();
-            if(userList == null) {
-                throw new Exception400("userList", "null 입니다.");
-            }
+            List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList = chatRoomCreateDTO.getUserList();
+            List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList = new ArrayList<>();
+
             ChatRoom chatRoom = new ChatRoom();
             chatRoomRepository.save(chatRoom);
-            List<ChatRoomResponseDTO.ChatRoomUserListFindDTO> chatRoomUserListFindDTOList = new ArrayList<>();
 
-            for(ChatRoomRequestDTO.ChatRoomRelationUserCreateDTO userId : userList) {
-                ChatRoomRelation chatRoomRelation = chatRoomRelationRepository.save(new ChatRoomRelation(getUserId(userId.getUserId()), chatRoom));
-                chatRoomUserListFindDTOList.add(new ChatRoomResponseDTO.ChatRoomUserListFindDTO(chatRoomRelation));
+            for(ChatRoomRequestDTO.ChatRoomUserDTO user : requestList) {
+                User findUser = getUserId(user.getUserId());
+                ChatRoomRelation chatRoomRelation = chatRoomRelationRepository.save(new ChatRoomRelation(findUser, chatRoom));
+                responseList.add(new ChatRoomResponseDTO.ChatRoomUserDTO(chatRoomRelation));
             }
 
-            ChatRoomResponseDTO.ChatRoomRelationCreateDTO chatRoomRelationCreateDTOList = new ChatRoomResponseDTO.ChatRoomRelationCreateDTO(chatRoom.getId(), chatRoomUserListFindDTOList);
-            return chatRoomRelationCreateDTOList;
+            ChatRoomResponseDTO.ChatRoomCreateDTO result = new ChatRoomResponseDTO.ChatRoomCreateDTO(chatRoom.getId(), responseList);
+            return result;
         }
         catch (Exception e) {
             throw new Exception500("create fail : " + e.getMessage());
