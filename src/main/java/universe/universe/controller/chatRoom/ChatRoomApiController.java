@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import universe.universe.common.exception.Exception400;
@@ -24,7 +25,7 @@ public class ChatRoomApiController {
     final private ChatRoomServiceImpl chatRoomService;
     final private AuthenticationService authenticationService;
     @PostMapping("/create")
-    public ResponseEntity<?> create(ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
+    public ResponseEntity<?> create(@RequestBody ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
         try {
             log.info("[ChatRoomApiController]");
             String userEmail = getUserEmail();
