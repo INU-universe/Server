@@ -6,7 +6,7 @@ import universe.universe.entitiy.user.User;
 
 @Entity
 @Getter
-public class ChatRoomRelationShip {
+public class ChatRoomRelation {
     @Id
     @GeneratedValue
     @Column(name = "chatroom_relationship_id")
@@ -19,4 +19,11 @@ public class ChatRoomRelationShip {
     @ManyToOne
     @JoinColumn(name = "chatroom_id")
     private ChatRoom chatRoom;
+    public ChatRoomRelation() {
+
+    }
+    public ChatRoomRelation(User user, ChatRoom chatRoom) {
+        this.user = user;
+        this.chatRoom = chatRoom;
+    }
 }

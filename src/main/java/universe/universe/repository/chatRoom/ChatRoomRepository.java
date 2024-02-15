@@ -1,4 +1,7 @@
 package universe.universe.repository.chatRoom;
 
-public class ChatRoomRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import universe.universe.entitiy.chatRoom.ChatRoom;
+
+public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 }

@@ -19,7 +19,7 @@ public class Message extends BaseEntity {
     private ChatRoom chatRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "suer_id") // 발신자의 ID
+    @JoinColumn(name = "user_id") // 발신자의 ID
     private User user;
 
     private String content;
