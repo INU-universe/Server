@@ -2,7 +2,11 @@ package universe.universe.dto.friend;
 
 import lombok.Getter;
 import lombok.Setter;
+import universe.universe.entitiy.friend.Friend;
 import universe.universe.entitiy.friend.FriendRequest;
+import universe.universe.entitiy.friend.FriendStatus;
+
+import java.util.List;
 
 public class FriendRequestResponseDTO {
     @Setter
@@ -39,6 +43,35 @@ public class FriendRequestResponseDTO {
             this.id = friendRequest.getId();
             this.toUserId = friendRequest.getToUser().getId();
             this.fromUserId = friendRequest.getFromUser().getId();
+        }
+    }
+    @Setter
+    @Getter
+    public static class FriendRequestFindOneDTO {
+        private Long userId;
+        private String userImg;
+        private String userName;
+        public FriendRequestFindOneDTO() {
+        }
+        public FriendRequestFindOneDTO(Long userId, String userImg, String userName) {
+            this.userId = userId;
+            this.userImg = userImg;
+            this.userName = userName;
+        }
+        public FriendRequestFindOneDTO(FriendRequest friendRequest) {
+            this.userId = friendRequest.getToUser().getId();
+            this.userImg = friendRequest.getToUser().getUserImg();
+            this.userName = friendRequest.getToUser().getUserName();
+        }
+    }
+    @Setter
+    @Getter
+    public static class FriendRequestFindAllDTO {
+        private Long userId;
+        private List<FriendRequestResponseDTO.FriendRequestFindOneDTO> friendList;
+        public FriendRequestFindAllDTO(Long userId, List<FriendRequestResponseDTO.FriendRequestFindOneDTO> friendList) {
+            this.userId= userId;
+            this.friendList = friendList;
         }
     }
 }

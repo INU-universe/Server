@@ -6,6 +6,6 @@ import universe.universe.entitiy.user.User;
 
 import java.util.Optional;
 
-public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
+public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long>, FriendRequestRepositoryCustom {
     Optional<FriendRequest> findByFromUserAndToUser(User fromUser, User toUser);
 }
