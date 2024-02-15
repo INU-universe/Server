@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
 import universe.universe.entitiy.base.BaseEntity;
-import universe.universe.entitiy.chatRoom.ChatRoomRelationShip;
+import universe.universe.entitiy.chatRoom.ChatRoomRelation;
 import universe.universe.entitiy.location.Location;
 
 import java.time.LocalDateTime;
@@ -35,13 +35,7 @@ public class User extends BaseEntity {
     private Location location;
 
     @OneToMany(mappedBy = "user")
-    private List<ChatRoomRelationShip> chatRoomRelationShips = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "fromUser")
-//    private List<FriendRelationShip> sentFriendRequests = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "toUser")
-//    private List<FriendRelationShip> receivedFriendRequests = new ArrayList<>();
+    private List<ChatRoomRelation> chatRoomRelations = new ArrayList<>();
 
     /** ======================== 메소드 ======================== **/
     public void updateRole(String role) {
