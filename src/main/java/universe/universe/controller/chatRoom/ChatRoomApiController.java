@@ -29,7 +29,7 @@ public class ChatRoomApiController {
         try {
             log.info("[ChatRoomApiController]");
             String userEmail = getUserEmail();
-            ChatRoomResponseDTO.ChatRoomCreateDTO createChatRoomRelation = chatRoomService.create(chatRoomCreateDTO);
+            ChatRoomResponseDTO.ChatRoomCreateDTO createChatRoomRelation = chatRoomService.create(userEmail, chatRoomCreateDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 생성 성공입니다.", createChatRoomRelation));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));

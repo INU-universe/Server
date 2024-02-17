@@ -28,10 +28,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     final private ChatRoomRepository chatRoomRepository;
     final private ChatRoomRelationRepository chatRoomRelationRepository;
     @Override
-    public ChatRoomResponseDTO.ChatRoomCreateDTO create(ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
+    public ChatRoomResponseDTO.ChatRoomCreateDTO create(String userEmail, ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
         try {
             List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList = chatRoomCreateDTO.getUserList();
             List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList = new ArrayList<>();
+
+            ChatRoomRequestDTO.ChatRoomUserDTO chatRoomUserDTO = new ChatRoomRequestDTO.ChatRoomUserDTO();
+            chatRoomUserDTO.setUserId(getUser(userEmail).getId());
+            requestList.add(chatRoomUserDTO);
 
             ChatRoom chatRoom = new ChatRoom();
             chatRoomRepository.save(chatRoom);
