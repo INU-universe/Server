@@ -38,10 +38,22 @@ public class ChatRoomApiController {
     @PostMapping("/delete/{chatRoomId}")
     public ResponseEntity<?> delete(@PathVariable Long chatRoomId) {
         try {
-            log.info("[ChatRoomApiController]");
             String userEmail = getUserEmail();
             chatRoomService.delete(userEmail, chatRoomId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 삭제 성공입니다."));
+        } catch (Exception400 e) {
+            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+        } catch (Exception500 e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
+
+    @GetMapping("/findAll")
+    public ResponseEntity<?> findAll() {
+        try {
+            String userEmail = getUserEmail();
+            ChatRoomResponseDTO.ChatRoomFindAllDTO findAllChatRoomRelation = chatRoomService.findAll(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 조회 성공입니다.", findAllChatRoomRelation));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {

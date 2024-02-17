@@ -8,6 +8,7 @@ import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.chatRoom.ChatRoomRequestDTO;
 import universe.universe.dto.chatRoom.ChatRoomResponseDTO;
+import universe.universe.dto.friend.FriendResponseDTO;
 import universe.universe.entitiy.chatRoom.ChatRoom;
 import universe.universe.entitiy.chatRoom.ChatRoomRelation;
 import universe.universe.entitiy.user.User;
@@ -63,6 +64,17 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             chatRoomRelationRepository.delete(findChatRoomRelation);
         } catch (Exception e) {
             throw new Exception500("delete fail : " + e.getMessage());
+        }
+    }
+
+    @Override
+    public ChatRoomResponseDTO.ChatRoomFindAllDTO findAll(String userEmail) {
+        try {
+            User findUser = getUser(userEmail);
+            ChatRoomResponseDTO.ChatRoomFindAllDTO findChatRoomRelationList = chatRoomRelationRepository.ChatRoomRelationFindAll(findUser.getId());
+            return findChatRoomRelationList;
+        } catch (Exception e) {
+            throw new Exception500("findAll fail : " + e.getMessage());
         }
     }
 

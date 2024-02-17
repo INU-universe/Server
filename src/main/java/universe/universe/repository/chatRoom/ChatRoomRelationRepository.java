@@ -8,6 +8,6 @@ import universe.universe.entitiy.user.User;
 
 import java.util.Optional;
 
-public interface ChatRoomRelationRepository extends JpaRepository<ChatRoomRelation, Long> {
+public interface ChatRoomRelationRepository extends JpaRepository<ChatRoomRelation, Long>, ChatRoomRelationRepositoryCustom {
     Optional<ChatRoomRelation> findByUserAndChatRoom(User user, ChatRoom chatRoom);
 }
