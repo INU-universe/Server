@@ -54,6 +54,19 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         }
     }
 
+    @Override
+    public void delete(String userEmail, Long chatRoomId) {
+        try {
+            User findUser = getUser(userEmail);
+            ChatRoom findChatRoom = getChatRoom(chatRoomId);
+            ChatRoomRelation findChatRoomRelation = getChatRoomRelation(findUser, findChatRoom);
+            chatRoomRelationRepository.delete(findChatRoomRelation);
+        } catch (Exception e) {
+            throw new Exception500("delete fail : " + e.getMessage());
+        }
+    }
+
+
     private User getUserId(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
@@ -68,5 +81,20 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");
         }
         return findUser;
+    }
+
+    private ChatRoom getChatRoom(Long chatRoomId) {
+        Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
+        if(!findChatRoom.isPresent()) {
+            throw new Exception404("해당 채팅방을 찾을 수 없습니다.");
+        }
+        return findChatRoom.get();
+    }
+    private ChatRoomRelation getChatRoomRelation(User findUser, ChatRoom findChatRoom) {
+        Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
+        if(!findChatRoomRelation.isPresent()) {
+            throw new Exception404("해당 관계를 찾을 수 없습니다.");
+        }
+        return findChatRoomRelation.get();
     }
 }
