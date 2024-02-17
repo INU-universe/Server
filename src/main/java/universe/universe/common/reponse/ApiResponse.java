@@ -25,7 +25,9 @@ public class ApiResponse<T> {
         this.message = message;
         this.data = data;
     }
-
+    public static <T> ApiResponse<T> SUCCESS (Integer code, String message) {
+        return new ApiResponse(code, ResponseStatus.SUCCESS, message);
+    }
     public static <T> ApiResponse<T> SUCCESS (Integer code, String message, T data) {
         return new ApiResponse(code, ResponseStatus.SUCCESS, message, data);
     }

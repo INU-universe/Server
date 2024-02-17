@@ -11,4 +11,6 @@ public interface FriendRequestService {
 
     // 친구 거절
     FriendRequestResponseDTO.FriendRequestRejectDTO reject(String userEmail, Long friendRelationShipId);
+    // 친구 요청 조회
+    FriendRequestResponseDTO.FriendRequestFindAllDTO findAll(String userEmail);
 }
