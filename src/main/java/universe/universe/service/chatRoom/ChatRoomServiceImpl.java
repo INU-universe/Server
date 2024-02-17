@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import universe.universe.common.exception.Exception401;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.chatRoom.ChatRoomRequestDTO;
 import universe.universe.dto.chatRoom.ChatRoomResponseDTO;
-import universe.universe.dto.friend.FriendResponseDTO;
 import universe.universe.entitiy.chatRoom.ChatRoom;
 import universe.universe.entitiy.chatRoom.ChatRoomRelation;
 import universe.universe.entitiy.user.User;
@@ -33,19 +33,18 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         try {
             List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList = chatRoomCreateDTO.getUserList();
             List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList = new ArrayList<>();
+            Long findUserId = getUser(userEmail).getId();
+
+            checkRequestList(requestList, findUserId);
 
             ChatRoomRequestDTO.ChatRoomUserDTO chatRoomUserDTO = new ChatRoomRequestDTO.ChatRoomUserDTO();
-            chatRoomUserDTO.setUserId(getUser(userEmail).getId());
+            chatRoomUserDTO.setUserId(findUserId);
             requestList.add(chatRoomUserDTO);
 
             ChatRoom chatRoom = new ChatRoom();
             chatRoomRepository.save(chatRoom);
 
-            for(ChatRoomRequestDTO.ChatRoomUserDTO user : requestList) {
-                User findUser = getUserId(user.getUserId());
-                ChatRoomRelation chatRoomRelation = chatRoomRelationRepository.save(new ChatRoomRelation(findUser, chatRoom));
-                responseList.add(new ChatRoomResponseDTO.ChatRoomUserDTO(chatRoomRelation));
-            }
+            addResponseList(requestList, responseList, chatRoom);
 
             ChatRoomResponseDTO.ChatRoomCreateDTO result = new ChatRoomResponseDTO.ChatRoomCreateDTO(chatRoom.getId(), responseList);
             return result;
@@ -54,7 +53,6 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             throw new Exception500("create fail : " + e.getMessage());
         }
     }
-
     @Override
     public void delete(String userEmail, Long chatRoomId) {
         try {
@@ -108,5 +106,21 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             throw new Exception404("해당 관계를 찾을 수 없습니다.");
         }
         return findChatRoomRelation.get();
+    }
+
+    private void addResponseList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList, ChatRoom chatRoom) {
+        for(ChatRoomRequestDTO.ChatRoomUserDTO user : requestList) {
+            User findUser = getUserId(user.getUserId());
+            ChatRoomRelation chatRoomRelation = chatRoomRelationRepository.save(new ChatRoomRelation(findUser, chatRoom));
+            responseList.add(new ChatRoomResponseDTO.ChatRoomUserDTO(chatRoomRelation));
+        }
+    }
+
+    private static void checkRequestList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, Long findUserId) {
+        for(ChatRoomRequestDTO.ChatRoomUserDTO user : requestList) {
+            if(user.getUserId() == findUserId) {
+                throw new Exception401("본인에게 채팅은 불가합니다.");
+            }
+        }
     }
 }
