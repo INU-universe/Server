@@ -37,7 +37,7 @@ public class FriendApiController {
         }
     }
     // 친구 삭제
-    @GetMapping("/delete/{userId}")
+    @PostMapping("/delete/{userId}")
     public ResponseEntity<?> delete(@PathVariable Long userId) {
         try {
             String userEmail = getUserEmail();
