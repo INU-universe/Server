@@ -84,17 +84,26 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
         - PostRequestDTO
 
 ## 📌 API 명세서
-- 회원 API (/api/user/)
-  - 로그인
-  - 회원 가입
-  - 회원 탈퇴
-  - 회원 수정
-- 위치 API (/api/location/)
-  - 위치 저장
-  - 위치 조회
-- 채팅방 API (/api/chatRoom/)
-  - 채팅방 조회
-  - 채팅방 만들기
-  - 채팅방 삭제
+- 회원 API (/api/user)
+  - 로그인 POST (/login)
+  - 회원 가입 POST (/join)
+  - 회원 탈퇴 POST (/delete)
+  - 회원 수정 POST (/update)
+- 위치 API (/api/location)
+  - 위치 업데이트 POST (/update)
+  - 위치 조회 GET (/find)
+  - 친구 위치 전체 조회 GET (/findAll)
+- 채팅방 API (/api/chatRoom)
+  - 채팅방 조회 GET (/findAll)
+  - 채팅방 생성 POST (/create)
+  - 채팅방 삭제 POST  (/delete/{chatRoomId})
+- 친구 요청 API (/api/friendRequest)
+  - 친구 요청 토글 POST (/toggle/{toUserId})
+  - 친구 요청 수락 POST (/accept/{toUserId})
+  - 친구 요청 거절 POST (/reject/{toUserId})
+  - 친구 요청 조회 GET (/findAll)
+- 친구 API (/api/friend)
+  - 친구 조회 GET (/findAll)
+  - 친구 삭제 POST (/delete/{userId})
 
 ---
