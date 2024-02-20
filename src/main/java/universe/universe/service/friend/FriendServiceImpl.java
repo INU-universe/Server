@@ -8,6 +8,7 @@ import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.friend.FriendResponseDTO;
 import universe.universe.entitiy.friend.Friend;
+import universe.universe.entitiy.friend.FriendStatus;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.friend.FriendRepository;
 import universe.universe.repository.user.UserRepository;
@@ -35,19 +36,53 @@ public class FriendServiceImpl implements FriendService {
     @Transactional
     public void delete(String userEmail, Long userId) {
         try {
-            User fromUser = getUser(userEmail);
-            User toUser = getUserId(userId);
-            Optional<Friend> findRelation1 = friendRepository.findByFromUserAndToUser(fromUser, toUser);
-            Optional<Friend> findRelation2 = friendRepository.findByFromUserAndToUser(toUser, fromUser);
+            Result result = getFriend(userEmail, userId);
 
-            if(!findRelation1.isPresent() || !findRelation2.isPresent()) {
-                throw new Exception404("해당 관계를 찾을 수 없습니다.");
-            }
-            friendRepository.delete(findRelation1.get());
-            friendRepository.delete(findRelation2.get());
+            friendRepository.delete(result.findRelation1.get());
+            friendRepository.delete(result.findRelation2.get());
         } catch (Exception e) {
             throw new Exception500("delete fail : " + e.getMessage());
         }
+    }
+
+    @Override
+    @Transactional
+    public FriendResponseDTO.FriendToggleDTO toggle(String userEmail, Long userId) {
+        try {
+            Result result = getFriend(userEmail, userId);
+
+            if(result.findRelation1().get().getFriendStatus() == FriendStatus.FAVORITE && result.findRelation2().get().getFriendStatus() == FriendStatus.FAVORITE) {
+                result.findRelation1().get().updateFriendStatus(FriendStatus.NOT_FAVORITE);
+                result.findRelation2().get().updateFriendStatus(FriendStatus.NOT_FAVORITE);
+            }
+            else if (result.findRelation1().get().getFriendStatus() == FriendStatus.NOT_FAVORITE && result.findRelation2().get().getFriendStatus() == FriendStatus.NOT_FAVORITE) {
+                result.findRelation1().get().updateFriendStatus(FriendStatus.FAVORITE);
+                result.findRelation2().get().updateFriendStatus(FriendStatus.FAVORITE);
+            }
+            else {
+                throw new Exception404("해당 관계에 문제가 있습니다.");
+            }
+            return new FriendResponseDTO.FriendToggleDTO(result.findRelation1().get());
+
+        } catch (Exception e) {
+            throw new Exception500("toggle fail : " + e.getMessage());
+        }
+    }
+
+    private Result getFriend(String userEmail, Long userId) {
+        User fromUser = getUser(userEmail);
+        User toUser = getUserId(userId);
+        Optional<Friend> findRelation1 = friendRepository.findByFromUserAndToUser(fromUser, toUser);
+        Optional<Friend> findRelation2 = friendRepository.findByFromUserAndToUser(toUser, fromUser);
+
+        if(!findRelation1.isPresent() || !findRelation2.isPresent()) {
+            throw new Exception404("해당 관계를 찾을 수 없습니다.");
+        }
+        Result result = new Result(findRelation1, findRelation2);
+        return result;
+    }
+
+    private record Result(Optional<Friend> findRelation1, Optional<Friend> findRelation2) {
     }
 
     private User getUser(String userEmail) {

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import universe.universe.entitiy.friend.Friend;
+import universe.universe.entitiy.friend.FriendRequest;
 import universe.universe.entitiy.friend.FriendStatus;
 import universe.universe.entitiy.user.User;
 
@@ -41,6 +42,18 @@ public class FriendResponseDTO {
         public FriendFindAllDTO(Long userId, List<FriendFindOneDTO> friendList) {
             this.userId= userId;
             this.friendList = friendList;
+        }
+    }
+    @Setter
+    @Getter
+    public static class FriendToggleDTO {
+        private Long id;
+        private Long toUserId;
+        private Long fromUserId;
+        public FriendToggleDTO(Friend friend) {
+            this.id = friend.getId();
+            this.toUserId = friend.getToUser().getId();
+            this.fromUserId = friend.getFromUser().getId();
         }
     }
 }

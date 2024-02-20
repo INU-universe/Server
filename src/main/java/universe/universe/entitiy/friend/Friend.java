@@ -28,6 +28,13 @@ public class Friend extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private FriendStatus friendStatus;
 
+    /** ======================== 메소드 ======================== **/
+    public void updateFriendStatus(FriendStatus friendStatus) {
+        this.friendStatus = friendStatus;
+    }
+
+    /** ======================== 생성자 ======================== **/
+
     public Friend() {
 
     }
