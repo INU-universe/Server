@@ -49,11 +49,24 @@ public class LocationApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
-    @GetMapping("/findAll")
-    public ResponseEntity<?> findAll() {
+    @GetMapping("notFavorite/findAll")
+    public ResponseEntity<?> notFavoriteFindAll() {
         try {
             String userEmail = getUserEmail();
-            LocationResponseDTO.LocationFindAllDTO findLocationList = locationService.findAll(userEmail);
+            LocationResponseDTO.LocationFindAllDTO findLocationList = locationService.notFavoriteFindAll(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", findLocationList));
+        } catch (Exception400 e) {
+            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+        } catch (Exception500 e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
+
+    @GetMapping("favorite/findAll")
+    public ResponseEntity<?> favoriteFindAll() {
+        try {
+            String userEmail = getUserEmail();
+            LocationResponseDTO.LocationFindAllDTO findLocationList = locationService.favoriteFindAll(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", findLocationList));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));

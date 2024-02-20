@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
 import universe.universe.entitiy.base.BaseEntity;
 import universe.universe.entitiy.chatRoom.ChatRoomRelation;
+import universe.universe.entitiy.friend.FriendStatus;
 import universe.universe.entitiy.location.Location;
 
 import java.time.LocalDateTime;

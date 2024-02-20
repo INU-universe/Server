@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
-import universe.universe.dto.friend.FriendRequestResponseDTO;
 import universe.universe.dto.location.LocationRequestDTO;
 import universe.universe.dto.location.LocationResponseDTO;
 import universe.universe.entitiy.location.Location;
@@ -47,10 +46,21 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public LocationResponseDTO.LocationFindAllDTO findAll(String userEmail) {
+    public LocationResponseDTO.LocationFindAllDTO notFavoriteFindAll(String userEmail) {
         try {
             User findUser = getUser(userEmail);
-            LocationResponseDTO.LocationFindAllDTO locationList = locationRepository.findAll(findUser.getId());
+            LocationResponseDTO.LocationFindAllDTO locationList = locationRepository.notFavoriteFindAll(findUser.getId());
+            return locationList;
+        } catch (Exception e) {
+            throw new Exception500("Location findAll fail : "+e.getMessage());
+        }
+    }
+
+    @Override
+    public LocationResponseDTO.LocationFindAllDTO favoriteFindAll(String userEmail) {
+        try {
+            User findUser = getUser(userEmail);
+            LocationResponseDTO.LocationFindAllDTO locationList = locationRepository.favoriteFindAll(findUser.getId());
             return locationList;
         } catch (Exception e) {
             throw new Exception500("Location findAll fail : "+e.getMessage());

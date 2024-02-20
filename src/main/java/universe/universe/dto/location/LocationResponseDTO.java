@@ -44,6 +44,18 @@ public class LocationResponseDTO {
 
     @Setter
     @Getter
+    public static class LocationFindAllDTO {
+        private LocationResponseDTO.LocationFindOneDTO userLocation;
+        private List<LocationResponseDTO.LocationFindOneDTO> friendLocationList;
+
+        public LocationFindAllDTO(LocationFindOneDTO userLocation, List<LocationFindOneDTO> friendLocationList) {
+            this.userLocation = userLocation;
+            this.friendLocationList = friendLocationList;
+        }
+    }
+
+    @Setter
+    @Getter
     public static class LocationUpdateDTO {
         private Long id;
         private double latitude;
@@ -52,18 +64,6 @@ public class LocationResponseDTO {
             this.id = location.getId();
             this.latitude = location.getLatitude();
             this.longitude = location.getLongitude();
-        }
-    }
-
-    @Setter
-    @Getter
-    public static class LocationFindAllDTO {
-        private LocationResponseDTO.LocationFindOneDTO userLocation;
-        private List<LocationResponseDTO.LocationFindOneDTO> friendLocationList;
-
-        public LocationFindAllDTO(LocationFindOneDTO userLocation, List<LocationFindOneDTO> friendLocationList) {
-            this.userLocation = userLocation;
-            this.friendLocationList = friendLocationList;
         }
     }
 }

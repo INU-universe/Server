@@ -10,6 +10,9 @@ public interface LocationService {
     // 단일 위치 정보 조회
     LocationResponseDTO.LocationFindOneDTO findOne(String userEmail);
 
-    // 전체 위치 정보 조회 (현재 회원 및 친구)
-    LocationResponseDTO.LocationFindAllDTO findAll(String userEmail);
+    // 전체 위치 정보 조회 (친한 친구 x)
+    LocationResponseDTO.LocationFindAllDTO notFavoriteFindAll(String userEmail);
+
+    // 전체 위치 정보 조회 (친한 친구)
+    LocationResponseDTO.LocationFindAllDTO favoriteFindAll(String userEmail);
 }
