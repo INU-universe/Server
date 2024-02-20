@@ -9,12 +9,12 @@ import universe.universe.entitiy.location.Location;
 public class LocationResponseDTO {
     @Setter
     @Getter
-    public static class LocationFindDTO {
+    public static class LocationFindOneDTO {
         private Long id;
         private double latitude;
         private double longitude;
 
-        public LocationFindDTO(Location location) {
+        public LocationFindOneDTO(Location location) {
             this.id = location.getId();
             this.latitude = location.getLatitude();
             this.longitude = location.getLongitude();

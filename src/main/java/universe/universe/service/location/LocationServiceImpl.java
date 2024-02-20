@@ -4,18 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.common.exception.Exception400;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.location.LocationRequestDTO;
 import universe.universe.dto.location.LocationResponseDTO;
-import universe.universe.dto.user.UserResponseDTO;
 import universe.universe.entitiy.location.Location;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.location.LocationRepository;
 import universe.universe.repository.user.UserRepository;
-
-import static universe.universe.entitiy.user.QUser.user;
 
 @Service
 @Transactional(readOnly = true)
@@ -38,10 +34,10 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public LocationResponseDTO.LocationFindDTO find(String userEmail) {
+    public LocationResponseDTO.LocationFindOneDTO findOne(String userEmail) {
         try {
             Long userId = getUser(userEmail).getId();
-            LocationResponseDTO.LocationFindDTO findLocation = locationRepository.find(userId);
+            LocationResponseDTO.LocationFindOneDTO findLocation = locationRepository.findOne(userId);
 
             return findLocation;
         } catch (Exception e){

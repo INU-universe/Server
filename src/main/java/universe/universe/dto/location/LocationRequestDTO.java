@@ -9,7 +9,7 @@ import universe.universe.entitiy.location.Location;
 public class LocationRequestDTO {
     @Setter
     @Getter
-    public static class LocationFindDTO {
+    public static class LocationFindOneDTO {
         private double latitude;
         private double longitude;
         public Location toEntity() {

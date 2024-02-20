@@ -8,5 +8,6 @@ public interface LocationService {
     LocationResponseDTO.LocationUpdateDTO update(LocationRequestDTO.LocationUpdateDTO locationUpdateDTO, String userEmail);
 
     // 위치 정보 조회
-    LocationResponseDTO.LocationFindDTO find(String userEmail);
+    LocationResponseDTO.LocationFindOneDTO findOne(String userEmail);
+    //
 }

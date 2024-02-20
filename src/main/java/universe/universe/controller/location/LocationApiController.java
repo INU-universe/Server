@@ -41,7 +41,7 @@ public class LocationApiController {
     public ResponseEntity<?> find() {
         try {
             String userEmail = getUserEmail();
-            LocationResponseDTO.LocationFindDTO findLocation = locationService.find(userEmail);
+            LocationResponseDTO.LocationFindOneDTO findLocation = locationService.findOne(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", findLocation));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));

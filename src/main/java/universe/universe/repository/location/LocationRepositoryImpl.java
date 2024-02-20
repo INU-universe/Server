@@ -6,9 +6,6 @@ import jakarta.persistence.EntityManager;
 import universe.universe.dto.location.LocationResponseDTO;
 import universe.universe.entitiy.location.QLocation;
 import universe.universe.entitiy.user.QUser;
-import universe.universe.entitiy.user.User;
-
-import static universe.universe.entitiy.user.QUser.user;
 
 public class LocationRepositoryImpl implements LocationRepositoryCustom {
     private final JPAQueryFactory queryFactory;
@@ -16,11 +13,11 @@ public class LocationRepositoryImpl implements LocationRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
     @Override
-    public LocationResponseDTO.LocationFindDTO find(Long userId) {
+    public LocationResponseDTO.LocationFindOneDTO findOne(Long userId) {
         QUser qUser = QUser.user;
         QLocation qLocation = QLocation.location;
         return queryFactory
-                .select(Projections.constructor(LocationResponseDTO.LocationFindDTO.class, qLocation))
+                .select(Projections.constructor(LocationResponseDTO.LocationFindOneDTO.class, qLocation))
                 .from(qUser)
                 .leftJoin(qUser.location, qLocation)
                 .where(qUser.id.eq(userId))
