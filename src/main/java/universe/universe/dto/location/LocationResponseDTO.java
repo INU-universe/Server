@@ -10,14 +10,20 @@ public class LocationResponseDTO {
     @Setter
     @Getter
     public static class LocationFindOneDTO {
-        private Long id;
+        private Long locationId;
         private double latitude;
         private double longitude;
+        private Long userId;
+        private String userName;
+        private String userImg;
 
         public LocationFindOneDTO(Location location) {
-            this.id = location.getId();
+            this.locationId = location.getId();
             this.latitude = location.getLatitude();
             this.longitude = location.getLongitude();
+            this.userId = location.getUser().getId();
+            this.userName = location.getUser().getUserName();
+            this.userImg = location.getUser().getUserImg();
         }
     }
 
@@ -32,5 +38,11 @@ public class LocationResponseDTO {
             this.latitude = location.getLatitude();
             this.longitude = location.getLongitude();
         }
+    }
+
+    @Setter
+    @Getter
+    public static class LocationFindAllDTO {
+
     }
 }

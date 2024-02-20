@@ -45,6 +45,11 @@ public class LocationServiceImpl implements LocationService {
         }
     }
 
+    @Override
+    public LocationResponseDTO.LocationFindAllDTO findAll(String userEmail) {
+        return null;
+    }
+
     private User getUser(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {

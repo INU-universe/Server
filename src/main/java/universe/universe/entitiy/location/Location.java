@@ -1,11 +1,9 @@
 package universe.universe.entitiy.location;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import universe.universe.entitiy.base.BaseEntity;
+import universe.universe.entitiy.user.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +18,9 @@ public class Location extends BaseEntity {
     private Long id;
     private double latitude;
     private double longitude;
+
+    @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
+    private User user;
 
     /** ======================== 메소드 ======================== **/
     public void updateLocation(double latitude, double longitude) {
