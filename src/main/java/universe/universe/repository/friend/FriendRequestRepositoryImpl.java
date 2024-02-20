@@ -15,7 +15,7 @@ public class FriendRequestRepositoryImpl implements FriendRequestRepositoryCusto
         this.queryFactory = new JPAQueryFactory(em);
     }
     @Override
-    public FriendRequestResponseDTO.FriendRequestFindAllDTO friendRequestFindAll(Long userId) {
+    public FriendRequestResponseDTO.FriendRequestFindAllDTO findAll(Long userId) {
         List<FriendRequestResponseDTO.FriendRequestFindOneDTO> friendRequestList = queryFactory
                 .select(Projections.constructor(FriendRequestResponseDTO.FriendRequestFindOneDTO.class,
                         friendRequest.fromUser.id,

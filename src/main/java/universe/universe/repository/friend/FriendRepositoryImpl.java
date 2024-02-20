@@ -14,7 +14,7 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
     @Override
-    public FriendResponseDTO.FriendFindAllDTO friendFindAll(Long userId) {
+    public FriendResponseDTO.FriendFindAllDTO findAll(Long userId) {
         List<FriendResponseDTO.FriendFindOneDTO> friendList = queryFactory
                 .select(Projections.constructor(FriendResponseDTO.FriendFindOneDTO.class,
                         friend.toUser.id,

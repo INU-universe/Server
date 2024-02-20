@@ -25,7 +25,7 @@ public class FriendServiceImpl implements FriendService {
     public FriendResponseDTO.FriendFindAllDTO findAll(String userEmail) {
         try {
             User findUser = getUser(userEmail);
-            FriendResponseDTO.FriendFindAllDTO findFriendList = friendRepository.friendFindAll(findUser.getId());
+            FriendResponseDTO.FriendFindAllDTO findFriendList = friendRepository.findAll(findUser.getId());
             return findFriendList;
         } catch (Exception e) {
             throw new Exception500("findAll fail : " + e.getMessage());

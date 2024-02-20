@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
+import universe.universe.dto.friend.FriendRequestResponseDTO;
 import universe.universe.dto.location.LocationRequestDTO;
 import universe.universe.dto.location.LocationResponseDTO;
 import universe.universe.entitiy.location.Location;
@@ -29,7 +30,7 @@ public class LocationServiceImpl implements LocationService {
 
             return new LocationResponseDTO.LocationUpdateDTO(findLocation);
         } catch (Exception e){
-            throw new Exception500("위치 변경 실패 : "+e.getMessage());
+            throw new Exception500("Location update fail : "+e.getMessage());
         }
     }
 
@@ -41,13 +42,19 @@ public class LocationServiceImpl implements LocationService {
 
             return findLocation;
         } catch (Exception e){
-            throw new Exception500("위치 조회 실패 : "+e.getMessage());
+            throw new Exception500("Location findOne fail : "+e.getMessage());
         }
     }
 
     @Override
     public LocationResponseDTO.LocationFindAllDTO findAll(String userEmail) {
-        return null;
+        try {
+            User findUser = getUser(userEmail);
+            LocationResponseDTO.LocationFindAllDTO locationList = locationRepository.findAll(findUser.getId());
+            return locationList;
+        } catch (Exception e) {
+            throw new Exception500("Location findAll fail : "+e.getMessage());
+        }
     }
 
     private User getUser(String userEmail) {

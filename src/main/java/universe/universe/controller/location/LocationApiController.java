@@ -37,8 +37,8 @@ public class LocationApiController {
         }
     }
 
-    @GetMapping("/find")
-    public ResponseEntity<?> find() {
+    @GetMapping("/findOne")
+    public ResponseEntity<?> findOne() {
         try {
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationFindOneDTO findLocation = locationService.findOne(userEmail);
@@ -49,6 +49,19 @@ public class LocationApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
+    @GetMapping("/findAll")
+    public ResponseEntity<?> findAll() {
+        try {
+            String userEmail = getUserEmail();
+            LocationResponseDTO.LocationFindAllDTO findLocationList = locationService.findAll(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", findLocationList));
+        } catch (Exception400 e) {
+            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+        } catch (Exception500 e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
+
 
     private String getUserEmail() {
         User user = authenticationService.getCurrentAuthenticatedUser();

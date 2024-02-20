@@ -8,7 +8,6 @@ import universe.universe.common.exception.Exception401;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.friend.FriendRequestResponseDTO;
-import universe.universe.dto.friend.FriendResponseDTO;
 import universe.universe.entitiy.friend.Friend;
 import universe.universe.entitiy.friend.FriendRequest;
 import universe.universe.entitiy.user.User;
@@ -115,7 +114,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     public FriendRequestResponseDTO.FriendRequestFindAllDTO findAll(String userEmail) {
         try {
             User findUser = getUser(userEmail);
-            FriendRequestResponseDTO.FriendRequestFindAllDTO findFriendRequestList = friendRequestRepository.friendRequestFindAll(findUser.getId());
+            FriendRequestResponseDTO.FriendRequestFindAllDTO findFriendRequestList = friendRequestRepository.findAll(findUser.getId());
             return findFriendRequestList;
         } catch (Exception e) {
             throw new Exception500("findAll fail : " + e.getMessage());
