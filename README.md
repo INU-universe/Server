@@ -91,8 +91,9 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
   - 회원 수정 POST (/update)
 - 위치 API (/api/location)
   - 위치 업데이트 POST (/update)
-  - 위치 조회 GET (/find)
-  - 친구 위치 전체 조회 GET (/findAll)
+  - 단일 위치 조회 GET (/findOne)
+  - 친구 위치 전체 조회 GET (/notFavorite/findAll)
+  - 친한 친구 위치 전체 조회 GET (/favorite/findAll)
 - 채팅방 API (/api/chatRoom)
   - 채팅방 조회 GET (/findAll)
   - 채팅방 생성 POST (/create)
@@ -104,6 +105,7 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
   - 친구 요청 조회 GET (/findAll)
 - 친구 API (/api/friend)
   - 친구 조회 GET (/findAll)
-  - 친구 삭제 POST (/delete/{userId})
+  - 친구 삭제 POST (/delete/{toUserId})
+  - 친한 친구 토글 POST (/toggle/{toUserId})
 
 ---
