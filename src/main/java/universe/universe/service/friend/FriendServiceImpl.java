@@ -32,6 +32,18 @@ public class FriendServiceImpl implements FriendService {
             throw new Exception500("findAll fail : " + e.getMessage());
         }
     }
+
+    @Override
+    public FriendResponseDTO.FriendFindInSchoolDTO findInSchool(String userEmail) {
+        try {
+            User findUser = getUser(userEmail);
+            FriendResponseDTO.FriendFindInSchoolDTO friendFindInSchoolList = friendRepository.findInSchool(findUser.getId());
+            return friendFindInSchoolList;
+        } catch (Exception e) {
+            throw new Exception500("findInSchool fail : " + e.getMessage());
+        }
+    }
+
     @Override
     @Transactional
     public void delete(String userEmail, Long userId) {

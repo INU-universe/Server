@@ -4,6 +4,8 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import universe.universe.dto.friend.FriendResponseDTO;
+import universe.universe.entitiy.user.UserStatus;
+
 import static universe.universe.entitiy.friend.QFriend.friend;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom {
                         friend.toUser.userImg,
                         friend.toUser.userName,
                         friend.friendStatus,
+                        friend.toUser.userStatus,
                         friend.toUser.schoolDate
                 ))
                 .from(friend)
@@ -28,5 +31,23 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom {
                 .fetch();
 
         return new FriendResponseDTO.FriendFindAllDTO(userId, friendList);
+    }
+
+    @Override
+    public FriendResponseDTO.FriendFindInSchoolDTO findInSchool(Long userId) {
+        List<FriendResponseDTO.FriendFindOneDTO> friendList = queryFactory
+                .select(Projections.constructor(FriendResponseDTO.FriendFindOneDTO.class,
+                        friend.toUser.id,
+                        friend.toUser.userImg,
+                        friend.toUser.userName,
+                        friend.friendStatus,
+                        friend.toUser.userStatus,
+                        friend.toUser.schoolDate
+                ))
+                .from(friend)
+                .where(friend.fromUser.id.eq(userId).and(friend.toUser.userStatus.eq(UserStatus.SCHOOL)))
+                .fetch();
+
+        return new FriendResponseDTO.FriendFindInSchoolDTO(userId, friendList);
     }
 }

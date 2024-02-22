@@ -4,4 +4,5 @@ import universe.universe.dto.friend.FriendResponseDTO;
 
 public interface FriendRepositoryCustom {
     FriendResponseDTO.FriendFindAllDTO findAll(Long userId);
+    FriendResponseDTO.FriendFindInSchoolDTO findInSchool(Long userId);
 }

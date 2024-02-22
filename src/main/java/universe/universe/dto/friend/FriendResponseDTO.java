@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import universe.universe.entitiy.friend.Friend;
-import universe.universe.entitiy.friend.FriendRequest;
 import universe.universe.entitiy.friend.FriendStatus;
-import universe.universe.entitiy.user.User;
+import universe.universe.entitiy.user.UserStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,14 +19,16 @@ public class FriendResponseDTO {
         private String friendImg;
         private String friendName;
         private FriendStatus friendStatus;
+        private UserStatus userStatus;
         private LocalDateTime schoolDate;
         public FriendFindOneDTO() {
         }
-        public FriendFindOneDTO(Long friendId, String friendImg, String friendName, FriendStatus friendStatus, LocalDateTime schoolDate) {
+        public FriendFindOneDTO(Long friendId, String friendImg, String friendName, FriendStatus friendStatus, UserStatus userStatus ,LocalDateTime schoolDate) {
             this.friendId = friendId;
             this.friendImg = friendImg;
             this.friendName = friendName;
             this.friendStatus = friendStatus;
+            this.userStatus = userStatus;
             this.schoolDate = schoolDate;
         }
         public FriendFindOneDTO(Friend friend) {
@@ -35,6 +36,7 @@ public class FriendResponseDTO {
             this.friendImg = friend.getToUser().getUserImg();
             this.friendName = friend.getToUser().getUserName();
             this.friendStatus = friend.getFriendStatus();
+            this.userStatus = friend.getToUser().getUserStatus();
             this.schoolDate = friend.getToUser().getSchoolDate();
         }
     }
@@ -44,6 +46,16 @@ public class FriendResponseDTO {
         private Long userId;
         private List<FriendResponseDTO.FriendFindOneDTO> friendList;
         public FriendFindAllDTO(Long userId, List<FriendFindOneDTO> friendList) {
+            this.userId= userId;
+            this.friendList = friendList;
+        }
+    }
+    @Setter
+    @Getter
+    public static class FriendFindInSchoolDTO {
+        private Long userId;
+        private List<FriendResponseDTO.FriendFindOneDTO> friendList;
+        public FriendFindInSchoolDTO(Long userId, List<FriendFindOneDTO> friendList) {
             this.userId= userId;
             this.friendList = friendList;
         }

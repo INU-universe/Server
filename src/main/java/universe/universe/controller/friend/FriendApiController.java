@@ -36,6 +36,20 @@ public class FriendApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
+
+    // 등교 중인 친구 목록 조회
+    @GetMapping("/findInSchool")
+    public ResponseEntity<?> findInSchool() {
+        try {
+            String userEmail = getUserEmail();
+            FriendResponseDTO.FriendFindInSchoolDTO friendFindInSchoolDTO = friendService.findInSchool(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "등교 중인 친구 목록 조회가 완료되었습니다.", friendFindInSchoolDTO));
+        } catch (Exception400 e) {
+            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+        } catch (Exception500 e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
     // 친구 삭제
     @PostMapping("/delete/{userId}")
     public ResponseEntity<?> delete(@PathVariable Long userId) {
