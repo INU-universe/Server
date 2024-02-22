@@ -6,6 +6,7 @@ import lombok.Setter;
 import universe.universe.entitiy.friend.Friend;
 import universe.universe.entitiy.friend.FriendStatus;
 import universe.universe.entitiy.location.Location;
+import universe.universe.entitiy.user.UserStatus;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class LocationResponseDTO {
         private Long userId;
         private String userName;
         private String userImg;
+        private UserStatus userStatus;
 
         public LocationFindOneDTO(Location location) {
             this.locationId = location.getId();
@@ -28,17 +30,19 @@ public class LocationResponseDTO {
             this.userId = location.getUser().getId();
             this.userName = location.getUser().getUserName();
             this.userImg = location.getUser().getUserImg();
+            this.userStatus = location.getUser().getUserStatus();
         }
 
         public LocationFindOneDTO() {
         }
-        public LocationFindOneDTO(Long locationId, double latitude, double longitude, Long userId, String userName, String userImg) {
+        public LocationFindOneDTO(Long locationId, double latitude, double longitude, Long userId, String userName, String userImg, UserStatus userStatus) {
             this.locationId = locationId;
             this.latitude = latitude;
             this.longitude = longitude;
             this.userId = userId;
             this.userName = userName;
             this.userImg = userImg;
+            this.userStatus = userStatus;
         }
     }
 

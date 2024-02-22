@@ -8,9 +8,12 @@ import universe.universe.entitiy.friend.FriendStatus;
 import universe.universe.entitiy.friend.QFriend;
 import universe.universe.entitiy.location.QLocation;
 import universe.universe.entitiy.user.QUser;
+import universe.universe.entitiy.user.UserStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static universe.universe.entitiy.friend.QFriend.friend;
 
 public class LocationRepositoryImpl implements LocationRepositoryCustom {
     private final JPAQueryFactory queryFactory;
@@ -41,7 +44,9 @@ public class LocationRepositoryImpl implements LocationRepositoryCustom {
                 .leftJoin(qFriend.toUser, qUser)
                 .leftJoin(qUser.location, qLocation)
                 .where(qFriend.fromUser.id.eq(userId)
-                        .or(qUser.id.eq(userId)))
+                        .or(qUser.id.eq(userId))
+                        .and(friend.toUser.userStatus.eq(UserStatus.SCHOOL))
+                )
                 .fetch();
 
         Result result = getUserLocation(userId, locations);
@@ -62,7 +67,9 @@ public class LocationRepositoryImpl implements LocationRepositoryCustom {
                 .leftJoin(qUser.location, qLocation)
                 .where(qFriend.fromUser.id.eq(userId)
                         .and(qFriend.friendStatus.eq(FriendStatus.FAVORITE))
-                        .or(qUser.id.eq(userId)))
+                        .or(qUser.id.eq(userId))
+                        .and(friend.toUser.userStatus.eq(UserStatus.SCHOOL))
+                )
                 .fetch();
 
         Result result = getUserLocation(userId, locations);
