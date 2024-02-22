@@ -9,6 +9,7 @@ import universe.universe.entitiy.friend.FriendRequest;
 import universe.universe.entitiy.friend.FriendStatus;
 import universe.universe.entitiy.user.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Data
 public class FriendResponseDTO {
@@ -19,19 +20,22 @@ public class FriendResponseDTO {
         private String friendImg;
         private String friendName;
         private FriendStatus friendStatus;
+        private LocalDateTime schoolDate;
         public FriendFindOneDTO() {
         }
-        public FriendFindOneDTO(Long friendId, String friendImg, String friendName, FriendStatus friendStatus) {
+        public FriendFindOneDTO(Long friendId, String friendImg, String friendName, FriendStatus friendStatus, LocalDateTime schoolDate) {
             this.friendId = friendId;
             this.friendImg = friendImg;
             this.friendName = friendName;
             this.friendStatus = friendStatus;
+            this.schoolDate = schoolDate;
         }
         public FriendFindOneDTO(Friend friend) {
             this.friendId = friend.getToUser().getId();
             this.friendImg = friend.getToUser().getUserImg();
             this.friendName = friend.getToUser().getUserName();
             this.friendStatus = friend.getFriendStatus();
+            this.schoolDate = friend.getToUser().getSchoolDate();
         }
     }
     @Setter

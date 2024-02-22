@@ -20,7 +20,8 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom {
                         friend.toUser.id,
                         friend.toUser.userImg,
                         friend.toUser.userName,
-                        friend.friendStatus
+                        friend.friendStatus,
+                        friend.toUser.schoolDate
                 ))
                 .from(friend)
                 .where(friend.fromUser.id.eq(userId))
