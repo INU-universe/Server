@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition
 @Configuration
+// http://localhost:8080/swagger-ui/index.html#/
 public class SwaggerConfig {
 
     @Bean
@@ -22,7 +23,7 @@ public class SwaggerConfig {
     private Info getInfo() {
         return new Info()
                 .version("1.0.0")
-                .description("Prography HW REST API DOC")
-                .title("Prography HW");
+                .description("UNI REST API DOC")
+                .title("UNI Server");
     }
 }

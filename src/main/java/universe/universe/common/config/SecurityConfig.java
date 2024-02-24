@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager, tokenRepository))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository))
                 .authorizeRequests(authorize -> authorize
+                        .requestMatchers("/swagger/index.html").permitAll()
                         .requestMatchers("/api/v1/user/**")
                         .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                         .requestMatchers("/api/v1/manager/**")
