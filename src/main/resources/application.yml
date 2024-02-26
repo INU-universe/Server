@@ -1,3 +1,5 @@
+jwt:
+  secret: hello.world.ee.ff
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

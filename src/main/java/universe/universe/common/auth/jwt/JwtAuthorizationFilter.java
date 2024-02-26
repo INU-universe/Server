@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,9 +20,12 @@ import java.io.IOException;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UserRepository userRepository;
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
+    @Value(("${jwt.secret}")) // application.properties 또는 yml 파일의 jwt.secret 값을 여기에 주입
+    private String secretKey; // JWT 토큰 생성 및 파싱에 사용할 비밀키
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, String secretKey) {
         super(authenticationManager);
         this.userRepository = userRepository;
+        this.secretKey = secretKey;
     }
 
     // 인증이나 권한이 필요한 주소 요청이 있을 때 해당 필터를 타게 된다.
@@ -38,7 +42,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         // JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
         String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
-        String userEmail = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(jwtToken).getClaim("userEmail").asString(); // jwtToken에서 userEmail을 꺼내온다.
+        String userEmail = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(jwtToken).getClaim("userEmail").asString(); // jwtToken에서 userEmail을 꺼내온다.
 
         // 서명이 정상적으로 됨
         if (userEmail != null) {

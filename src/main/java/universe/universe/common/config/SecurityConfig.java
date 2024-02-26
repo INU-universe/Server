@@ -1,6 +1,7 @@
 package universe.universe.common.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,8 @@ public class SecurityConfig {
     private final CorsConfig corsConfig;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    @Value(("${jwt.secret}"))
+    private String secretKey;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -48,8 +51,8 @@ public class SecurityConfig {
                 .httpBasic(basic -> basic
                         .disable() // basic 방식은 id와 pw를 보내기 떄문에 노출이 될 가능성이 크다. 그래서 bearer token 방법을 쓴다.
                 )
-                .addFilter(new JwtAuthenticationFilter(authenticationManager, tokenRepository))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager, tokenRepository, secretKey))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository, secretKey))
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/api/v1/user/**")
                         .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
