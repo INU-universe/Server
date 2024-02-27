@@ -10,16 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import universe.universe.repository.user.UserRepository;
 
 @RestController
-@RequestMapping("/oauth2")
+@RequestMapping("api/oauth2")
 @RequiredArgsConstructor
 @Slf4j
 public class Oauth2ApiController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/authorization/google")
-    public @ResponseBody String OauthLogin(Authentication authentication, @AuthenticationPrincipal OAuth2User oauth) {
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+    @PostMapping("/login")
+    public @ResponseBody String Oauth2Login(Authentication authentication) {
         return "Oauth 세션 정보 확인하기";
     }
 }

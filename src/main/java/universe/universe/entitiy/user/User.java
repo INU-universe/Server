@@ -72,6 +72,7 @@ public class User extends BaseEntity {
         this.userName = userName;
         this.userPassword = userPassword;
         this.role = role;
+        this.location = new Location();
     }
     @Builder
     public User(String userEmail, String userName, String userPassword, String role, String provider, String providerId) {
@@ -79,6 +80,7 @@ public class User extends BaseEntity {
         this.userName = userName;
         this.userPassword = userPassword;
         this.role = role;
+        this.location = new Location();
 //        this.provider = provider;
 //        this.providerId = providerId;
     }
