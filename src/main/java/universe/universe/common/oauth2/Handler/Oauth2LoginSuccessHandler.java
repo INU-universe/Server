@@ -1,4 +1,4 @@
-package universe.universe.common.oauth.Handler;
+package universe.universe.common.oauth2.Handler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

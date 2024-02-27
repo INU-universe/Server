@@ -12,13 +12,11 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import universe.universe.common.auth.jwt.JwtAuthenticationFilter;
 import universe.universe.common.auth.jwt.JwtAuthorizationFilter;
-import universe.universe.common.oauth.Handler.Oauth2LoginFailureHandler;
-import universe.universe.common.oauth.Handler.Oauth2LoginSuccessHandler;
-import universe.universe.common.oauth.PrincipalOauth2UserService;
+import universe.universe.common.oauth2.Handler.Oauth2LoginFailureHandler;
+import universe.universe.common.oauth2.Handler.Oauth2LoginSuccessHandler;
+import universe.universe.common.oauth2.PrincipalOauth2UserService;
 import universe.universe.repository.token.TokenRepository;
 import universe.universe.repository.user.UserRepository;
 
