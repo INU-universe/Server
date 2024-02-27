@@ -1,6 +1,7 @@
 package universe.universe.entitiy.user;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
 import universe.universe.entitiy.base.BaseEntity;
@@ -25,6 +26,10 @@ public class User extends BaseEntity {
     private String userPassword;
     private String userName;
     private String userImg = "img";
+
+    /** Oauth2 Login **/
+//    private String provider;
+//    private String providerId;
 
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus = UserStatus.NOT_SCHOOL;
@@ -59,5 +64,22 @@ public class User extends BaseEntity {
         this.userPassword = userPassword;
         this.userName = userName;
         this.location = new Location();
+    }
+
+    @Builder
+    public User(String userEmail, String userName, String userPassword, String role) {
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.role = role;
+    }
+    @Builder
+    public User(String userEmail, String userName, String userPassword, String role, String provider, String providerId) {
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.role = role;
+//        this.provider = provider;
+//        this.providerId = providerId;
     }
 }

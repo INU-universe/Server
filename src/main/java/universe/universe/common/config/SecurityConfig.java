@@ -1,6 +1,7 @@
 package universe.universe.common.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import universe.universe.common.auth.jwt.JwtAuthenticationFilter;
 import universe.universe.common.auth.jwt.JwtAuthorizationFilter;
+import universe.universe.common.oauth.service.PrincipalOauth2UserService;
 import universe.universe.repository.token.TokenRepository;
 import universe.universe.repository.user.UserRepository;
 
@@ -26,6 +28,9 @@ public class SecurityConfig {
     private final TokenRepository tokenRepository;
     @Value(("${jwt.secret}"))
     private String secretKey;
+
+    /** Oauth2 로그인 구현 **/
+    private final PrincipalOauth2UserService principalOauth2UserService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -61,6 +66,18 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**")
                         .access("hasRole('ROLE_ADMIN')")
                         .anyRequest().permitAll())
+
+                /** Oauth2 로그인 구현 **/
+                .oauth2Login(login -> login
+                        .loginPage("/loginForm")
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(principalOauth2UserService))
+                )
+                .formLogin(login -> login
+                        .loginPage("/loginForm")
+                        .loginProcessingUrl("/loginProc") // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해준다.
+                        .defaultSuccessUrl("/") // 로그인이 완료되면 일로 이동한다.
+                )
                 .build();
     }
 }
