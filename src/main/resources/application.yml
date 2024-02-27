@@ -1,3 +1,5 @@
+jwt:
+  secret: hello.world.ee.ff
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -19,9 +21,17 @@ spring:
         use_sql_comments: true
 #        default_batch_fetch_size: 100
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 956078510095-udsnstgimq57c81p5mqbf97gakgdh7hj.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.orm.jdbc.bind: trace
-
-
-# lsof -i :8080

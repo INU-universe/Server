@@ -1,6 +1,7 @@
 package universe.universe.common.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,8 +12,13 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import universe.universe.common.auth.jwt.JwtAuthenticationFilter;
 import universe.universe.common.auth.jwt.JwtAuthorizationFilter;
+import universe.universe.common.oauth.Handler.Oauth2LoginFailureHandler;
+import universe.universe.common.oauth.Handler.Oauth2LoginSuccessHandler;
+import universe.universe.common.oauth.PrincipalOauth2UserService;
 import universe.universe.repository.token.TokenRepository;
 import universe.universe.repository.user.UserRepository;
 
@@ -23,6 +29,13 @@ public class SecurityConfig {
     private final CorsConfig corsConfig;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    @Value(("${jwt.secret}"))
+    private String secretKey;
+
+    /** Oauth2 로그인 구현 **/
+    private final PrincipalOauth2UserService principalOauth2UserService;
+    private final Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
+    private final Oauth2LoginFailureHandler oauth2LoginFailureHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -36,7 +49,6 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain configure(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         return http
-//                .addFilterBefore(new MyFilter3(), SecurityContextPersistenceFilter.class)
                 .csrf(CsrfConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션을 사용하지 않겠다.
@@ -48,8 +60,8 @@ public class SecurityConfig {
                 .httpBasic(basic -> basic
                         .disable() // basic 방식은 id와 pw를 보내기 떄문에 노출이 될 가능성이 크다. 그래서 bearer token 방법을 쓴다.
                 )
-                .addFilter(new JwtAuthenticationFilter(authenticationManager, tokenRepository))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager, tokenRepository, secretKey))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository, secretKey))
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/swagger/index.html").permitAll()
                         .requestMatchers("/api/v1/user/**")
@@ -59,6 +71,19 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**")
                         .access("hasRole('ROLE_ADMIN')")
                         .anyRequest().permitAll())
+
+                /** Oauth2 로그인 구현 **/
+                .oauth2Login(login -> login
+                        .successHandler(oauth2LoginSuccessHandler)
+                        .failureHandler(oauth2LoginFailureHandler)
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(principalOauth2UserService))
+                )
+//                .formLogin(login -> login
+//                        .loginPage("/loginForm")
+//                        .loginProcessingUrl("/loginProc") // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해준다.
+//                        .defaultSuccessUrl("/") // 로그인이 완료되면 일로 이동한다.
+//                )
                 .build();
     }
 }

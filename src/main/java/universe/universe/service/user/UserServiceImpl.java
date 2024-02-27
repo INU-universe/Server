@@ -12,7 +12,6 @@ import universe.universe.dto.user.UserRequestDTO;
 import universe.universe.dto.user.UserResponseDTO;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.user.UserRepository;
-import universe.universe.repository.user.UserRepositoryImpl;
 
 @Service
 @Transactional

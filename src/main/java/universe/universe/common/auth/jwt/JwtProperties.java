@@ -1,7 +1,8 @@
 package universe.universe.common.auth.jwt;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public interface JwtProperties {
-    String SECRET = "cos";
     int ACCESS_EXPIRATION_TIME = 60000*10;
     String TOKEN_PREFIX = "Bearer ";
     String HEADER_STRING = "Authorization";
