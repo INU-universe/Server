@@ -1,7 +1,6 @@
 package universe.universe.common.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +12,13 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import universe.universe.common.auth.jwt.JwtAuthenticationFilter;
 import universe.universe.common.auth.jwt.JwtAuthorizationFilter;
-import universe.universe.common.oauth.service.PrincipalOauth2UserService;
+import universe.universe.common.oauth.Handler.Oauth2LoginFailureHandler;
+import universe.universe.common.oauth.Handler.Oauth2LoginSuccessHandler;
+import universe.universe.common.oauth.PrincipalOauth2UserService;
 import universe.universe.repository.token.TokenRepository;
 import universe.universe.repository.user.UserRepository;
 
@@ -31,6 +34,8 @@ public class SecurityConfig {
 
     /** Oauth2 로그인 구현 **/
     private final PrincipalOauth2UserService principalOauth2UserService;
+    private final Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
+    private final Oauth2LoginFailureHandler oauth2LoginFailureHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -44,7 +49,6 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain configure(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         return http
-//                .addFilterBefore(new MyFilter3(), SecurityContextPersistenceFilter.class)
                 .csrf(CsrfConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션을 사용하지 않겠다.
@@ -69,15 +73,16 @@ public class SecurityConfig {
 
                 /** Oauth2 로그인 구현 **/
                 .oauth2Login(login -> login
-                        .loginPage("/loginForm")
+                        .successHandler(oauth2LoginSuccessHandler)
+                        .failureHandler(oauth2LoginFailureHandler)
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                                 .userService(principalOauth2UserService))
                 )
-                .formLogin(login -> login
-                        .loginPage("/loginForm")
-                        .loginProcessingUrl("/loginProc") // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해준다.
-                        .defaultSuccessUrl("/") // 로그인이 완료되면 일로 이동한다.
-                )
+//                .formLogin(login -> login
+//                        .loginPage("/loginForm")
+//                        .loginProcessingUrl("/loginProc") // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해준다.
+//                        .defaultSuccessUrl("/") // 로그인이 완료되면 일로 이동한다.
+//                )
                 .build();
     }
 }

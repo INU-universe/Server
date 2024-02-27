@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Map;
 
 public class PrincipalDetails implements UserDetails, OAuth2User {
-
     private static final long serialVersionUID = 1L;
     private User user;
     private Map<String, Object> attributes;

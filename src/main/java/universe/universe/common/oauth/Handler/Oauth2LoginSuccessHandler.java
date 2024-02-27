@@ -1,50 +1,28 @@
-package universe.universe.common.auth.jwt;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.FilterChain;
+package universe.universe.common.oauth.Handler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 import universe.universe.common.auth.PrincipalDetails;
 import universe.universe.common.auth.jwt.util.JwtUtil;
-import universe.universe.entitiy.user.User;
 import universe.universe.repository.token.TokenRepository;
 
 import java.io.IOException;
+
 @Slf4j
+@Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private final AuthenticationManager authenticationManager;
+public class Oauth2LoginSuccessHandler implements AuthenticationSuccessHandler {
+    @Value(("${jwt.secret}"))
+    private String secretKey;
     private final TokenRepository tokenRepository;
-    private final String secretKey;
-
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        try {
-            ObjectMapper om = new ObjectMapper();
-            User user = om.readValue(request.getInputStream(), User.class);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserEmail(), user.getUserPassword());
-
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-
-            return authentication;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 //        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 //
 //        // RSA 방식이 아닌, Hash 암호 방식이다.
@@ -69,8 +47,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        Map<String, String> tokenMap = new HashMap<>();
 //        tokenMap.put("jwtToken", accessToken);
 //        response.setContentType("application/json");
+//
+//        log.info("JWT Token : " + accessToken);
 //        new ObjectMapper().writeValue(response.getOutputStream(), tokenMap);
-        log.info("Login 성공!");
+        log.info("OAuth2 Login 성공!");
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         JwtUtil.generateAndSendToken(response, principalDetails, tokenRepository, secretKey);
     }

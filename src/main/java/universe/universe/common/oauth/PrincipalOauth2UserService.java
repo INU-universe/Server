@@ -1,4 +1,4 @@
-package universe.universe.common.oauth.service;
+package universe.universe.common.oauth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +50,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .userEmail(userInfoEmail)
                     .userName(userInfoName)
                     .role("ROLE_USER")
+//                    .userPassword(null)
 //                    .provider(oAuth2UserInfo.getProvider())
 //                    .providerId(oAuth2UserInfo.getProviderId())
                     .build();
