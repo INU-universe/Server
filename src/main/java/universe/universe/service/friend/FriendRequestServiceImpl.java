@@ -34,7 +34,7 @@ import static universe.universe.entitiy.friend.FriendStatus.NOT_FAVORITE;
 public class FriendRequestServiceImpl implements FriendRequestService {
     final private UserRepository userRepository;
     final private FriendRepository friendRepository;
-    final private FriendRequestRepository friendRequestRepository;
+//    final private FriendRequestRepository friendRequestRepository;
     @Value(("${jwt.secret}"))
     private String secretKey;
 
