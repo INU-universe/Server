@@ -8,8 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
-import universe.universe.service.token.RefreshTokenServiceImpl;
-import universe.universe.service.token.TokenService;
+import universe.universe.service.token.TokenServiceImpl;
 
 import java.io.IOException;
 
@@ -17,7 +16,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
-    private final TokenService tokenService;
+    private final TokenServiceImpl tokenService;
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         tokenService.logout(request.getHeader("Authorization"));

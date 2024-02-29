@@ -19,10 +19,9 @@ import universe.universe.common.config.CorsConfig;
 import universe.universe.common.auth.oauth2.handler.Oauth2LoginFailureHandler;
 import universe.universe.common.auth.oauth2.handler.Oauth2LoginSuccessHandler;
 import universe.universe.common.auth.oauth2.PrincipalOauth2UserService;
-import universe.universe.repository.token.TokenRepository;
+import universe.universe.repository.token.RefreshTokenRepository;
 import universe.universe.repository.user.UserRepository;
-import universe.universe.service.token.RefreshTokenServiceImpl;
-import universe.universe.service.token.TokenService;
+import universe.universe.service.token.TokenServiceImpl;
 
 @Configuration
 @EnableWebSecurity // 시큐리티 활성화 -> 기본 스프링 필터체인에 등록
@@ -30,8 +29,8 @@ import universe.universe.service.token.TokenService;
 public class SecurityConfig {
     private final CorsConfig corsConfig;
     private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
-    private final TokenService tokenService;
+    private final RefreshTokenRepository tokenRepository;
+    private final TokenServiceImpl tokenService;
     @Value(("${jwt.secret}"))
     private String secretKey;
 

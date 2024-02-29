@@ -17,18 +17,17 @@ import universe.universe.common.auth.jwt.JwtProperties;
 import universe.universe.common.exception.Exception404;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.user.UserRepository;
-import universe.universe.service.token.RefreshTokenServiceImpl;
-import universe.universe.service.token.TokenService;
+import universe.universe.service.token.TokenServiceImpl;
 
 import java.io.IOException;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UserRepository userRepository;
-    private TokenService tokenService;
+    private TokenServiceImpl tokenService;
     @Value(("${jwt.secret}")) // application.properties 또는 yml 파일의 jwt.secret 값을 여기에 주입
     private String secretKey; // JWT 토큰 생성 및 파싱에 사용할 비밀키
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, TokenService tokenService, String secretKey) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, TokenServiceImpl tokenService, String secretKey) {
         super(authenticationManager);
         this.userRepository = userRepository;
         this.tokenService = tokenService;

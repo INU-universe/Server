@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 import universe.universe.common.auth.PrincipalDetails;
 import universe.universe.common.auth.jwt.util.JwtUtil;
-import universe.universe.repository.token.TokenRepository;
+import universe.universe.repository.token.RefreshTokenRepository;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class Oauth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Value(("${jwt.secret}"))
     private String secretKey;
-    private final TokenRepository tokenRepository;
+    private final RefreshTokenRepository tokenRepository;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 //        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();

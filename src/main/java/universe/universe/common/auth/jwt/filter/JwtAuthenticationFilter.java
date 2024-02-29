@@ -15,14 +15,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import universe.universe.common.auth.PrincipalDetails;
 import universe.universe.common.auth.jwt.util.JwtUtil;
 import universe.universe.entitiy.user.User;
-import universe.universe.repository.token.TokenRepository;
+import universe.universe.repository.token.RefreshTokenRepository;
 
 import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
-    private final TokenRepository tokenRepository;
+    private final RefreshTokenRepository tokenRepository;
     private final String secretKey;
 
     @Override

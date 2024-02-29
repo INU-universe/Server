@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import universe.universe.common.auth.PrincipalDetails;
 import universe.universe.common.auth.jwt.JwtProperties;
 import universe.universe.entitiy.token.RefreshToken;
-import universe.universe.repository.token.TokenRepository;
+import universe.universe.repository.token.RefreshTokenRepository;
 
 import java.io.IOException;
 import java.util.Date;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 public class JwtUtil {
 
-    public static void generateAndSendToken(HttpServletResponse response, PrincipalDetails principalDetails, TokenRepository tokenRepository, String secretKey) throws IOException {
+    public static void generateAndSendToken(HttpServletResponse response, PrincipalDetails principalDetails, RefreshTokenRepository tokenRepository, String secretKey) throws IOException {
         String accessToken = createToken("accessToken", JwtProperties.ACCESS_EXPIRATION_TIME, principalDetails, secretKey);
         String refreshToken = createToken("refreshToken", JwtProperties.REFRESH_EXPIRATION_TIME, principalDetails, secretKey);
 

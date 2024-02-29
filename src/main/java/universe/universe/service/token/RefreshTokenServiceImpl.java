@@ -11,7 +11,7 @@ import universe.universe.dto.token.RefreshTokenRequestDTO;
 import universe.universe.dto.token.RefreshTokenResponseDTO;
 import universe.universe.entitiy.token.RefreshToken;
 import universe.universe.entitiy.user.User;
-import universe.universe.repository.token.TokenRepository;
+import universe.universe.repository.token.RefreshTokenRepository;
 import universe.universe.repository.user.UserRepository;
 
 import java.util.Optional;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class RefreshTokenServiceImpl implements RefreshTokenService {
-    final private TokenRepository tokenRepository;
+    final private RefreshTokenRepository tokenRepository;
     final private UserRepository userRepository;
     final private JwtProvider jwtProvider;
     @Override
