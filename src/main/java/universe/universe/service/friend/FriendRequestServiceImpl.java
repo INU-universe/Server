@@ -1,9 +1,13 @@
 package universe.universe.service.friend;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import universe.universe.common.auth.jwt.JwtProperties;
 import universe.universe.common.exception.Exception401;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
@@ -15,6 +19,7 @@ import universe.universe.repository.friend.FriendRepository;
 import universe.universe.repository.friend.FriendRequestRepository;
 import universe.universe.repository.user.UserRepository;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,6 +33,32 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     final private UserRepository userRepository;
     final private FriendRepository friendRepository;
     final private FriendRequestRepository friendRequestRepository;
+    @Value(("${jwt.secret}"))
+    private String secretKey;
+
+    @Override
+    public FriendRequestResponseDTO.FriendRequestSendDTO send(String userEmail) {
+        try {
+            User findUser = getUser(userEmail);
+
+            // 임시 토큰 생성 (예: JWT)
+            String token = JWT.create()
+                    .withSubject("accessToken")
+                    .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
+                    .withClaim("userId", findUser.getId())
+                    .sign(Algorithm.HMAC512(secretKey)); // 고유한 값
+
+            // 임시 토큰을 포함한 URL 생성
+            String friendRequestURL = "http://localhost:8080/api/friendRequest/send?token=" + token;
+
+            FriendRequestResponseDTO.FriendRequestSendDTO friendRequestSendDTO = new FriendRequestResponseDTO.FriendRequestSendDTO();
+            friendRequestSendDTO.setFriendRequestURL(friendRequestURL);
+            return friendRequestSendDTO;
+        } catch (Exception e) {
+            throw new Exception500("send fail : " + e.getMessage());
+        }
+    }
+
     @Override
     public FriendRequestResponseDTO.FriendRequestToggleDTO toggle(String userEmail, Long toUserId) {
         try {

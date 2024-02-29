@@ -22,6 +22,19 @@ public class FriendRequestApiController {
     final private FriendRequestServiceImpl friendRequestService;
     final private AuthenticationService authenticationService;
 
+    @PostMapping("/send")
+    public ResponseEntity<?> send() {
+        try {
+            String userEmail = getUserEmail();
+            FriendRequestResponseDTO.FriendRequestSendDTO friendRequestSendDTO = friendRequestService.send(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청이 완료되었습니다.", friendRequestSendDTO));
+        } catch (Exception400 e) {
+            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+        } catch (Exception500 e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
+
     // 친구 토글
     @PostMapping("/toggle/{toUserId}")
     public ResponseEntity<?> toggle(@PathVariable Long toUserId) {

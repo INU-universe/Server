@@ -74,4 +74,9 @@ public class FriendRequestResponseDTO {
             this.friendList = friendList;
         }
     }
+    @Setter
+    @Getter
+    public static class FriendRequestSendDTO {
+        private String FriendRequestURL;
+    }
 }
