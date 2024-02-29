@@ -12,8 +12,8 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import universe.universe.common.auth.jwt.JwtAuthenticationFilter;
-import universe.universe.common.auth.jwt.JwtAuthorizationFilter;
+import universe.universe.common.auth.jwt.filter.JwtAuthenticationFilter;
+import universe.universe.common.auth.jwt.filter.JwtAuthorizationFilter;
 import universe.universe.common.oauth2.Handler.Oauth2LoginFailureHandler;
 import universe.universe.common.oauth2.Handler.Oauth2LoginSuccessHandler;
 import universe.universe.common.oauth2.PrincipalOauth2UserService;

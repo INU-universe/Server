@@ -1,4 +1,4 @@
-package universe.universe.common.auth.jwt;
+package universe.universe.common.auth.jwt.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import universe.universe.common.auth.PrincipalDetails;
+import universe.universe.common.auth.jwt.JwtProperties;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.user.UserRepository;
 

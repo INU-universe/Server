@@ -1,4 +1,4 @@
-package universe.universe.common.auth.jwt;
+package universe.universe.common.auth.jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
