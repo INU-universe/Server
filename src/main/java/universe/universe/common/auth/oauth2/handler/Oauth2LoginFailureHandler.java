@@ -1,4 +1,4 @@
-package universe.universe.common.auth.oauth2.Handler;
+package universe.universe.common.auth.oauth2.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

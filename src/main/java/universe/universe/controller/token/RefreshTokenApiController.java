@@ -11,23 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 import universe.universe.common.exception.Exception400;
 import universe.universe.common.exception.Exception500;
 import universe.universe.common.reponse.ApiResponse;
-import universe.universe.dto.friend.FriendResponseDTO;
-import universe.universe.dto.token.TokenRequestDTO;
-import universe.universe.dto.token.TokenResponseDTO;
-import universe.universe.entitiy.token.RefreshToken;
-import universe.universe.service.token.TokenServiceImpl;
+import universe.universe.dto.token.RefreshTokenRequestDTO;
+import universe.universe.dto.token.RefreshTokenResponseDTO;
+import universe.universe.service.token.RefreshTokenServiceImpl;
 
 @RestController
 @RequestMapping("/api/token")
 @RequiredArgsConstructor
 @Slf4j
-public class TokenApiController {
-    private final TokenServiceImpl tokenService;
+public class RefreshTokenApiController {
+    private final RefreshTokenServiceImpl tokenService;
 
     @PostMapping("/getAccessToken")
-    public ResponseEntity<?> getAccessToken(@RequestBody TokenRequestDTO.TokenGetAccessTokenDTO tokenGetAccessTokenDTO) {
+    public ResponseEntity<?> getAccessToken(@RequestBody RefreshTokenRequestDTO.RefreshTokenGetAccessTokenDTO tokenGetAccessTokenDTO) {
         try {
-            TokenResponseDTO.TokenGetAccessTokenDTO getAccessToken = tokenService.getAccessToken(tokenGetAccessTokenDTO);
+            RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO getAccessToken = tokenService.getAccessToken(tokenGetAccessTokenDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "RefreshToken 발급이 완료되었습니다.", getAccessToken));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));

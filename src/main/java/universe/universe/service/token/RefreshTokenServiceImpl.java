@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import universe.universe.common.auth.jwt.provider.JwtProvider;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
-import universe.universe.dto.token.TokenRequestDTO;
-import universe.universe.dto.token.TokenResponseDTO;
+import universe.universe.dto.token.RefreshTokenRequestDTO;
+import universe.universe.dto.token.RefreshTokenResponseDTO;
 import universe.universe.entitiy.token.RefreshToken;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.token.TokenRepository;
@@ -17,22 +17,22 @@ import universe.universe.repository.user.UserRepository;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class TokenServiceImpl implements TokenService{
+public class RefreshTokenServiceImpl implements RefreshTokenService {
     final private TokenRepository tokenRepository;
     final private UserRepository userRepository;
     final private JwtProvider jwtProvider;
     @Override
-    public TokenResponseDTO.TokenGetAccessTokenDTO getAccessToken(TokenRequestDTO.TokenGetAccessTokenDTO tokenGetAccessTokenDTO) {
+    public RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO getAccessToken(RefreshTokenRequestDTO.RefreshTokenGetAccessTokenDTO tokenGetAccessTokenDTO) {
         try {
             RefreshToken findRefreshToken = getRefreshToken(tokenGetAccessTokenDTO.getRefreshToken());
             User findUser = getUserId(findRefreshToken.getUserId());
 
             String accessToken = jwtProvider.generateToken(findUser);
 
-            TokenResponseDTO.TokenGetAccessTokenDTO tokenGetAccessToken = new TokenResponseDTO.TokenGetAccessTokenDTO(accessToken, findRefreshToken.getRefreshToken());
+            RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO tokenGetAccessToken = new RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO(accessToken, findRefreshToken.getRefreshToken());
 
             return tokenGetAccessToken;
         } catch (Exception e) {

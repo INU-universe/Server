@@ -12,14 +12,17 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import universe.universe.common.auth.jwt.filter.JwtAuthenticationFilter;
 import universe.universe.common.auth.jwt.filter.JwtAuthorizationFilter;
 import universe.universe.common.config.CorsConfig;
-import universe.universe.common.auth.oauth2.Handler.Oauth2LoginFailureHandler;
-import universe.universe.common.auth.oauth2.Handler.Oauth2LoginSuccessHandler;
+import universe.universe.common.auth.oauth2.handler.Oauth2LoginFailureHandler;
+import universe.universe.common.auth.oauth2.handler.Oauth2LoginSuccessHandler;
 import universe.universe.common.auth.oauth2.PrincipalOauth2UserService;
 import universe.universe.repository.token.TokenRepository;
 import universe.universe.repository.user.UserRepository;
+import universe.universe.service.token.RefreshTokenServiceImpl;
+import universe.universe.service.token.TokenService;
 
 @Configuration
 @EnableWebSecurity // 시큐리티 활성화 -> 기본 스프링 필터체인에 등록
@@ -28,6 +31,7 @@ public class SecurityConfig {
     private final CorsConfig corsConfig;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final TokenService tokenService;
     @Value(("${jwt.secret}"))
     private String secretKey;
 
@@ -35,6 +39,7 @@ public class SecurityConfig {
     private final PrincipalOauth2UserService principalOauth2UserService;
     private final Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
     private final Oauth2LoginFailureHandler oauth2LoginFailureHandler;
+    private final LogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -60,7 +65,7 @@ public class SecurityConfig {
                         .disable() // basic 방식은 id와 pw를 보내기 떄문에 노출이 될 가능성이 크다. 그래서 bearer token 방법을 쓴다.
                 )
                 .addFilter(new JwtAuthenticationFilter(authenticationManager, tokenRepository, secretKey))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository, secretKey))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository, tokenService, secretKey))
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/swagger/index.html").permitAll()
                         .requestMatchers("/api/token/getAccessToken").permitAll()
@@ -70,7 +75,7 @@ public class SecurityConfig {
                         .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                         .requestMatchers("/api/v1/admin/**")
                         .access("hasRole('ROLE_ADMIN')")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
 
                 /** Oauth2 로그인 구현 **/
                 .oauth2Login(login -> login
@@ -78,6 +83,11 @@ public class SecurityConfig {
                         .failureHandler(oauth2LoginFailureHandler)
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                                 .userService(principalOauth2UserService))
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessHandler(logoutSuccessHandler)
+                        .deleteCookies("JSESSIONID")
                 )
 //                .formLogin(login -> login
 //                        .loginPage("/loginForm")

@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-public class TokenResponseDTO {
+public class RefreshTokenResponseDTO {
     @Setter
     @Getter
-    public static class TokenGetAccessTokenDTO {
+    public static class RefreshTokenGetAccessTokenDTO {
         private String accessToken;
         private String refreshToken;
 
-        public TokenGetAccessTokenDTO(String accessToken, String findRefreshToken) {
+        public RefreshTokenGetAccessTokenDTO(String accessToken, String findRefreshToken) {
             this.accessToken = accessToken;
             this.refreshToken = findRefreshToken;
         }
