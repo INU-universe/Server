@@ -69,7 +69,7 @@ public class SecurityConfig {
                         .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                         .requestMatchers("/api/v1/admin/**")
                         .access("hasRole('ROLE_ADMIN')")
-                        .anyRequest().permitAll())
+                        .anyRequest().authenticated())
 
                 /** Oauth2 로그인 구현 **/
                 .oauth2Login(login -> login
