@@ -1,9 +1,5 @@
 package universe.universe.controller.friend;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +10,6 @@ import universe.universe.common.exception.Exception400;
 import universe.universe.common.exception.Exception500;
 import universe.universe.common.reponse.ApiResponse;
 import universe.universe.dto.friend.FriendRequestResponseDTO;
-import universe.universe.dto.friend.FriendResponseDTO;
 import universe.universe.entitiy.user.User;
 import universe.universe.service.auth.AuthenticationService;
 import universe.universe.service.friend.FriendRequestServiceImpl;
@@ -49,19 +44,6 @@ public class FriendRequestApiController {
 
             FriendRequestResponseDTO.FriendRequestAcceptURLDTO friendRequestAcceptURLDTO = friendRequestService.acceptURL(userEmail, token);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 링크 수락이 완료되었습니다.", friendRequestAcceptURLDTO));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-        } catch (Exception500 e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-        }
-    }
-    // 친구 요청 목록 조회
-    @GetMapping("/findAll")
-    public ResponseEntity<?> findAll() {
-        try {
-            String userEmail = getUserEmail();
-            FriendRequestResponseDTO.FriendRequestFindAllDTO friendRequestFindAllDTO = friendRequestService.findAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 요청 목록 조회가 완료되었습니다.", friendRequestFindAllDTO));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -110,6 +92,19 @@ public class FriendRequestApiController {
 //            String userEmail = getUserEmail();
 //            FriendRequestResponseDTO.FriendRequestRejectDTO friendRequestRejectDTO = friendRequestService.reject(userEmail, toUserId);
 //            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청 거절이 완료되었습니다.", friendRequestRejectDTO));
+//        } catch (Exception400 e) {
+//            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+//        } catch (Exception500 e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+//        }
+//    }
+//    // 친구 요청 목록 조회
+//    @GetMapping("/findAll")
+//    public ResponseEntity<?> findAll() {
+//        try {
+//            String userEmail = getUserEmail();
+//            FriendRequestResponseDTO.FriendRequestFindAllDTO friendRequestFindAllDTO = friendRequestService.findAll(userEmail);
+//            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 요청 목록 조회가 완료되었습니다.", friendRequestFindAllDTO));
 //        } catch (Exception400 e) {
 //            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
 //        } catch (Exception500 e) {

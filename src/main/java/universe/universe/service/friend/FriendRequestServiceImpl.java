@@ -168,18 +168,17 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 //            throw new Exception500("reject fail : " + e.getMessage());
 //        }
 //    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public FriendRequestResponseDTO.FriendRequestFindAllDTO findAll(String userEmail) {
-        try {
-            User findUser = getUser(userEmail);
-            FriendRequestResponseDTO.FriendRequestFindAllDTO findFriendRequestList = friendRequestRepository.findAll(findUser.getId());
-            return findFriendRequestList;
-        } catch (Exception e) {
-            throw new Exception500("findAll fail : " + e.getMessage());
-        }
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public FriendRequestResponseDTO.FriendRequestFindAllDTO findAll(String userEmail) {
+//        try {
+//            User findUser = getUser(userEmail);
+//            FriendRequestResponseDTO.FriendRequestFindAllDTO findFriendRequestList = friendRequestRepository.findAll(findUser.getId());
+//            return findFriendRequestList;
+//        } catch (Exception e) {
+//            throw new Exception500("findAll fail : " + e.getMessage());
+//        }
+//    }
 
     private User getUser(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
