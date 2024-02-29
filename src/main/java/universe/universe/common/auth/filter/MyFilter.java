@@ -1,4 +1,4 @@
-package universe.universe.common.filter;
+package universe.universe.common.auth.filter;
 
 import jakarta.servlet.*;
 import java.io.IOException;

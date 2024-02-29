@@ -1,4 +1,4 @@
-package universe.universe.common.config;
+package universe.universe.common.auth.jwt.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

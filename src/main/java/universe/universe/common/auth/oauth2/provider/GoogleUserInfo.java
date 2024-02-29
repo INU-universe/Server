@@ -1,4 +1,4 @@
-package universe.universe.common.oauth2.provider;
+package universe.universe.common.auth.oauth2.provider;
 
 import java.util.Map;
 

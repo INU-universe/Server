@@ -1,4 +1,4 @@
-package universe.universe.common.oauth2;
+package universe.universe.common.auth.oauth2;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,8 +8,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import universe.universe.common.auth.PrincipalDetails;
-import universe.universe.common.oauth2.provider.GoogleUserInfo;
-import universe.universe.common.oauth2.provider.Oauth2UserInfo;
+import universe.universe.common.auth.oauth2.provider.GoogleUserInfo;
+import universe.universe.common.auth.oauth2.provider.Oauth2UserInfo;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.user.UserRepository;
 

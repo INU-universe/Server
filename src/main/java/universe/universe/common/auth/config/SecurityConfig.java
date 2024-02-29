@@ -1,4 +1,4 @@
-package universe.universe.common.config;
+package universe.universe.common.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,9 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import universe.universe.common.auth.jwt.filter.JwtAuthenticationFilter;
 import universe.universe.common.auth.jwt.filter.JwtAuthorizationFilter;
-import universe.universe.common.oauth2.Handler.Oauth2LoginFailureHandler;
-import universe.universe.common.oauth2.Handler.Oauth2LoginSuccessHandler;
-import universe.universe.common.oauth2.PrincipalOauth2UserService;
+import universe.universe.common.config.CorsConfig;
+import universe.universe.common.auth.oauth2.Handler.Oauth2LoginFailureHandler;
+import universe.universe.common.auth.oauth2.Handler.Oauth2LoginSuccessHandler;
+import universe.universe.common.auth.oauth2.PrincipalOauth2UserService;
 import universe.universe.repository.token.TokenRepository;
 import universe.universe.repository.user.UserRepository;
 

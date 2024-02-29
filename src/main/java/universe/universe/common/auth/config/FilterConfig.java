@@ -1,9 +1,9 @@
-package universe.universe.common.config;
+package universe.universe.common.auth.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import universe.universe.common.filter.MyFilter;
+import universe.universe.common.auth.filter.MyFilter;
 
 @Configuration
 public class FilterConfig {
