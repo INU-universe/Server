@@ -1,16 +1,20 @@
 package universe.universe.entitiy.token;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@RedisHash(value = "refreshToken", timeToLive = 14440)
 public class RefreshToken {
     @Id
     @Column(nullable = false)
     private String refreshToken;
+    private Long userId;
+
+    public RefreshToken(String refreshToken, Long userId) {
+        this.refreshToken = refreshToken;
+        this.userId = userId;
+    }
 }

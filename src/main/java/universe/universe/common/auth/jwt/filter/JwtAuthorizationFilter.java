@@ -34,7 +34,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
 
-        // header가 있는지 확인
         if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
             System.out.println("jwtHeader = " + jwtHeader);
             chain.doFilter(request, response);
@@ -43,17 +42,14 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         // JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
         String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
-        String userEmail = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(jwtToken).getClaim("userEmail").asString(); // jwtToken에서 userEmail을 꺼내온다.
+        String userEmail = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(jwtToken).getClaim("userEmail").asString();
 
         // 서명이 정상적으로 됨
         if (userEmail != null) {
             User Entity = userRepository.findByUserEmail(userEmail);
 
             PrincipalDetails principalDetails = new PrincipalDetails(Entity);
-            // JWT 토큰 서명을 통해서 서명이 정상이면 Authentication 객체를 만들어준다.
-            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities()); // 비밀번호는 일단 null로 한다. (가짜)
-
-            // 강제로 시큐리티의 세션에 접근항 Authentication 객체를 저장
+            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, principalDetails.getPassword(), principalDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);
