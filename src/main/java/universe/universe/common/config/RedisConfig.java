@@ -12,7 +12,7 @@ public class RedisConfig {
     @Value("${jwt.redis.host}")
     private String host;
 
-    @Value("${jwt.redis.post}")
+    @Value("${jwt.redis.port}")
     private int port;
 
     @Bean
