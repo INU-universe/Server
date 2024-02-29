@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class RefreshTokenServiceImpl implements RefreshTokenService {
-    final private RefreshTokenRepository tokenRepository;
+    final private RefreshTokenRepository refreshTokenRepository;
     final private UserRepository userRepository;
     final private JwtProvider jwtProvider;
     @Override
@@ -48,7 +48,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     private RefreshToken getRefreshToken(String refreshToken) {
-        Optional<RefreshToken> findRefreshToken = tokenRepository.findById(refreshToken);
+        Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findById(refreshToken);
         if(!findRefreshToken.isPresent()) {
             throw new Exception404("해당 refresh token을 찾을 수 없습니다.");
         }

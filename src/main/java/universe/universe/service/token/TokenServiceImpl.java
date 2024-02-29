@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
+import universe.universe.repository.token.RefreshTokenRepository;
 
 import java.util.Optional;
 import java.util.Set;
@@ -25,9 +26,6 @@ public class TokenServiceImpl implements TokenService {
                 String token = optionalToken.get();
                 blacklistToken(token);
                 log.error("Logout 성공");
-                for(int i=0; i< blacklistedTokens.size(); i++) {
-                    System.out.println("blackList: " + blacklistedTokens);
-                }
             } else {
                 throw new Exception404("해당 토큰을 찾을 수 없습니다.");
             }

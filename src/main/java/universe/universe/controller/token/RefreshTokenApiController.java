@@ -20,12 +20,12 @@ import universe.universe.service.token.RefreshTokenServiceImpl;
 @RequiredArgsConstructor
 @Slf4j
 public class RefreshTokenApiController {
-    private final RefreshTokenServiceImpl tokenService;
+    private final RefreshTokenServiceImpl refreshTokenService;
 
     @PostMapping("/getAccessToken")
     public ResponseEntity<?> getAccessToken(@RequestBody RefreshTokenRequestDTO.RefreshTokenGetAccessTokenDTO tokenGetAccessTokenDTO) {
         try {
-            RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO getAccessToken = tokenService.getAccessToken(tokenGetAccessTokenDTO);
+            RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO getAccessToken = refreshTokenService.getAccessToken(tokenGetAccessTokenDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "RefreshToken 발급이 완료되었습니다.", getAccessToken));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));

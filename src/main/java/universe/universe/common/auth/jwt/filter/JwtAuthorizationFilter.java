@@ -40,7 +40,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
 
         if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
-            System.out.println("jwtHeader = " + jwtHeader);
             chain.doFilter(request, response);
             return;
         }
