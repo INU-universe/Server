@@ -5,6 +5,7 @@ import lombok.Setter;
 import universe.universe.entitiy.friend.Friend;
 import universe.universe.entitiy.friend.FriendRequest;
 import universe.universe.entitiy.friend.FriendStatus;
+import universe.universe.entitiy.user.User;
 
 import java.util.List;
 
@@ -78,5 +79,15 @@ public class FriendRequestResponseDTO {
     @Getter
     public static class FriendRequestSendDTO {
         private String FriendRequestURL;
+    }
+    @Setter
+    @Getter
+    public static class FriendRequestAcceptURLDTO {
+        private Long toUserId;
+        private Long fromUserId;
+        public FriendRequestAcceptURLDTO(User fromUser, User toUser) {
+            this.toUserId = fromUser.getId();
+            this.fromUserId = toUser.getId();
+        }
     }
 }
