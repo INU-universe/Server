@@ -4,7 +4,7 @@ import universe.universe.dto.friend.FriendRequestResponseDTO;
 
 public interface FriendRequestService {
     // 친구 초대 링크 보내기
-    FriendRequestResponseDTO.FriendRequestSendDTO send(String userEmail);
+    FriendRequestResponseDTO.FriendRequestGetURLDTO getURL(String userEmail);
     // 친구 초대 링크 수락
     FriendRequestResponseDTO.FriendRequestAcceptURLDTO acceptURL(String userEmail, String token);
 

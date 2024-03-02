@@ -15,6 +15,7 @@ public class FriendResponseDTO {
     @Setter
     @Getter
     public static class FriendFindOneDTO {
+        private Long id;
         private Long friendId;
         private String friendImg;
         private String friendName;
@@ -23,7 +24,8 @@ public class FriendResponseDTO {
         private LocalDateTime schoolDate;
         public FriendFindOneDTO() {
         }
-        public FriendFindOneDTO(Long friendId, String friendImg, String friendName, FriendStatus friendStatus, UserStatus userStatus ,LocalDateTime schoolDate) {
+        public FriendFindOneDTO(Long id, Long friendId, String friendImg, String friendName, FriendStatus friendStatus, UserStatus userStatus ,LocalDateTime schoolDate) {
+            this.id = id;
             this.friendId = friendId;
             this.friendImg = friendImg;
             this.friendName = friendName;
@@ -32,6 +34,7 @@ public class FriendResponseDTO {
             this.schoolDate = schoolDate;
         }
         public FriendFindOneDTO(Friend friend) {
+            this.id = friend.getId();
             this.friendId = friend.getToUser().getId();
             this.friendImg = friend.getToUser().getUserImg();
             this.friendName = friend.getToUser().getUserName();

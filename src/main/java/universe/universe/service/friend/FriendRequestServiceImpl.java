@@ -2,8 +2,6 @@ package universe.universe.service.friend;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,10 +13,8 @@ import universe.universe.common.exception.Exception404;
 import universe.universe.common.exception.Exception500;
 import universe.universe.dto.friend.FriendRequestResponseDTO;
 import universe.universe.entitiy.friend.Friend;
-import universe.universe.entitiy.friend.FriendRequest;
 import universe.universe.entitiy.user.User;
 import universe.universe.repository.friend.FriendRepository;
-import universe.universe.repository.friend.FriendRequestRepository;
 import universe.universe.repository.user.UserRepository;
 
 import java.util.Date;
@@ -39,7 +35,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     private String secretKey;
 
     @Override
-    public FriendRequestResponseDTO.FriendRequestSendDTO send(String userEmail) {
+    public FriendRequestResponseDTO.FriendRequestGetURLDTO getURL(String userEmail) {
         try {
             User findUser = getUser(userEmail);
             String token = JWT.create()
@@ -50,7 +46,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
             String friendRequestURL = "http://localhost:8080/api/friendRequest/accept?token=" + token;
 
-            FriendRequestResponseDTO.FriendRequestSendDTO friendRequestSendDTO = new FriendRequestResponseDTO.FriendRequestSendDTO();
+            FriendRequestResponseDTO.FriendRequestGetURLDTO friendRequestSendDTO = new FriendRequestResponseDTO.FriendRequestGetURLDTO();
             friendRequestSendDTO.setFriendRequestURL(friendRequestURL);
             return friendRequestSendDTO;
         } catch (Exception e) {

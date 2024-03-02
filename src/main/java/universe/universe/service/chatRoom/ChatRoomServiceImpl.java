@@ -42,10 +42,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             requestList.add(chatRoomUserDTO);
 
             ChatRoom chatRoom = new ChatRoom();
+
             chatRoomRepository.save(chatRoom);
 
             addResponseList(requestList, responseList, chatRoom);
-
             ChatRoomResponseDTO.ChatRoomCreateDTO result = new ChatRoomResponseDTO.ChatRoomCreateDTO(chatRoom.getId(), responseList);
             return result;
         }
@@ -53,6 +53,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             throw new Exception500("create fail : " + e.getMessage());
         }
     }
+
     @Override
     public void delete(String userEmail, Long chatRoomId) {
         try {
