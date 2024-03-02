@@ -19,6 +19,7 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom {
     public FriendResponseDTO.FriendFindAllDTO findAll(Long userId) {
         List<FriendResponseDTO.FriendFindOneDTO> friendList = queryFactory
                 .select(Projections.constructor(FriendResponseDTO.FriendFindOneDTO.class,
+                        friend.id,
                         friend.toUser.id,
                         friend.toUser.userImg,
                         friend.toUser.userName,
@@ -37,6 +38,7 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom {
     public FriendResponseDTO.FriendFindInSchoolDTO findInSchool(Long userId) {
         List<FriendResponseDTO.FriendFindOneDTO> friendList = queryFactory
                 .select(Projections.constructor(FriendResponseDTO.FriendFindOneDTO.class,
+                        friend.id,
                         friend.toUser.id,
                         friend.toUser.userImg,
                         friend.toUser.userName,

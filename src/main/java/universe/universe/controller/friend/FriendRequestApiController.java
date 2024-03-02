@@ -24,7 +24,7 @@ public class FriendRequestApiController {
     @Value(("${jwt.secret}"))
     private String secretKey;
 
-    @GetMapping("/send")
+    @GetMapping("/get")
     public ResponseEntity<?> getURL() {
         try {
             String userEmail = getUserEmail();
