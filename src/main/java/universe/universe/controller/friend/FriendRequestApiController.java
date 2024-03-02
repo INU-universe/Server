@@ -24,11 +24,11 @@ public class FriendRequestApiController {
     @Value(("${jwt.secret}"))
     private String secretKey;
 
-    @PostMapping("/send")
-    public ResponseEntity<?> send() {
+    @GetMapping("/send")
+    public ResponseEntity<?> getURL() {
         try {
             String userEmail = getUserEmail();
-            FriendRequestResponseDTO.FriendRequestSendDTO friendRequestSendDTO = friendRequestService.send(userEmail);
+            FriendRequestResponseDTO.FriendRequestGetURLDTO friendRequestSendDTO = friendRequestService.getURL(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 링크 요청이 완료되었습니다.", friendRequestSendDTO));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));

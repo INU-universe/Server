@@ -2,17 +2,12 @@ package universe.universe.dto.friend;
 
 import lombok.Getter;
 import lombok.Setter;
-import universe.universe.entitiy.friend.Friend;
-import universe.universe.entitiy.friend.FriendRequest;
-import universe.universe.entitiy.friend.FriendStatus;
 import universe.universe.entitiy.user.User;
-
-import java.util.List;
 
 public class FriendRequestResponseDTO {
     @Setter
     @Getter
-    public static class FriendRequestSendDTO {
+    public static class FriendRequestGetURLDTO {
         private String FriendRequestURL;
     }
     @Setter
