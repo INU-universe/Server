@@ -14,6 +14,6 @@ public class InitApiController {
     // 자동 배포 확인
     @GetMapping
     public String init() {
-        return "init: CI/CD Success";
+        return "init: CI/CD Success1";
     }
 }
