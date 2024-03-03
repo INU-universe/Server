@@ -7,10 +7,10 @@ FROM openjdk:17
 ARG JAR_FILE=build/libs/*.jar
 
 # jar 파일 복제
-COPY build/libs/*.jar spring-base.jar
+COPY build/libs/*.jar mung.jar
 
 # 인자 설정 부분과 jar 파일 복제 부분 합쳐서 진행해도 무방
 #COPY build/libs/*.jar app.jar
 
 # 실행 명령어
-ENTRYPOINT ["java", "-jar", "/spring-base.jar"]
+ENTRYPOINT ["java", "-jar", "/mung.jar"]
