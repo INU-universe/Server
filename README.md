@@ -108,4 +108,9 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
   - 친구 삭제 POST (/delete/{toUserId})
   - 친한 친구 토글 POST (/toggle/{toUserId})
 
+## 📌 참고 자료
+- 도커 참고 자료
+  - https://devfoxstar.github.io/java/springboot-docker-ec2-deploy/
+  - https://ppaksang.tistory.com/17
+     
 ---
