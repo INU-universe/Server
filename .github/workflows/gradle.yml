@@ -50,18 +50,16 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # 1. 최신 이미지를 풀받습니다
-      - name: docker pull
-        run: sudo docker pull mungzogi/mung
+      - name: Application Run
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ec2-13-125-16-209.ap-northeast-2.compute.amazonaws.com
+          username: ubuntu
+          key: MIIEowIBAAKCAQEAm/JMcAKLyeC5BZ4EWNrMTW8jX25dOMSFu3LmQNEFR8WDYUOcfoweJvHleghV1qSKeTllcs9NRWLsFgPluZ5VMVKz9RiCxMedY+oisiNWhN+8Ul1KXCdxclv68CHcaLTQyXwhV2jJEVpEmkmzzyHgAa1SIx9AAIojNzc48GM6LSPwfqk9CP7KWs8J/oJd+wX+RuFVahOkxUzJbg9gQ44U2hkJjljSTCpSWmVi7AlH0By319Z70fQ1Oou93ALg16BGaO0rZMH8ne3OAA2bIDIzpz4Dq+HYclCdxB5EkVuZEMsVeq88HqPTvzkLnhh3uCGRL705VVZhlPSl1ODAz1seawIDAQABAoIBAFTdkk1uhUZSnj35VWJJh98n+TcI54BqKmDtUXK6jUYWrb2zvql7dTk6cOhtOtF5b8Yyvwuw1ttIzzPX4R+Xk8Mov7hFI30VKIjkNQd+han/3Atyq3HlIS7b8X7W3oy4wdq0S6y24J0p46WXMFwrki03djiY3AqvIiT9T2Y6icFgMMe1ehIo0gmhPc8Zlo2jWS6LORXx4B2yiXBhb7VgzqmOosuH3mDYtMgPcsWy/qLrIxQvysjJWZEQyMuhAgrWjut5e24fzg7LlV1YcT5xKjWpxlwrmjOMsLWR9vzmnVFU3fGgF0WnOH0UNtSTMJPEQ6wyGFetGw20TNmDDmqOZ1ECgYEA0w59uwpXTTD83dsTlXViLt6l1MIDSKu0ZbiXFISv2JXGJEIJw9beUa3oNArany82Oy/aLyvRMQLo9fs1L0IniOuFstmDeXv/bTvsPBy6evOMK4UkJXeh8+X06L+traBG1iuESAT1ez9sDd7c7bA3hpRsWHMEjzNo2ssmUi9O42kCgYEAvSeKxHF3M6TerFVWfuk2Zg7MzOYlWPdfnlMBGVRNHLtS/In4LP67THlhcur9K/wcko28o4a0KmEXye9rS0zBUVcSP4+1CFJKkeKSv8XFSAC8OwjYZfWO2zxPLqZDWQZlqQdyJuLGEVIqbw8WLVX0G9+Z3Apl18mQ0/nQxTGJvLMCgYEAxjkl/TWJKQaJeBT6H7VPsZWLSnetfeNGWwMzYiH8xf5lSkh7w2NbCnu7SqWnDzrYRF59HTCaGN4SznRRT0FiwEX0HDYONVswWvecuBiDTFbRn0481LO3d8rSaoccJ6YQ4bWdV8bQiCDY624VMWf/vnZIDAp6jcRLBrMmGqoz/YECgYBz2CjDgJ45ccqyDp2nohqfzIafIoBTCUV1SG6O3bNQWmVLpw/oNqXtAxWsdMBS1NeG5elW2SO0JLyV/txeRIbM0x+o79E2ZHeo+vNXIb9eBp1BJnypjQdNu5TfBBKRDjrql1XQ/OfDKeg1Fi9F2rNi8sFfIrsWuirJt+ClNF6fwwKBgHM+3pa/ZHiDQmOOFBzk8jkFCno0LTVDe8JMEIzrAJ68jdWyrD+Sffh5dBtgiehVbWKcWrMYqEH9ixwrzEpfMlPpmi6DzZgUUWEfb4xq3IACZPBiCzeIejlVYCm2BSKYIW3DJ3J0xe+bcs3boli5WyjFyYeIwIQlMordVzywnIm0
 
-      # 2. 기존의 컨테이너를 중지시킵니다
-      - name: docker stop container
-        run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
-
-      # 3. 최신 이미지를 컨테이너화하여 실행시킵니다
-      - name: docker run new container
-        run: sudo docker run --name mung --rm -d -p 8080:8080 mungzogi/mung
-
-      # 4. 미사용 이미지를 정리합니다
-      - name: delete old docker image
-        run: sudo docker system prune -f
+          script: |
+            sudo docker kill mung
+            sudo docker rm -f mung
+            sudo docker rmi mungzogi/mung
+            sudo docker pull mungzogi/mung
+            sudo docker run -p 8080:8080 -d --net mybridge --name=boot-server mungzogi/mung
