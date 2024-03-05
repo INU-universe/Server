@@ -74,7 +74,8 @@ jobs:
           cd ./src/main/resources
           
           # application.yml 파일 생성
-          mkdir ./src/main/resources
+          mkdir -p ./src/main/resources
+          
           touch ./application.yml
           
           # GitHub-Actions 에서 설정한 값을 application-database.yml 파일에 쓰기
