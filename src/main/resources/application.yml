@@ -10,10 +10,6 @@ spring:
     url: jdbc:mysql://mungdb.cn9h0errreou.ap-northeast-2.rds.amazonaws.com:3306/mung_db?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
     username: admin
     password: hhs2684021
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
 
   jpa:
     hibernate:
