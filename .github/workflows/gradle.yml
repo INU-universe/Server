@@ -112,6 +112,11 @@ jobs:
 #        with:
 #          arguments: clean bootJar
 
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew 
+          ./gradlew build
+
       ## 웹 이미지 빌드 및 도커허브에 push
       - name: web docker build and push
         run: |
