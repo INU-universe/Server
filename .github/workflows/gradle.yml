@@ -94,10 +94,15 @@ jobs:
 #        shell: bash
 
 
+#      - name: Build with Gradle
+#        run: |
+#          chmod +x gradlew
+#          ./gradlew build
+
       - name: Build with Gradle
-        run: |
-          chmod +x gradlew 
-          ./gradlew build
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: clean bootJar
 
       #          ./gradlew bootJar
       ## 웹 이미지 빌드 및 도커허브에 push
