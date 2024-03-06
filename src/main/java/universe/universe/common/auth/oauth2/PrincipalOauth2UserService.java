@@ -23,9 +23,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        System.out.println("userRequest clientRegistration : " + userRequest.getClientRegistration());
-        System.out.println("oAuth2User : " + oAuth2User);
-
         return processOAuth2User(userRequest, oAuth2User);
     }
 
@@ -39,8 +36,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         String userInfoEmail = oAuth2UserInfo.getEmail();
         String userInfoName = oAuth2UserInfo.getName();
+        String userInfoImg = oAuth2UserInfo.getImg();
+
         log.info("userInfoEmail: {}", userInfoEmail);
         log.info("userInfoName: {}", userInfoName);
+        log.info("userInfoImg: {}", userInfoImg);
 
         User user = userRepository.findByUserEmail(userInfoEmail);
         if (user != null) {
@@ -49,6 +49,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             user = User.builder()
                     .userEmail(userInfoEmail)
                     .userName(userInfoName)
+                    .userImg(userInfoImg)
                     .role("ROLE_USER")
 //                    .userPassword(null)
 //                    .provider(oAuth2UserInfo.getProvider())

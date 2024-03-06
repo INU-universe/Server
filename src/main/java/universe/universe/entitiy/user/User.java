@@ -25,7 +25,7 @@ public class User extends BaseEntity {
     private String userEmail;
     private String userPassword;
     private String userName;
-    private String userImg = "img";
+    private String userImg;
 
     /** Oauth2 Login **/
 //    private String provider;
@@ -67,10 +67,11 @@ public class User extends BaseEntity {
     }
 
     @Builder
-    public User(String userEmail, String userName, String userPassword, String role) {
+    public User(String userEmail, String userName, String userPassword, String userImg, String role) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.userPassword = userPassword;
+        this.userImg = userImg;
         this.role = role;
         this.location = new Location();
     }

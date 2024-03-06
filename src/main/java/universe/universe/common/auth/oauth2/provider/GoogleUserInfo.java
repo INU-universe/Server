@@ -21,6 +21,9 @@ public class GoogleUserInfo implements Oauth2UserInfo {
     }
 
     @Override
+    public String getImg() { return (String) attributes.get("picture"); }
+
+    @Override
     public String getEmail() {
         return (String) attributes.get("email");
     }
