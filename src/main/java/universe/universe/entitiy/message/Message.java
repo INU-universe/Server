@@ -23,4 +23,14 @@ public class Message extends BaseEntity {
     private User user;
 
     private String content;
+
+    public Message() {
+
+    }
+
+    public Message(User findUser, ChatRoom findChatRoom, String messageContent) {
+        this.user = findUser;
+        this.chatRoom = findChatRoom;
+        this.content = messageContent;
+    }
 }
