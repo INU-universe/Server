@@ -51,18 +51,20 @@ public class MessageApiController {
     }
 
     // 메세지 전체 조회
-//    @PostMapping("/findAll")
-//    public ResponseEntity<?> findAll(@RequestBody UserRequestDTO.UserUpdateDTO userUpdateDTO) {
-//        try {
-//            String userEmail = getUserEmail();
-//            UserResponseDTO.UserUpdateDTO updateUser = userService.update(userUpdateDTO, userEmail);
-//            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 수정이 완료되었습니다.", updateUser));
-//        } catch (Exception400 e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-//        } catch (Exception500 e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-//        }
-//    }
+    @GetMapping("/findAll/{chatRoomId}")
+    public ResponseEntity<?> findAll(@PathVariable Long chatRoomId) {
+        try {
+            String userEmail = getUserEmail();
+
+            MessageResponseDTO.MessageFindAllDTO findAllMessage = messageService.findAll(userEmail, chatRoomId);
+
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 조회가 완료되었습니다.", findAllMessage));
+        } catch (Exception400 e) {
+            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+        } catch (Exception500 e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
 
 
     private String getUserEmail() {

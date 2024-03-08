@@ -64,7 +64,13 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageResponseDTO.MessageFindAllDTO findAll(String userEmail, Long chatRoomId) {
         try {
-            return null;
+            User findUser = getUserEmail(userEmail);
+            ChatRoom findChatRoom = getChatRoomId(chatRoomId);
+
+            checkChatRoomRelation(findUser, findChatRoom);
+
+            MessageResponseDTO.MessageFindAllDTO messageFindAllDTO = messageRepository.findAll(chatRoomId);
+            return messageFindAllDTO;
         } catch (Exception e) {
             throw new Exception500("Message findAll fail : " + e.getMessage());
         }
