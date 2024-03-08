@@ -10,8 +10,10 @@ import universe.universe.common.exception.Exception500;
 import universe.universe.dto.message.MessageRequestDTO;
 import universe.universe.dto.message.MessageResponseDTO;
 import universe.universe.entitiy.chatRoom.ChatRoom;
+import universe.universe.entitiy.chatRoom.ChatRoomRelation;
 import universe.universe.entitiy.message.Message;
 import universe.universe.entitiy.user.User;
+import universe.universe.repository.chatRoom.ChatRoomRelationRepository;
 import universe.universe.repository.chatRoom.ChatRoomRepository;
 import universe.universe.repository.message.MessageRepository;
 import universe.universe.repository.user.UserRepository;
@@ -27,12 +29,16 @@ public class MessageServiceImpl implements MessageService {
     final private MessageRepository messageRepository;
     final private UserRepository userRepository;
     final private ChatRoomRepository chatRoomRepository;
+    final private ChatRoomRelationRepository chatRoomRelationRepository;
     @Override
-    public MessageResponseDTO.MessageSaveDTO save(MessageRequestDTO.MessageSaveDTO messageSaveDTO) {
+    public MessageResponseDTO.MessageSaveDTO save(MessageRequestDTO.MessageSaveDTO messageSaveDTO, String userEmail) {
         try {
-            User findUser = getUserId(messageSaveDTO.getUserId());
+            User findUser = getUserEmail(userEmail);
             ChatRoom findChatRoom = getChatRoomId(messageSaveDTO.getChatRoomId());
             String messageContent = messageSaveDTO.getContent();
+
+            checkChatRoomRelation(findUser, findChatRoom);
+
             Message message = new Message(findUser, findChatRoom, messageContent);
             messageRepository.save(message);
             return new MessageResponseDTO.MessageSaveDTO(message);
@@ -40,12 +46,13 @@ public class MessageServiceImpl implements MessageService {
             throw new Exception500("Message save fail : " + e.getMessage());
         }
     }
+
     @Override
     public void delete(String userEmail, Long messageId) {
         try {
             User findUser = getUserEmail(userEmail);
             Message findMessage = getMessageId(messageId);
-            if(!Objects.equals(findUser.getId(), findMessage.getId())) {
+            if(!Objects.equals(findUser.getId(), findMessage.getUser().getId())) {
                 throw new Exception400("userEmail", "회원이 맞지 않습니다.");
             }
             messageRepository.delete(findMessage);
@@ -60,6 +67,13 @@ public class MessageServiceImpl implements MessageService {
             return null;
         } catch (Exception e) {
             throw new Exception500("Message findAll fail : " + e.getMessage());
+        }
+    }
+
+    private void checkChatRoomRelation(User findUser, ChatRoom findChatRoom) {
+        Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
+        if(!findChatRoomRelation.isPresent()) {
+            throw new Exception404("해당 유저는 채팅방에서 찾을 수 없습니다.");
         }
     }
 

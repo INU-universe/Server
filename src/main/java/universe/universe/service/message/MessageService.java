@@ -5,7 +5,7 @@ import universe.universe.dto.message.MessageResponseDTO;
 
 public interface MessageService {
     // 메세지 저장
-    MessageResponseDTO.MessageSaveDTO save(MessageRequestDTO.MessageSaveDTO messageSaveDTO);
+    MessageResponseDTO.MessageSaveDTO save(MessageRequestDTO.MessageSaveDTO messageSaveDTO, String userEmail);
 
     // 메세지 삭제
     void delete(String userEmail, Long messageId);

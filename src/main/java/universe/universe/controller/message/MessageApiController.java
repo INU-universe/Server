@@ -26,7 +26,8 @@ public class MessageApiController {
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody MessageRequestDTO.MessageSaveDTO messageSaveDTO) {
         try {
-            MessageResponseDTO.MessageSaveDTO saveMessage = messageService.save(messageSaveDTO);
+            String userEmail = getUserEmail();
+            MessageResponseDTO.MessageSaveDTO saveMessage = messageService.save(messageSaveDTO, userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 저장이 완료되었습니다.", saveMessage));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));

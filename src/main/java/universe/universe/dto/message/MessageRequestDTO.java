@@ -10,7 +10,6 @@ public class MessageRequestDTO {
     @Setter
     public static class MessageSaveDTO {
         private Long chatRoomId;
-        private Long userId;
         private String content;
     }
 }
