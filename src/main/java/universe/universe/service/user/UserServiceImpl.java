@@ -49,20 +49,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail) {
-        if(!userUpdateDTO.getUserEmail().equals(userEmail)) {
-            throw new Exception400("userEmail", "회원이 맞지 않습니다.");
-        }
-
-        try {
-            User findUser = userRepository.findByUserEmail(userEmail);
-            findUser.updateUserImg(userUpdateDTO.getUserImg());
-            return new UserResponseDTO.UserUpdateDTO(findUser);
-        } catch (Exception e){
-            throw new Exception500("회원 수정 실패 : "+e.getMessage());
-        }
-    }
+//    @Override
+//    public UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail) {
+//        if(!userUpdateDTO.getUserEmail().equals(userEmail)) {
+//            throw new Exception400("userEmail", "회원이 맞지 않습니다.");
+//        }
+//
+//        try {
+//            User findUser = userRepository.findByUserEmail(userEmail);
+//            findUser.updateUserImg(userUpdateDTO.getUserImg());
+//            return new UserResponseDTO.UserUpdateDTO(findUser);
+//        } catch (Exception e){
+//            throw new Exception500("회원 수정 실패 : "+e.getMessage());
+//        }
+//    }
 
     @Override
     public UserResponseDTO.UserFindDTO find(String userEmail) {

@@ -63,19 +63,19 @@ public class FriendApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
-    // 친한 친구 토글
-    @PostMapping("/toggle/{userId}")
-    public ResponseEntity<?> toggle(@PathVariable Long userId) {
-        try {
-            String userEmail = getUserEmail();
-            FriendResponseDTO.FriendToggleDTO friendToggleDTO = friendService.toggle(userEmail, userId);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친한 친구 토글이 완료되었습니다.", friendToggleDTO));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-        } catch (Exception500 e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-        }
-    }
+//    // 친한 친구 토글
+//    @PostMapping("/toggle/{userId}")
+//    public ResponseEntity<?> toggle(@PathVariable Long userId) {
+//        try {
+//            String userEmail = getUserEmail();
+//            FriendResponseDTO.FriendToggleDTO friendToggleDTO = friendService.toggle(userEmail, userId);
+//            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친한 친구 토글이 완료되었습니다.", friendToggleDTO));
+//        } catch (Exception400 e) {
+//            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+//        } catch (Exception500 e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+//        }
+//    }
     private String getUserEmail() {
         User user = authenticationService.getCurrentAuthenticatedUser();
         String userEmail = user.getUserEmail();
