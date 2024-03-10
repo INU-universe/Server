@@ -13,6 +13,8 @@ import universe.universe.domain.user.dto.UserRequestDTO;
 import universe.universe.domain.user.dto.UserResponseDTO;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.global.exception.Exception400;
+import universe.universe.global.exception.Exception404;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -24,13 +26,13 @@ class UserServiceImplTest {
 
     @BeforeEach
     public void beforeEach() {
-
+        userRepository.deleteAll();
     }
 
     @Test
     @Transactional
-    @DisplayName("user join test")
-    void join() throws Exception {
+    @DisplayName("테스트 : 회원 가입")
+    void 회원_가입() throws Exception {
         // given
         UserRequestDTO.UserJoinDTO userJoinDTO = getUserJoinDTO();
 
@@ -49,8 +51,22 @@ class UserServiceImplTest {
 
     @Test
     @Transactional
-    @DisplayName("user delete test")
-    void delete() throws Exception {
+    @DisplayName("테스트 : 중복 회원 가입")
+    void 중복_회원_가입() throws Exception {
+        // given
+        UserRequestDTO.UserJoinDTO userJoinDTO = getUserJoinDTO();
+
+        // when
+        userService.join(userJoinDTO);
+
+        // then
+        assertThrows(Exception400.class, () -> userService.join(userJoinDTO));
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("테스트 : 회원 삭제")
+    void 회원_삭제() throws Exception {
         // given
         UserRequestDTO.UserJoinDTO userJoinDTO = getUserJoinDTO();
         userService.join(userJoinDTO);
@@ -63,8 +79,15 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("user findOne test")
-    void findOne() throws Exception {
+    @Transactional
+    @DisplayName("테스트 : 없는 회원 삭제")
+    void 없는_회원_삭제() throws Exception {
+        assertThrows(Exception400.class, () -> userService.delete("test@test.com"));
+    }
+
+    @Test
+    @DisplayName("테스트 : 회원 찾기")
+    void 회원_찾기() throws Exception {
         // given
         UserRequestDTO.UserJoinDTO userJoinDTO = getUserJoinDTO();
         userService.join(userJoinDTO);
@@ -75,6 +98,16 @@ class UserServiceImplTest {
         // then
         assertNotNull(result);
         assertEquals("test@test.com", result.getUserEmail());
+    }
+
+    @Test
+    @DisplayName("테스트 : 없는 회원 찾기")
+    void 없는_회원_찾기() throws Exception {
+        // when
+        UserResponseDTO.UserFindDTO result = userService.findOne("test@test.com");
+
+        // then
+        assertNull(result);
     }
 
     private static UserRequestDTO.UserJoinDTO getUserJoinDTO() {
