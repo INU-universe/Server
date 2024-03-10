@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition
 @Configuration
 // http://localhost:8080/swagger-ui/index.html#/
+// http://localhost:8080/swagger-ui/index.html#/
 public class SwaggerConfig {
 
     @Bean
