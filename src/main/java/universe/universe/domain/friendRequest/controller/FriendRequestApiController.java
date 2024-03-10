@@ -28,8 +28,8 @@ public class FriendRequestApiController {
     public ResponseEntity<?> getURL() {
         try {
             String userEmail = getUserEmail();
-            FriendRequestResponseDTO.FriendRequestGetURLDTO friendRequestSendDTO = friendRequestService.getURL(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 링크 요청이 완료되었습니다.", friendRequestSendDTO));
+            FriendRequestResponseDTO.FriendRequestGetURLDTO result = friendRequestService.getURL(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 링크 요청이 완료되었습니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -41,9 +41,8 @@ public class FriendRequestApiController {
     public ResponseEntity<?> acceptURL(@RequestParam("token") String token) {
         try {
             String userEmail = getUserEmail();
-
-            FriendRequestResponseDTO.FriendRequestAcceptURLDTO friendRequestAcceptURLDTO = friendRequestService.acceptURL(userEmail, token);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 링크 수락이 완료되었습니다.", friendRequestAcceptURLDTO));
+            FriendRequestResponseDTO.FriendRequestAcceptURLDTO result = friendRequestService.acceptURL(userEmail, token);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 링크 수락이 완료되었습니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {

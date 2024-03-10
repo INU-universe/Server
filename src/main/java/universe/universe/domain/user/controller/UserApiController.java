@@ -26,8 +26,8 @@ public class UserApiController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody UserRequestDTO.UserJoinDTO userJoinDTO) {
         try {
-            UserResponseDTO.UserJoinDTO joinUser = userService.join(userJoinDTO);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 가입이 완료되었습니다.", joinUser));
+            UserResponseDTO.UserJoinDTO result = userService.join(userJoinDTO);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 가입이 완료되었습니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -48,6 +48,18 @@ public class UserApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
+    @GetMapping("/find")
+    public ResponseEntity<?> find() {
+        try {
+            String userEmail = getUserEmail();
+            UserResponseDTO.UserFindDTO result = userService.find(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 조회 성공입니다.", result));
+        } catch (Exception400 e) {
+            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
+        } catch (Exception500 e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
 
 //    // 회원 수정
 //    @PostMapping("/update")
@@ -62,20 +74,6 @@ public class UserApiController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
 //        }
 //    }
-
-    @GetMapping("/find")
-    public ResponseEntity<?> find() {
-        try {
-            String userEmail = getUserEmail();
-            UserResponseDTO.UserFindDTO findUser = userService.find(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 조회 성공입니다.", findUser));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-        } catch (Exception500 e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-        }
-    }
-
 
     private String getUserEmail() {
         User user = authenticationService.getCurrentAuthenticatedUser();

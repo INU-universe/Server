@@ -28,8 +28,8 @@ public class LocationApiController {
     public ResponseEntity<?> update(@RequestBody LocationRequestDTO.LocationUpdateDTO locationUpdateDTO) {
         try {
             String userEmail = getUserEmail();
-            LocationResponseDTO.LocationUpdateDTO updateLocation = locationService.update(locationUpdateDTO, userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 변이 완료되었습니다.", updateLocation));
+            LocationResponseDTO.LocationUpdateDTO result = locationService.update(locationUpdateDTO, userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 변이 완료되었습니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -41,8 +41,8 @@ public class LocationApiController {
     public ResponseEntity<?> findOne() {
         try {
             String userEmail = getUserEmail();
-            LocationResponseDTO.LocationFindOneDTO findLocation = locationService.findOne(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", findLocation));
+            LocationResponseDTO.LocationFindOneDTO result = locationService.findOne(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -53,8 +53,8 @@ public class LocationApiController {
     public ResponseEntity<?> notFavoriteFindAll() {
         try {
             String userEmail = getUserEmail();
-            LocationResponseDTO.LocationFindAllDTO findLocationList = locationService.notFavoriteFindAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", findLocationList));
+            LocationResponseDTO.LocationFindAllDTO result = locationService.notFavoriteFindAll(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -66,8 +66,8 @@ public class LocationApiController {
     public ResponseEntity<?> favoriteFindAll() {
         try {
             String userEmail = getUserEmail();
-            LocationResponseDTO.LocationFindAllDTO findLocationList = locationService.favoriteFindAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", findLocationList));
+            LocationResponseDTO.LocationFindAllDTO result = locationService.favoriteFindAll(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "위치 조회 성공입니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {

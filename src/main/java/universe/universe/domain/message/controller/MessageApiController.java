@@ -27,8 +27,8 @@ public class MessageApiController {
     public ResponseEntity<?> save(@RequestBody MessageRequestDTO.MessageSaveDTO messageSaveDTO) {
         try {
             String userEmail = getUserEmail();
-            MessageResponseDTO.MessageSaveDTO saveMessage = messageService.save(messageSaveDTO, userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 저장이 완료되었습니다.", saveMessage));
+            MessageResponseDTO.MessageSaveDTO result = messageService.save(messageSaveDTO, userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 저장이 완료되었습니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -55,10 +55,8 @@ public class MessageApiController {
     public ResponseEntity<?> findAll(@PathVariable Long chatRoomId) {
         try {
             String userEmail = getUserEmail();
-
-            MessageResponseDTO.MessageFindAllDTO findAllMessage = messageService.findAll(userEmail, chatRoomId);
-
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 조회가 완료되었습니다.", findAllMessage));
+            MessageResponseDTO.MessageFindAllDTO result = messageService.findAll(userEmail, chatRoomId);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 조회가 완료되었습니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {

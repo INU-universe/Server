@@ -26,8 +26,8 @@ public class ChatRoomApiController {
         try {
             log.info("[ChatRoomApiController]");
             String userEmail = getUserEmail();
-            ChatRoomResponseDTO.ChatRoomCreateDTO createChatRoomRelation = chatRoomService.create(userEmail, chatRoomCreateDTO);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 생성 성공입니다.", createChatRoomRelation));
+            ChatRoomResponseDTO.ChatRoomCreateDTO result = chatRoomService.create(userEmail, chatRoomCreateDTO);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 생성 성공입니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
@@ -52,8 +52,8 @@ public class ChatRoomApiController {
     public ResponseEntity<?> findAll() {
         try {
             String userEmail = getUserEmail();
-            ChatRoomResponseDTO.ChatRoomFindAllDTO findAllChatRoomRelation = chatRoomService.findAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 조회 성공입니다.", findAllChatRoomRelation));
+            ChatRoomResponseDTO.ChatRoomFindAllDTO result = chatRoomService.findAll(userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 조회 성공입니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
