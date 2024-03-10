@@ -5,8 +5,8 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import universe.universe.domain.chatRoom.dto.ChatRoomResponseDTO;
-import universe.universe.entitiy.chatRoom.QChatRoomRelation;
-import universe.universe.entitiy.user.QUser;
+import universe.universe.domain.chatRoomRelation.entity.QChatRoomRelation;
+import universe.universe.domain.user.entity.QUser;
 
 import java.util.List;
 

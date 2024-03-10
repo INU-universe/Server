@@ -1,4 +1,4 @@
-package universe.universe.entitiy.location;
+package universe.universe.domain.location.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -8,7 +8,6 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
-import universe.universe.domain.location.entity.Location;
 
 
 /**
@@ -17,13 +16,13 @@ import universe.universe.domain.location.entity.Location;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QLocation extends EntityPathBase<Location> {
 
-    private static final long serialVersionUID = 1693994726L;
+    private static final long serialVersionUID = -812659439L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QLocation location = new QLocation("location");
 
-    public final universe.universe.entitiy.base.QBaseEntity _super = new universe.universe.entitiy.base.QBaseEntity(this);
+    public final universe.universe.global.common.QBaseEntity _super = new universe.universe.global.common.QBaseEntity(this);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdTime = _super.createdTime;
@@ -37,7 +36,7 @@ public class QLocation extends EntityPathBase<Location> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedTime = _super.updatedTime;
 
-    public final universe.universe.entitiy.user.QUser user;
+    public final universe.universe.domain.user.entity.QUser user;
 
     public QLocation(String variable) {
         this(Location.class, forVariable(variable), INITS);
@@ -57,7 +56,7 @@ public class QLocation extends EntityPathBase<Location> {
 
     public QLocation(Class<? extends Location> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new universe.universe.entitiy.user.QUser(forProperty("user"), inits.get("user")) : null;
+        this.user = inits.isInitialized("user") ? new universe.universe.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

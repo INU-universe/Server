@@ -1,4 +1,4 @@
-package universe.universe.entitiy.chatRoom;
+package universe.universe.domain.chatRoomRelation.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -8,7 +8,6 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
-import universe.universe.domain.chatRoomRelation.entity.ChatRoomRelation;
 
 
 /**
@@ -17,17 +16,17 @@ import universe.universe.domain.chatRoomRelation.entity.ChatRoomRelation;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QChatRoomRelation extends EntityPathBase<ChatRoomRelation> {
 
-    private static final long serialVersionUID = 707131586L;
+    private static final long serialVersionUID = -1712461691L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QChatRoomRelation chatRoomRelation = new QChatRoomRelation("chatRoomRelation");
 
-    public final QChatRoom chatRoom;
+    public final universe.universe.domain.chatRoom.entity.QChatRoom chatRoom;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final universe.universe.entitiy.user.QUser user;
+    public final universe.universe.domain.user.entity.QUser user;
 
     public QChatRoomRelation(String variable) {
         this(ChatRoomRelation.class, forVariable(variable), INITS);
@@ -47,8 +46,8 @@ public class QChatRoomRelation extends EntityPathBase<ChatRoomRelation> {
 
     public QChatRoomRelation(Class<? extends ChatRoomRelation> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.chatRoom = inits.isInitialized("chatRoom") ? new QChatRoom(forProperty("chatRoom")) : null;
-        this.user = inits.isInitialized("user") ? new universe.universe.entitiy.user.QUser(forProperty("user"), inits.get("user")) : null;
+        this.chatRoom = inits.isInitialized("chatRoom") ? new universe.universe.domain.chatRoom.entity.QChatRoom(forProperty("chatRoom")) : null;
+        this.user = inits.isInitialized("user") ? new universe.universe.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

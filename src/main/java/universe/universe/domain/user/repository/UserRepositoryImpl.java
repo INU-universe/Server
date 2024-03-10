@@ -4,7 +4,8 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import universe.universe.domain.user.dto.UserResponseDTO;
-import static universe.universe.entitiy.user.QUser.user;
+
+import static universe.universe.domain.user.entity.QUser.user;
 
 public class UserRepositoryImpl implements UserRepositoryCustom {
     private final JPAQueryFactory queryFactory;

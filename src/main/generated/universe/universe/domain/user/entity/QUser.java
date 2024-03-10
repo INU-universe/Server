@@ -1,4 +1,4 @@
-package universe.universe.entitiy.user;
+package universe.universe.domain.user.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -8,8 +8,6 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
-import universe.universe.domain.user.entity.User;
-import universe.universe.domain.user.entity.UserStatus;
 
 
 /**
@@ -18,20 +16,20 @@ import universe.universe.domain.user.entity.UserStatus;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
-    private static final long serialVersionUID = 667347238L;
+    private static final long serialVersionUID = 22935357L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QUser user = new QUser("user");
 
-    public final universe.universe.entitiy.base.QBaseEntity _super = new universe.universe.entitiy.base.QBaseEntity(this);
+    public final universe.universe.global.common.QBaseEntity _super = new universe.universe.global.common.QBaseEntity(this);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdTime = _super.createdTime;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final universe.universe.entitiy.location.QLocation location;
+    public final universe.universe.domain.location.entity.QLocation location;
 
     public final StringPath role = createString("role");
 
@@ -68,7 +66,7 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.location = inits.isInitialized("location") ? new universe.universe.entitiy.location.QLocation(forProperty("location"), inits.get("location")) : null;
+        this.location = inits.isInitialized("location") ? new universe.universe.domain.location.entity.QLocation(forProperty("location"), inits.get("location")) : null;
     }
 
 }

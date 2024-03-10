@@ -1,4 +1,4 @@
-package universe.universe.entitiy.chatRoom;
+package universe.universe.domain.chatRoom.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import universe.universe.domain.chatRoom.entity.ChatRoom;
 
 
 /**
@@ -16,11 +15,11 @@ import universe.universe.domain.chatRoom.entity.ChatRoom;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QChatRoom extends EntityPathBase<ChatRoom> {
 
-    private static final long serialVersionUID = -459824986L;
+    private static final long serialVersionUID = 1890044493L;
 
     public static final QChatRoom chatRoom = new QChatRoom("chatRoom");
 
-    public final universe.universe.entitiy.base.QBaseEntity _super = new universe.universe.entitiy.base.QBaseEntity(this);
+    public final universe.universe.global.common.QBaseEntity _super = new universe.universe.global.common.QBaseEntity(this);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdTime = _super.createdTime;

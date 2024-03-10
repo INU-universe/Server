@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import universe.universe.common.exception.*;
 import universe.universe.global.reponse.ApiResponse;
 import universe.universe.global.exception.*;
 

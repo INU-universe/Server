@@ -5,8 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import universe.universe.domain.friend.dto.FriendResponseDTO;
 import universe.universe.domain.user.entity.UserStatus;
-
-import static universe.universe.entitiy.friend.QFriend.friend;
+import static universe.universe.domain.friend.entity.QFriend.friend;
 
 import java.util.List;
 

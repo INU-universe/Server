@@ -1,4 +1,4 @@
-package universe.universe.entitiy.base;
+package universe.universe.global.common;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import universe.universe.global.common.BaseEntity;
 
 
 /**
@@ -16,7 +15,7 @@ import universe.universe.global.common.BaseEntity;
 @Generated("com.querydsl.codegen.DefaultSupertypeSerializer")
 public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
-    private static final long serialVersionUID = 671344745L;
+    private static final long serialVersionUID = -1778597204L;
 
     public static final QBaseEntity baseEntity = new QBaseEntity("baseEntity");
 
