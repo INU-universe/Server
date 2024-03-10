@@ -67,11 +67,7 @@ class FriendRequestServiceImplTest {
         User result2 = getUser(getUserJoinDTO2());
 
         // when
-        String token = JWT.create()
-                .withSubject("accessToken")
-                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
-                .withClaim("userId", result1.getId())
-                .sign(Algorithm.HMAC512(secretKey));
+        String token = getToken(result1);
 
         friendRequestService.acceptURL(result2.getUserEmail(), token);
         Optional<Friend> findFromUserAndToUser = friendRepository.findByFromUserAndToUser(result1, result2);
@@ -89,11 +85,7 @@ class FriendRequestServiceImplTest {
         User result2 = getUser(getUserJoinDTO2());
 
         // when
-        String token = JWT.create()
-                .withSubject("accessToken")
-                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
-                .withClaim("userId", result1.getId())
-                .sign(Algorithm.HMAC512(secretKey));
+        String token = getToken(result1);
 
         friendRequestService.acceptURL(result2.getUserEmail(), token);
 
@@ -122,11 +114,7 @@ class FriendRequestServiceImplTest {
         User result2 = getUser(getUserJoinDTO2());
 
         // when
-        String token = JWT.create()
-                .withSubject("accessToken")
-                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
-                .withClaim("userId", result1.getId())
-                .sign(Algorithm.HMAC512(secretKey));
+        String token = getToken(result1);
 
         userService.delete(result1.getUserEmail());
 
@@ -143,11 +131,7 @@ class FriendRequestServiceImplTest {
         User result2 = getUser(getUserJoinDTO2());
 
         // when
-        String token = JWT.create()
-                .withSubject("accessToken")
-                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
-                .withClaim("userId", result1.getId())
-                .sign(Algorithm.HMAC512(secretKey));
+        String token = getToken(result1);
 
         userService.delete(result2.getUserEmail());
 
@@ -163,14 +147,19 @@ class FriendRequestServiceImplTest {
         User result1 = getUser(getUserJoinDTO1());
 
         // when
-        String token = JWT.create()
-                .withSubject("accessToken")
-                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
-                .withClaim("userId", result1.getId())
-                .sign(Algorithm.HMAC512(secretKey));
+        String token = getToken(result1);
 
         // then
         assertThrows(Exception500.class, () -> friendRequestService.acceptURL(result1.getUserEmail(), token));
+    }
+
+    private String getToken(User result) {
+        String token = JWT.create()
+                .withSubject("accessToken")
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
+                .withClaim("userId", result.getId())
+                .sign(Algorithm.HMAC512(secretKey));
+        return token;
     }
 
     private static UserRequestDTO.UserJoinDTO getUserJoinDTO1() {
