@@ -33,7 +33,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         try {
             List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList = chatRoomCreateDTO.getUserList();
             List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList = new ArrayList<>();
-            Long findUserId = getUser(userEmail).getId();
+            Long findUserId = getUser_Email(userEmail).getId();
 
             checkRequestList(requestList, findUserId);
 
@@ -50,35 +50,35 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             return result;
         }
         catch (Exception e) {
-            throw new Exception500("create fail : " + e.getMessage());
+            throw new Exception500("chatRoom create fail : " + e.getMessage());
         }
     }
 
     @Override
     public void delete(String userEmail, Long chatRoomId) {
         try {
-            User findUser = getUser(userEmail);
-            ChatRoom findChatRoom = getChatRoom(chatRoomId);
+            User findUser = getUser_Email(userEmail);
+            ChatRoom findChatRoom = getChatRoom_Id(chatRoomId);
             ChatRoomRelation findChatRoomRelation = getChatRoomRelation(findUser, findChatRoom);
             chatRoomRelationRepository.delete(findChatRoomRelation);
         } catch (Exception e) {
-            throw new Exception500("delete fail : " + e.getMessage());
+            throw new Exception500("chatRoom delete fail : " + e.getMessage());
         }
     }
 
     @Override
     public ChatRoomResponseDTO.ChatRoomFindAllDTO findAll(String userEmail) {
         try {
-            User findUser = getUser(userEmail);
-            ChatRoomResponseDTO.ChatRoomFindAllDTO findChatRoomRelationList = chatRoomRelationRepository.ChatRoomRelationFindAll(findUser.getId());
-            return findChatRoomRelationList;
+            User findUser = getUser_Email(userEmail);
+            ChatRoomResponseDTO.ChatRoomFindAllDTO result = chatRoomRelationRepository.ChatRoomRelationFindAll(findUser.getId());
+            return result;
         } catch (Exception e) {
-            throw new Exception500("findAll fail : " + e.getMessage());
+            throw new Exception500("chatRoom findAll fail : " + e.getMessage());
         }
     }
 
 
-    private User getUserId(Long userId) {
+    private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");
@@ -86,7 +86,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return findUser.get();
     }
 
-    private User getUser(String userEmail) {
+    private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");
@@ -94,7 +94,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return findUser;
     }
 
-    private ChatRoom getChatRoom(Long chatRoomId) {
+    private ChatRoom getChatRoom_Id(Long chatRoomId) {
         Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
         if(!findChatRoom.isPresent()) {
             throw new Exception404("해당 채팅방을 찾을 수 없습니다.");
@@ -111,7 +111,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     private void addResponseList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList, ChatRoom chatRoom) {
         for(ChatRoomRequestDTO.ChatRoomUserDTO user : requestList) {
-            User findUser = getUserId(user.getUserId());
+            User findUser = getUser_Id(user.getUserId());
             ChatRoomRelation chatRoomRelation = chatRoomRelationRepository.save(new ChatRoomRelation(findUser, chatRoom));
             responseList.add(new ChatRoomResponseDTO.ChatRoomUserDTO(chatRoomRelation));
         }

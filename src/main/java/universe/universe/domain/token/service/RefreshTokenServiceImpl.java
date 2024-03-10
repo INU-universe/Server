@@ -28,18 +28,18 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     public RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO getAccessToken(RefreshTokenRequestDTO.RefreshTokenGetAccessTokenDTO tokenGetAccessTokenDTO) {
         try {
             RefreshToken findRefreshToken = getRefreshToken(tokenGetAccessTokenDTO.getRefreshToken());
-            User findUser = getUserId(findRefreshToken.getUserId());
+            User findUser = getUser_Id(findRefreshToken.getUserId());
 
             String accessToken = jwtProvider.generateToken(findUser);
 
-            RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO tokenGetAccessToken = new RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO(accessToken, findRefreshToken.getRefreshToken());
+            RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO result = new RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO(accessToken, findRefreshToken.getRefreshToken());
 
-            return tokenGetAccessToken;
+            return result;
         } catch (Exception e) {
-            throw new Exception500("getAccessToken fail : " + e.getMessage());
+            throw new Exception500("refreshToken getAccessToken fail : " + e.getMessage());
         }
     }
-    private User getUserId(Long userId) {
+    private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");

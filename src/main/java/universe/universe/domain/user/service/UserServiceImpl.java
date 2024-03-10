@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             return new UserResponseDTO.UserJoinDTO(user);
         } catch (Exception e){
-            throw new Exception500("회원 가입 실패 : "+e.getMessage());
+            throw new Exception500("user join fail : " + e.getMessage());
         }
     }
 
@@ -45,11 +45,21 @@ public class UserServiceImpl implements UserService {
             User findUser = userRepository.findByUserEmail(userEmail);
             userRepository.delete(findUser);
         } catch (Exception e){
-            throw new Exception500("회원 탈퇴 실패 : "+e.getMessage());
+            throw new Exception500("user delete fail : " + e.getMessage());
         }
     }
 
-//    @Override
+    @Override
+    public UserResponseDTO.UserFindDTO findOne(String userEmail) {
+        try {
+            UserResponseDTO.UserFindDTO result = userRepository.findOne(userEmail);
+            return result;
+        } catch (Exception e) {
+            throw new Exception404("user findOne fail : " + e.getMessage());
+        }
+    }
+
+    //    @Override
 //    public UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail) {
 //        if(!userUpdateDTO.getUserEmail().equals(userEmail)) {
 //            throw new Exception400("userEmail", "회원이 맞지 않습니다.");
@@ -63,14 +73,4 @@ public class UserServiceImpl implements UserService {
 //            throw new Exception500("회원 수정 실패 : "+e.getMessage());
 //        }
 //    }
-
-    @Override
-    public UserResponseDTO.UserFindDTO find(String userEmail) {
-        try {
-            UserResponseDTO.UserFindDTO findUser = userRepository.findOne(userEmail);
-            return findUser;
-        } catch (Exception e) {
-            throw new Exception404("회원 조회 실패 : "+e.getMessage());
-        }
-    }
 }

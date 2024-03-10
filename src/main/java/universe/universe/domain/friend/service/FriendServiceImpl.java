@@ -24,22 +24,22 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public FriendResponseDTO.FriendFindAllDTO findAll(String userEmail) {
         try {
-            User findUser = getUser(userEmail);
-            FriendResponseDTO.FriendFindAllDTO findFriendList = friendRepository.findAll(findUser.getId());
-            return findFriendList;
+            User findUser = getUser_Email(userEmail);
+            FriendResponseDTO.FriendFindAllDTO result = friendRepository.findAll(findUser.getId());
+            return result;
         } catch (Exception e) {
-            throw new Exception500("findAll fail : " + e.getMessage());
+            throw new Exception500("friend findAll fail : " + e.getMessage());
         }
     }
 
     @Override
     public FriendResponseDTO.FriendFindInSchoolDTO findInSchool(String userEmail) {
         try {
-            User findUser = getUser(userEmail);
-            FriendResponseDTO.FriendFindInSchoolDTO friendFindInSchoolList = friendRepository.findInSchool(findUser.getId());
-            return friendFindInSchoolList;
+            User findUser = getUser_Email(userEmail);
+            FriendResponseDTO.FriendFindInSchoolDTO result = friendRepository.findInSchool(findUser.getId());
+            return result;
         } catch (Exception e) {
-            throw new Exception500("findInSchool fail : " + e.getMessage());
+            throw new Exception500("friend findInSchool fail : " + e.getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ public class FriendServiceImpl implements FriendService {
             friendRepository.delete(result.findRelation1.get());
             friendRepository.delete(result.findRelation2.get());
         } catch (Exception e) {
-            throw new Exception500("delete fail : " + e.getMessage());
+            throw new Exception500("friend delete fail : " + e.getMessage());
         }
     }
 
@@ -81,8 +81,8 @@ public class FriendServiceImpl implements FriendService {
 //    }
 
     private Result getFriend(String userEmail, Long userId) {
-        User fromUser = getUser(userEmail);
-        User toUser = getUserId(userId);
+        User fromUser = getUser_Email(userEmail);
+        User toUser = getUser_Id(userId);
         Optional<Friend> findRelation1 = friendRepository.findByFromUserAndToUser(fromUser, toUser);
         Optional<Friend> findRelation2 = friendRepository.findByFromUserAndToUser(toUser, fromUser);
 
@@ -96,14 +96,14 @@ public class FriendServiceImpl implements FriendService {
     private record Result(Optional<Friend> findRelation1, Optional<Friend> findRelation2) {
     }
 
-    private User getUser(String userEmail) {
+    private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");
         }
         return findUser;
     }
-    private User getUserId(Long userId) {
+    private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");

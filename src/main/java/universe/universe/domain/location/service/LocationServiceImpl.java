@@ -24,7 +24,7 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     public LocationResponseDTO.LocationUpdateDTO update(LocationRequestDTO.LocationUpdateDTO locationUpdateDTO, String userEmail) {
         try {
-            Location findLocation = getLocation(userEmail);
+            Location findLocation = getLocation_Email(userEmail);
             findLocation.updateLocation(locationUpdateDTO.getLatitude(), locationUpdateDTO.getLongitude());
 
             return new LocationResponseDTO.LocationUpdateDTO(findLocation);
@@ -36,10 +36,10 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationResponseDTO.LocationFindOneDTO findOne(String userEmail) {
         try {
-            Long userId = getUser(userEmail).getId();
-            LocationResponseDTO.LocationFindOneDTO findLocation = locationRepository.findOne(userId);
+            Long userId = getUser_Email(userEmail).getId();
+            LocationResponseDTO.LocationFindOneDTO result = locationRepository.findOne(userId);
 
-            return findLocation;
+            return result;
         } catch (Exception e){
             throw new Exception500("Location findOne fail : "+e.getMessage());
         }
@@ -48,9 +48,9 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationResponseDTO.LocationFindAllDTO notFavoriteFindAll(String userEmail) {
         try {
-            User findUser = getUser(userEmail);
-            LocationResponseDTO.LocationFindAllDTO locationList = locationRepository.notFavoriteFindAll(findUser.getId());
-            return locationList;
+            User findUser = getUser_Email(userEmail);
+            LocationResponseDTO.LocationFindAllDTO result = locationRepository.notFavoriteFindAll(findUser.getId());
+            return result;
         } catch (Exception e) {
             throw new Exception500("Location findAll fail : "+e.getMessage());
         }
@@ -59,15 +59,15 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationResponseDTO.LocationFindAllDTO favoriteFindAll(String userEmail) {
         try {
-            User findUser = getUser(userEmail);
-            LocationResponseDTO.LocationFindAllDTO locationList = locationRepository.favoriteFindAll(findUser.getId());
-            return locationList;
+            User findUser = getUser_Email(userEmail);
+            LocationResponseDTO.LocationFindAllDTO result = locationRepository.favoriteFindAll(findUser.getId());
+            return result;
         } catch (Exception e) {
             throw new Exception500("Location findAll fail : "+e.getMessage());
         }
     }
 
-    private User getUser(String userEmail) {
+    private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new Exception404("해당 유저를 찾을 수 없습니다. User: " + findUser);
@@ -75,8 +75,8 @@ public class LocationServiceImpl implements LocationService {
         return findUser;
     }
 
-    private Location getLocation(String userEmail) {
-        Location findLocation = getUser(userEmail).getLocation();
+    private Location getLocation_Email(String userEmail) {
+        Location findLocation = getUser_Email(userEmail).getLocation();
         return findLocation;
     }
 }

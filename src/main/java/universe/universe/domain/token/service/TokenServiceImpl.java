@@ -29,7 +29,7 @@ public class TokenServiceImpl implements TokenService {
                 throw new Exception404("해당 토큰을 찾을 수 없습니다.");
             }
         } catch (Exception e) {
-            throw new Exception500("logout fail : " + e.getMessage());
+            throw new Exception500("token logout fail : " + e.getMessage());
         }
     }
     public void blacklistToken(String token) {

@@ -33,8 +33,8 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageResponseDTO.MessageSaveDTO save(MessageRequestDTO.MessageSaveDTO messageSaveDTO, String userEmail) {
         try {
-            User findUser = getUserEmail(userEmail);
-            ChatRoom findChatRoom = getChatRoomId(messageSaveDTO.getChatRoomId());
+            User findUser = getUser_Email(userEmail);
+            ChatRoom findChatRoom = getChatRoom_Id(messageSaveDTO.getChatRoomId());
             String messageContent = messageSaveDTO.getContent();
 
             checkChatRoomRelation(findUser, findChatRoom);
@@ -50,8 +50,8 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void delete(String userEmail, Long messageId) {
         try {
-            User findUser = getUserEmail(userEmail);
-            Message findMessage = getMessageId(messageId);
+            User findUser = getUser_Email(userEmail);
+            Message findMessage = getMessage_Id(messageId);
             if(!Objects.equals(findUser.getId(), findMessage.getUser().getId())) {
                 throw new Exception400("userEmail", "회원이 맞지 않습니다.");
             }
@@ -64,13 +64,13 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageResponseDTO.MessageFindAllDTO findAll(String userEmail, Long chatRoomId) {
         try {
-            User findUser = getUserEmail(userEmail);
-            ChatRoom findChatRoom = getChatRoomId(chatRoomId);
+            User findUser = getUser_Email(userEmail);
+            ChatRoom findChatRoom = getChatRoom_Id(chatRoomId);
 
             checkChatRoomRelation(findUser, findChatRoom);
 
-            MessageResponseDTO.MessageFindAllDTO messageFindAllDTO = messageRepository.findAll(chatRoomId);
-            return messageFindAllDTO;
+            MessageResponseDTO.MessageFindAllDTO result = messageRepository.findAll(chatRoomId);
+            return result;
         } catch (Exception e) {
             throw new Exception500("Message findAll fail : " + e.getMessage());
         }
@@ -83,28 +83,28 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
-    private Message getMessageId(Long messageId) {
+    private Message getMessage_Id(Long messageId) {
         Optional<Message> findMessage = messageRepository.findById(messageId);
         if(!findMessage.isPresent()) {
             throw new Exception404("해당 메세지를 찾을 수 없습니다.");
         }
         return findMessage.get();
     }
-    private ChatRoom getChatRoomId(Long chatRoomId) {
+    private ChatRoom getChatRoom_Id(Long chatRoomId) {
         Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
         if(!findChatRoom.isPresent()) {
             throw new Exception404("해당 채팅방을 찾을 수 없습니다.");
         }
         return findChatRoom.get();
     }
-    private User getUserEmail(String userEmail) {
+    private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");
         }
         return findUser;
     }
-    private User getUserId(Long userId) {
+    private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");

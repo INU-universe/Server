@@ -37,7 +37,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public FriendRequestResponseDTO.FriendRequestGetURLDTO getURL(String userEmail) {
         try {
-            User findUser = getUser(userEmail);
+            User findUser = getUser_Email(userEmail);
             String token = JWT.create()
                     .withSubject("accessToken")
                     .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
@@ -46,11 +46,11 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
             String friendRequestURL = "http://localhost:8080/api/friendRequest/accept?token=" + token;
 
-            FriendRequestResponseDTO.FriendRequestGetURLDTO friendRequestSendDTO = new FriendRequestResponseDTO.FriendRequestGetURLDTO();
-            friendRequestSendDTO.setFriendRequestURL(friendRequestURL);
-            return friendRequestSendDTO;
+            FriendRequestResponseDTO.FriendRequestGetURLDTO result = new FriendRequestResponseDTO.FriendRequestGetURLDTO();
+            result.setFriendRequestURL(friendRequestURL);
+            return result;
         } catch (Exception e) {
-            throw new Exception500("send fail : " + e.getMessage());
+            throw new Exception500("friendRequest send fail : " + e.getMessage());
         }
     }
 
@@ -58,8 +58,8 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     public FriendRequestResponseDTO.FriendRequestAcceptURLDTO acceptURL(String userEmail, String token) {
         try {
             Long fromUserId = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token).getClaim("userId").asLong();
-            User fromUser = getUserId(fromUserId);
-            User toUser = getUser(userEmail);
+            User fromUser = getUser_Id(fromUserId);
+            User toUser = getUser_Email(userEmail);
 
             Optional<Friend> friendExist = friendRepository.findByFromUserAndToUser(fromUser, toUser);
 
@@ -78,7 +78,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
                 return new FriendRequestResponseDTO.FriendRequestAcceptURLDTO(fromUser, toUser);
             }
         } catch (Exception e) {
-            throw new Exception500("acceptURL fail : " + e.getMessage());
+            throw new Exception500("friendRequest acceptURL fail : " + e.getMessage());
         }
     }
 
@@ -176,7 +176,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 //        }
 //    }
 
-    private User getUser(String userEmail) {
+    private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");
@@ -184,7 +184,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         return findUser;
     }
 
-    private User getUserId(Long userId) {
+    private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
             throw new Exception404("해당 유저를 찾을 수 없습니다.");

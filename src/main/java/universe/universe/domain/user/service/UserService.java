@@ -14,5 +14,5 @@ public interface UserService {
 //    UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail);
 
     // 회원 조회
-    UserResponseDTO.UserFindDTO find(String userEmail);
+    UserResponseDTO.UserFindDTO findOne(String userEmail);
 }

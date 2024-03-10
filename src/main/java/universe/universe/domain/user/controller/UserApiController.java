@@ -48,11 +48,11 @@ public class UserApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
-    @GetMapping("/find")
-    public ResponseEntity<?> find() {
+    @GetMapping("/findOne")
+    public ResponseEntity<?> findOne() {
         try {
             String userEmail = getUserEmail();
-            UserResponseDTO.UserFindDTO result = userService.find(userEmail);
+            UserResponseDTO.UserFindDTO result = userService.findOne(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 조회 성공입니다.", result));
         } catch (Exception400 e) {
             return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
