@@ -1,4 +1,4 @@
-package universe.universe.service.chatRoom;
+package universe.universe.domain.chatRoom.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
