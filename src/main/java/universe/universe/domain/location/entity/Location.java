@@ -15,7 +15,7 @@ public class Location extends BaseEntity {
     private double latitude;
     private double longitude;
 
-    @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "location", fetch = FetchType.LAZY, orphanRemoval = true)
     private User user;
 
     /** ======================== 메소드 ======================== **/

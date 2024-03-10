@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
+import universe.universe.domain.chatRoomRelation.entity.ChatRoomRelation;
 import universe.universe.global.common.BaseEntity;
 import universe.universe.domain.location.entity.Location;
 
