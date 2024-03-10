@@ -8,13 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.dto.chatRoom.ChatRoomRequestDTO;
-import universe.universe.dto.chatRoom.ChatRoomResponseDTO;
-import universe.universe.entitiy.user.User;
-import universe.universe.repository.user.UserRepository;
-
-import java.util.ArrayList;
-import java.util.List;
+import universe.universe.domain.chatRoom.service.ChatRoomServiceImpl;
+import universe.universe.domain.user.repository.UserRepository;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
