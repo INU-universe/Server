@@ -112,5 +112,6 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
 - 도커 참고 자료
   - https://devfoxstar.github.io/java/springboot-docker-ec2-deploy/
   - https://ppaksang.tistory.com/17
-     
+  - https://velog.io/@zvyg1023/CICD-Docker-Github-Action-Spring-Boot
+  - https://chan-it-note.tistory.com/121
 ---
