@@ -7,7 +7,7 @@ import universe.universe.domain.message.dto.MessageResponseDTO;
 
 import java.util.List;
 
-import static universe.universe.entitiy.message.QMessage.message;
+import static universe.universe.domain.message.entity.QMessage.message;
 
 public class MessageRepositoryImpl implements MessageRepositoryCustom {
     private final JPAQueryFactory queryFactory;
