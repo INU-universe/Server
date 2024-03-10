@@ -43,6 +43,9 @@ public class User extends BaseEntity {
     public void updateRole(String role) {
         this.role = role;
     }
+    public void updateUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
+    }
     public void updateUserImg(String userImg) {
         this.userImg = userImg;
     }

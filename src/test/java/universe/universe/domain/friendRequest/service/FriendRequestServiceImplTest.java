@@ -41,6 +41,7 @@ class FriendRequestServiceImplTest {
     private String secretKey;
     @BeforeEach
     public void beforeEach() {
+        friendRepository.deleteAll();
         userRepository.deleteAll();
     }
 
@@ -49,7 +50,7 @@ class FriendRequestServiceImplTest {
     @DisplayName("테스트 : 친구 요청 URL 발급")
     void 친구_요청_URL_발급() {
         // given
-        User result = getUser(getUserJoinDTO1());
+        User result = getUser(getUserJoinDTO("test1@test.com"));
 
         // when
         FriendRequestResponseDTO.FriendRequestGetURLDTO url = friendRequestService.getURL(result.getUserEmail());
@@ -63,8 +64,8 @@ class FriendRequestServiceImplTest {
     @DisplayName("테스트 : 친구 요청 URL 수락")
     void 친구_요청_URL_수락() {
         // given
-        User result1 = getUser(getUserJoinDTO1());
-        User result2 = getUser(getUserJoinDTO2());
+        User result1 = getUser(getUserJoinDTO("test1@test.com"));
+        User result2 = getUser(getUserJoinDTO("test2@test.com"));
 
         // when
         String token = getToken(result1);
@@ -81,8 +82,8 @@ class FriendRequestServiceImplTest {
     @DisplayName("테스트 : 중복 친구 요청 URL 수락")
     void 중복_친구_요청_URL_수락() {
         // given
-        User result1 = getUser(getUserJoinDTO1());
-        User result2 = getUser(getUserJoinDTO2());
+        User result1 = getUser(getUserJoinDTO("test1@test.com"));
+        User result2 = getUser(getUserJoinDTO("test2@test.com"));
 
         // when
         String token = getToken(result1);
@@ -98,8 +99,8 @@ class FriendRequestServiceImplTest {
     @DisplayName("테스트 : 친구 요청 잘못된 URL 수락 1")
     void 친구_요청_잘못된_URL_수락_1() {
         // given
-        User result1 = getUser(getUserJoinDTO1());
-        User result2 = getUser(getUserJoinDTO2());
+        User result1 = getUser(getUserJoinDTO("test1@test.com"));
+        User result2 = getUser(getUserJoinDTO("test2@test.com"));
 
         // when, then
         assertThrows(Exception500.class, () -> friendRequestService.acceptURL(result2.getUserEmail(), "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZWZyZXNoVG9rZW4iLCJyb2xlIjoiUk9MRV9VU0VSIiwidXNlckVtYWlsIjoidGVzdDJAdGVzdC5jb20iLCJleHAiOjE3MTA2ODEzNDJ9.opbzs2aDn9y-zbxIoL8mxvdbGxV30Z7jGXgtfTX2hlGdDDOPi75uY_-r1XondAf0jMVP5fUmCg3cXGCeFivYQw"));
@@ -110,8 +111,8 @@ class FriendRequestServiceImplTest {
     @DisplayName("테스트 : 친구 요청 잘못된 URL 수락 2")
     void 친구_요청_잘못된_URL_수락_2() {
         // given
-        User result1 = getUser(getUserJoinDTO1());
-        User result2 = getUser(getUserJoinDTO2());
+        User result1 = getUser(getUserJoinDTO("test1@test.com"));
+        User result2 = getUser(getUserJoinDTO("test2@test.com"));
 
         // when
         String token = getToken(result1);
@@ -127,8 +128,8 @@ class FriendRequestServiceImplTest {
     @DisplayName("테스트 : 친구 요청 잘못된 URL 수락 3")
     void 친구_요청_잘못된_URL_수락_3() {
         // given
-        User result1 = getUser(getUserJoinDTO1());
-        User result2 = getUser(getUserJoinDTO2());
+        User result1 = getUser(getUserJoinDTO("test1@test.com"));
+        User result2 = getUser(getUserJoinDTO("test2@test.com"));
 
         // when
         String token = getToken(result1);
@@ -144,7 +145,7 @@ class FriendRequestServiceImplTest {
     @DisplayName("테스트 : 친구 요청 잘못된 URL 수락 4")
     void 친구_요청_잘못된_URL_수락_4() {
         // given
-        User result1 = getUser(getUserJoinDTO1());
+        User result1 = getUser(getUserJoinDTO("test1@test.com"));
 
         // when
         String token = getToken(result1);
@@ -152,7 +153,6 @@ class FriendRequestServiceImplTest {
         // then
         assertThrows(Exception500.class, () -> friendRequestService.acceptURL(result1.getUserEmail(), token));
     }
-
     private String getToken(User result) {
         String token = JWT.create()
                 .withSubject("accessToken")
@@ -162,15 +162,9 @@ class FriendRequestServiceImplTest {
         return token;
     }
 
-    private static UserRequestDTO.UserJoinDTO getUserJoinDTO1() {
+    private static UserRequestDTO.UserJoinDTO getUserJoinDTO(String userEmail) {
         UserRequestDTO.UserJoinDTO userJoinDTO = new UserRequestDTO.UserJoinDTO();
-        userJoinDTO.setUserEmail("test1@test.com");
-        userJoinDTO.setUserPassword("1234");
-        return userJoinDTO;
-    }
-    private static UserRequestDTO.UserJoinDTO getUserJoinDTO2() {
-        UserRequestDTO.UserJoinDTO userJoinDTO = new UserRequestDTO.UserJoinDTO();
-        userJoinDTO.setUserEmail("test2@test.com");
+        userJoinDTO.setUserEmail(userEmail);
         userJoinDTO.setUserPassword("1234");
         return userJoinDTO;
     }

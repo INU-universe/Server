@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import universe.universe.domain.friend.repository.FriendRepository;
 import universe.universe.domain.user.dto.UserRequestDTO;
 import universe.universe.domain.user.dto.UserResponseDTO;
 import universe.universe.domain.user.entity.User;
@@ -22,10 +23,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class UserServiceImplTest {
     @Autowired private UserServiceImpl userService;
+    @Autowired private FriendRepository friendRepository;
     @Autowired private UserRepository userRepository;
 
     @BeforeEach
     public void beforeEach() {
+        friendRepository.deleteAll();
         userRepository.deleteAll();
     }
 
