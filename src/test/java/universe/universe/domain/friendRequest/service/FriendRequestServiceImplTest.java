@@ -99,7 +99,6 @@ class FriendRequestServiceImplTest {
     @DisplayName("테스트 : 친구 요청 잘못된 URL 수락 1")
     void 친구_요청_잘못된_URL_수락_1() {
         // given
-        User result1 = getUser(getUserJoinDTO("test1@test.com"));
         User result2 = getUser(getUserJoinDTO("test2@test.com"));
 
         // when, then
