@@ -15,7 +15,7 @@ import universe.universe.global.auth.service.AuthenticationService;
 import universe.universe.domain.user.service.UserServiceImpl;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/v1/user/user")
 @RequiredArgsConstructor
 @Slf4j
 public class UserApiController {

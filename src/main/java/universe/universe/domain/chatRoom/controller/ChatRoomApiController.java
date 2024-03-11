@@ -15,7 +15,7 @@ import universe.universe.global.auth.service.AuthenticationService;
 import universe.universe.domain.chatRoom.service.ChatRoomServiceImpl;
 
 @RestController
-@RequestMapping("/api/chatRoom")
+@RequestMapping("/api/v1/user/chatRoom")
 @RequiredArgsConstructor
 @Slf4j
 public class ChatRoomApiController {

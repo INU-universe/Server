@@ -16,7 +16,7 @@ import universe.universe.domain.location.service.LocationServiceImpl;
 import universe.universe.domain.user.service.UserServiceImpl;
 
 @RestController
-@RequestMapping("/api/location")
+@RequestMapping("/api/v1/user/location")
 @RequiredArgsConstructor
 @Slf4j
 public class LocationApiController {

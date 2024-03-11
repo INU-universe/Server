@@ -14,7 +14,7 @@ import universe.universe.global.auth.service.AuthenticationService;
 import universe.universe.domain.friend.service.FriendServiceImpl;
 
 @RestController
-@RequestMapping("/api/friend")
+@RequestMapping("/api/v1/user/friend")
 @RequiredArgsConstructor
 @Slf4j
 public class FriendApiController {

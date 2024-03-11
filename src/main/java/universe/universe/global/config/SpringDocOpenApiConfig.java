@@ -1,4 +1,4 @@
-package universe.universe.global.swagger;
+package universe.universe.global.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 // http://localhost:8080/swagger-ui/index.html#/
 // http://localhost:8080/swagger-ui/index.html#/
-public class SwaggerConfig {
+public class SpringDocOpenApiConfig {
 
     @Bean
     public OpenAPI getOpenApi() {

@@ -68,13 +68,15 @@ public class SecurityConfig {
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/swagger/index.html").permitAll()
                         .requestMatchers("/api/token/getAccessToken").permitAll()
+                        .requestMatchers("/api/healthCheck").permitAll()
                         .requestMatchers("/api/v1/user/**")
                         .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                         .requestMatchers("/api/v1/manager/**")
                         .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                         .requestMatchers("/api/v1/admin/**")
                         .access("hasRole('ROLE_ADMIN')")
-                        .anyRequest().permitAll())
+//                        .anyRequest().permitAll()
+                )
 
                 /** Oauth2 로그인 구현 **/
                 .oauth2Login(login -> login

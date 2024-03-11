@@ -2,6 +2,7 @@ package universe.universe.global.common;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 public class HealthCheckApiController {
-    // 자동 배포 확인
     @GetMapping
-    public String init() {
-        return "init: CI/CD Success7";
+    public ResponseEntity<?> healthcheck() {
+        return ResponseEntity.ok().body("healthCheck 완료.");
     }
 }

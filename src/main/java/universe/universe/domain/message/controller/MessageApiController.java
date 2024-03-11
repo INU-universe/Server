@@ -15,7 +15,7 @@ import universe.universe.global.auth.service.AuthenticationService;
 import universe.universe.domain.message.service.MessageServiceImpl;
 
 @RestController
-@RequestMapping("/api/message")
+@RequestMapping("/api/v1/user/message")
 @RequiredArgsConstructor
 @Slf4j
 public class MessageApiController {
