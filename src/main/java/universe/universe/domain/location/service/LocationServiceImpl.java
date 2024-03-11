@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import universe.universe.global.exception.Exception400;
 import universe.universe.global.exception.Exception404;
 import universe.universe.global.exception.Exception500;
 import universe.universe.domain.location.dto.LocationRequestDTO;
@@ -70,13 +71,16 @@ public class LocationServiceImpl implements LocationService {
     private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
-            throw new Exception404("해당 유저를 찾을 수 없습니다. User: " + findUser);
+            throw new Exception400("userEmail", "해당 유저를 찾을 수 없습니다.");
         }
         return findUser;
     }
 
     private Location getLocation_Email(String userEmail) {
         Location findLocation = getUser_Email(userEmail).getLocation();
+        if(findLocation == null) {
+            throw new Exception400("location", "해당 위치를 찾을 수 없습니다.");
+        }
         return findLocation;
     }
 }

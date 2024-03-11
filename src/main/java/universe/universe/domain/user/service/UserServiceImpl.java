@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByUserEmail(userJoinDTO.getUserEmail())) {
             throw new Exception400("userEmail", "이미 가입된 이메일 주소입니다.");
         }
-        userJoinDTO.setUserPassword(bCryptPasswordEncoder.encode(userJoinDTO.getUserPassword()));
-
         try {
+            userJoinDTO.setUserPassword(bCryptPasswordEncoder.encode(userJoinDTO.getUserPassword()));
+
             User user = userJoinDTO.toEntity();
             userRepository.save(user);
             return new UserResponseDTO.UserJoinDTO(user);
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
             UserResponseDTO.UserFindDTO result = userRepository.findOne(userEmail);
             return result;
         } catch (Exception e) {
-            throw new Exception404("user findOne fail : " + e.getMessage());
+            throw new Exception500("user findOne fail : " + e.getMessage());
         }
     }
 
@@ -83,14 +83,14 @@ public class UserServiceImpl implements UserService {
     private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
-            throw new Exception404("해당 유저를 찾을 수 없습니다.");
+            throw new Exception400("userEmail", "해당 유저를 찾을 수 없습니다.");
         }
         return findUser;
     }
     private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
-            throw new Exception404("해당 유저를 찾을 수 없습니다.");
+            throw new Exception400("userId", "해당 유저를 찾을 수 없습니다.");
         }
         return findUser.get();
     }

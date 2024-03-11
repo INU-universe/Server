@@ -12,7 +12,7 @@ public class Exception401 extends RuntimeException {
     }
 
     public ApiResponse<?> body(){
-        return ApiResponse.FAILURE(HttpStatus.UNAUTHORIZED.value(), "unAuthorized");
+        return ApiResponse.FAILURE(HttpStatus.UNAUTHORIZED.value(), "Exception401 : UnAuthorized");
     }
 
     public HttpStatus status(){

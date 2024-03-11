@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.global.auth.jwt.JwtProperties;
+import universe.universe.global.exception.Exception400;
 import universe.universe.global.exception.Exception401;
 import universe.universe.global.exception.Exception404;
 import universe.universe.global.exception.Exception500;
@@ -179,7 +180,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
-            throw new Exception404("해당 유저를 찾을 수 없습니다.");
+            throw new Exception400("userEmail", "해당 유저를 찾을 수 없습니다.");
         }
         return findUser;
     }
@@ -187,7 +188,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
-            throw new Exception404("해당 유저를 찾을 수 없습니다.");
+            throw new Exception400("userId", "해당 유저를 찾을 수 없습니다.");
         }
         return findUser.get();
     }

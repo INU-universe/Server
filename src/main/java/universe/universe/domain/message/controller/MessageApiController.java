@@ -29,8 +29,6 @@ public class MessageApiController {
             String userEmail = getUserEmail();
             MessageResponseDTO.MessageSaveDTO result = messageService.save(messageSaveDTO, userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 저장이 완료되었습니다.", result));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
@@ -43,8 +41,6 @@ public class MessageApiController {
             String userEmail = getUserEmail();
             messageService.delete(userEmail, messageId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 삭제가 완료되었습니다."));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
@@ -57,8 +53,6 @@ public class MessageApiController {
             String userEmail = getUserEmail();
             MessageResponseDTO.MessageFindAllDTO result = messageService.findAll(userEmail, chatRoomId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "메세지 조회가 완료되었습니다.", result));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }

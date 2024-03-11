@@ -30,8 +30,6 @@ public class FriendRequestApiController {
             String userEmail = getUserEmail();
             FriendRequestResponseDTO.FriendRequestGetURLDTO result = friendRequestService.getURL(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 링크 요청이 완료되었습니다.", result));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
@@ -43,8 +41,6 @@ public class FriendRequestApiController {
             String userEmail = getUserEmail();
             FriendRequestResponseDTO.FriendRequestAcceptURLDTO result = friendRequestService.acceptURL(userEmail, token);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 링크 수락이 완료되었습니다.", result));
-        } catch (Exception400 e) {
-            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }

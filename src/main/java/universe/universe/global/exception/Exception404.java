@@ -12,7 +12,7 @@ public class Exception404 extends RuntimeException {
     }
 
     public ApiResponse<?> body(){
-        return ApiResponse.FAILURE(HttpStatus.NOT_FOUND.value(), "notFound");
+        return ApiResponse.FAILURE(HttpStatus.NOT_FOUND.value(), "Exception404 : NotFound");
     }
 
     public HttpStatus status(){

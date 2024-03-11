@@ -30,8 +30,8 @@ public class JwtUtil {
         tokenMap.put("refreshToken", refreshToken);
         response.setContentType("application/json");
 
-        log.info("Access Token : " + accessToken);
-        log.info("Refresh Token : " + refreshToken);
+//        log.info("Access Token : " + accessToken);
+//        log.info("Refresh Token : " + refreshToken);
 
         new ObjectMapper().writeValue(response.getOutputStream(), tokenMap);
     }

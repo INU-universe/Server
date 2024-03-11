@@ -12,7 +12,7 @@ public class Exception403 extends RuntimeException {
     }
 
     public ApiResponse<?> body(){
-        return ApiResponse.FAILURE(HttpStatus.FORBIDDEN.value(), "forbidden");
+        return ApiResponse.FAILURE(HttpStatus.FORBIDDEN.value(), "Exception403 : Forbidden");
     }
 
     public HttpStatus status(){

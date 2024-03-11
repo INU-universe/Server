@@ -8,7 +8,6 @@ import universe.universe.global.valid.Valid;
 // 유효성 검사 실패, 잘못된 파라메터 요청
 @Getter
 public class Exception400 extends RuntimeException {
-
     private String key;
     private String value;
 
@@ -18,9 +17,13 @@ public class Exception400 extends RuntimeException {
         this.value = value;
     }
 
+    public Exception400(String key) {
+        this.key = key;
+    }
+
     public ApiResponse<?> body(){
         Valid valid = new Valid(key, value);
-        return ApiResponse.FAILURE(HttpStatus.BAD_REQUEST.value(), "badRequest");
+        return ApiResponse.FAILURE(HttpStatus.BAD_REQUEST.value(), "Exception400 : BadRequest");
     }
 
     public HttpStatus status(){

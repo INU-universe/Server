@@ -69,6 +69,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger/index.html").permitAll()
                         .requestMatchers("/api/token/getAccessToken").permitAll()
                         .requestMatchers("/api/healthCheck").permitAll()
+                        .requestMatchers("/api/v1/user/user/join").permitAll()
                         .requestMatchers("/api/v1/user/**")
                         .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                         .requestMatchers("/api/v1/manager/**")
