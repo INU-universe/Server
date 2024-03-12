@@ -1,61 +1,90 @@
 package universe.universe.domain.chatRoom.service;
 
-import org.junit.jupiter.api.DisplayName;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-import universe.universe.domain.chatRoom.service.ChatRoomServiceImpl;
+import universe.universe.domain.friend.repository.FriendRepository;
+import universe.universe.domain.friendRequest.service.FriendRequestServiceImpl;
+import universe.universe.domain.user.dto.UserRequestDTO;
+import universe.universe.domain.user.dto.UserResponseDTO;
+import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.domain.user.service.UserServiceImpl;
+import universe.universe.global.auth.jwt.JwtProperties;
 
+import java.util.Date;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class ChatRoomServiceImplTest {
-    @Autowired private ChatRoomServiceImpl chatRoomService;
+    @Autowired private FriendRequestServiceImpl friendRequestService;
+    @Autowired private FriendRepository friendRepository;
     @Autowired private UserRepository userRepository;
+    @Autowired private UserServiceImpl userService;
+
+    @Value(("${jwt.secret}"))
+    private String secretKey;
+    @BeforeEach
+    public void beforeEach() {
+        friendRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+    @Test
+    void create() {
+        // given
+
+        // when
+
+        // then
+    }
 
     @Test
-    @Transactional
-    @DisplayName("채팅방 개설 테스트")
-    void create() {
-//        // 사용자 생성
-//        User user1 = userRepository.save(new User("test1@naver.com", "1234", "test1"));
-//        User user2 = userRepository.save(new User("test2@naver.com", "1234", "test2"));
-//        User user3 = userRepository.save(new User("test3@naver.com", "1234", "test3"));
-//
-//        // DTO 생성 및 사용자 추가
-//        ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO = new ChatRoomRequestDTO.ChatRoomCreateDTO();
-//        List<ChatRoomRequestDTO.ChatRoomUserDTO> userList = new ArrayList<>();
-//
-//        ChatRoomRequestDTO.ChatRoomUserDTO chatRoomUserDTO1 = new ChatRoomRequestDTO.ChatRoomUserDTO();
-//        chatRoomUserDTO1.setUserId(user1.getId());
-//
-//        ChatRoomRequestDTO.ChatRoomUserDTO chatRoomUserDTO2 = new ChatRoomRequestDTO.ChatRoomUserDTO();
-//        chatRoomUserDTO2.setUserId(user2.getId());
-//
-//        ChatRoomRequestDTO.ChatRoomUserDTO chatRoomUserDTO3 = new ChatRoomRequestDTO.ChatRoomUserDTO();
-//        chatRoomUserDTO3.setUserId(user3.getId());
-//
-//        userList.add(chatRoomUserDTO1);
-//        userList.add(chatRoomUserDTO2);
-//        userList.add(chatRoomUserDTO3);
-//
-//        chatRoomCreateDTO.setUserList(userList);
-//
-//        // 채팅방 생성
-//        ChatRoomResponseDTO.ChatRoomCreateDTO createChatRoomRelation = chatRoomService.create(chatRoomCreateDTO);
-//
-//        // 결과 확인
-//        System.out.println("[Start2]");
-//        System.out.println("createChatRoomRelation.getChatRoomId() = " + createChatRoomRelation.getChatRoomId());
-//        System.out.println("createChatRoomRelation.getUserList().size() = " + createChatRoomRelation.getUserList().size());
-//        for(int i=0; i<createChatRoomRelation.getUserList().size(); i++) {
-//            System.out.println("createChatRoomRelation = " + createChatRoomRelation.getUserList().get(i).getUserEmail());
-//        }
-//        System.out.println("[End2]");
+    void delete() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    @Test
+    void findAll() {
+        // given
+
+        // when
+
+        // then
+    }
+
+    private String getToken(User result) {
+        String token = JWT.create()
+                .withSubject("accessToken")
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
+                .withClaim("userId", result.getId())
+                .sign(Algorithm.HMAC512(secretKey));
+        return token;
+    }
+
+    private static UserRequestDTO.UserJoinDTO getUserJoinDTO(String userEmail) {
+        UserRequestDTO.UserJoinDTO userJoinDTO = new UserRequestDTO.UserJoinDTO();
+        userJoinDTO.setUserEmail(userEmail);
+        userJoinDTO.setUserPassword("1234");
+        return userJoinDTO;
+    }
+    private User getUser(UserRequestDTO.UserJoinDTO getUserJoinDTO) {
+        UserRequestDTO.UserJoinDTO userJoinDTO = getUserJoinDTO;
+        UserResponseDTO.UserJoinDTO result = userService.join(userJoinDTO);
+        Optional<User> findUser = userRepository.findById(result.getId());
+        return findUser.get();
     }
 }
