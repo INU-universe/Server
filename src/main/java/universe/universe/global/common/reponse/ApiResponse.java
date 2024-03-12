@@ -1,4 +1,4 @@
-package universe.universe.global.reponse;
+package universe.universe.global.common.reponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

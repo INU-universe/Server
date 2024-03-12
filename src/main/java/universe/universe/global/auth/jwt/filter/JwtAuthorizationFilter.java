@@ -14,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import universe.universe.global.auth.PrincipalDetails;
 import universe.universe.global.auth.jwt.JwtProperties;
-import universe.universe.global.exception.Exception404;
+import universe.universe.global.common.exception.Exception404;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.domain.token.service.TokenServiceImpl;

@@ -1,4 +1,4 @@
-package universe.universe.global.valid;
+package universe.universe.global.common.valid;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package universe.universe.global.config;
+package universe.universe.global.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

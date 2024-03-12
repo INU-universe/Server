@@ -1,4 +1,4 @@
-package universe.universe.global.reponse;
+package universe.universe.global.common.reponse;
 
 public enum ResponseStatus {
     SUCCESS, FAIL, ERROR

@@ -1,8 +1,8 @@
-package universe.universe.global.exception;
+package universe.universe.global.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import universe.universe.global.reponse.ApiResponse;
+import universe.universe.global.common.reponse.ApiResponse;
 
 // 서버 에러
 @Getter

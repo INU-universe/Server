@@ -1,9 +1,9 @@
-package universe.universe.global.exception;
+package universe.universe.global.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import universe.universe.global.reponse.ApiResponse;
-import universe.universe.global.valid.Valid;
+import universe.universe.global.common.reponse.ApiResponse;
+import universe.universe.global.common.valid.Valid;
 
 // 유효성 검사 실패, 잘못된 파라메터 요청
 @Getter

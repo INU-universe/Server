@@ -1,12 +1,12 @@
-package universe.universe.global.exception.advice;
+package universe.universe.global.common.advice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import universe.universe.global.reponse.ApiResponse;
-import universe.universe.global.exception.*;
+import universe.universe.global.common.exception.*;
+import universe.universe.global.common.reponse.ApiResponse;
 
 @Slf4j
 @RestControllerAdvice

@@ -14,8 +14,7 @@ import universe.universe.domain.user.dto.UserRequestDTO;
 import universe.universe.domain.user.dto.UserResponseDTO;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
-import universe.universe.global.exception.Exception400;
-import universe.universe.global.exception.Exception404;
+import universe.universe.global.common.exception.Exception400;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest

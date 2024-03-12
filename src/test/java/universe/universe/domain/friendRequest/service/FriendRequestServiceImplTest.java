@@ -21,8 +21,7 @@ import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.domain.user.service.UserServiceImpl;
 import universe.universe.global.auth.jwt.JwtProperties;
-import universe.universe.global.exception.Exception400;
-import universe.universe.global.exception.Exception500;
+import universe.universe.global.common.exception.Exception500;
 
 import java.util.Date;
 import java.util.Optional;

@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import universe.universe.global.exception.*;
-import universe.universe.global.reponse.ApiResponse;
+import universe.universe.global.common.exception.Exception500;
+import universe.universe.global.common.reponse.ApiResponse;
 import universe.universe.domain.user.dto.UserRequestDTO;
 import universe.universe.domain.user.dto.UserResponseDTO;
 import universe.universe.domain.user.entity.User;
@@ -38,7 +38,7 @@ public class UserApiController {
         try {
             String userEmail = getUserEmail();
             userService.delete(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 탈퇴가 완료되었습니다.", null));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 탈퇴가 완료되었습니다."));
         }  catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }

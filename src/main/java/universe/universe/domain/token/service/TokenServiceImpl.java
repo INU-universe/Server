@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.global.exception.Exception404;
-import universe.universe.global.exception.Exception500;
+import universe.universe.global.common.exception.Exception404;
+import universe.universe.global.common.exception.Exception500;
 
 import java.util.Optional;
 import java.util.Set;

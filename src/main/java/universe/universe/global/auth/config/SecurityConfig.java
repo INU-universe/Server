@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import universe.universe.global.auth.jwt.filter.JwtAuthenticationFilter;
 import universe.universe.global.auth.jwt.filter.JwtAuthorizationFilter;
-import universe.universe.global.config.CorsConfig;
+import universe.universe.global.common.config.CorsConfig;
 import universe.universe.global.auth.oauth2.handler.Oauth2LoginFailureHandler;
 import universe.universe.global.auth.oauth2.handler.Oauth2LoginSuccessHandler;
 import universe.universe.global.auth.oauth2.PrincipalOauth2UserService;

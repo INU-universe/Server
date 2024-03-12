@@ -1,4 +1,4 @@
-package universe.universe.global.config;
+package universe.universe.global.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

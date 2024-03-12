@@ -1,4 +1,4 @@
-package universe.universe.global.config;
+package universe.universe.global.common.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
