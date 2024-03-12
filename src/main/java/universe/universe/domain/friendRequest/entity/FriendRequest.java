@@ -25,7 +25,7 @@ public class FriendRequest extends BaseEntity {
 
 
     /** ======================== 생성자 ======================== **/
-    public FriendRequest() {
+    protected FriendRequest() {
 
     }
     public FriendRequest(User fromUser, User toUser) {

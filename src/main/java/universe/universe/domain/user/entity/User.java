@@ -58,7 +58,7 @@ public class User extends BaseEntity {
     }
 
     /** ======================== 생성자 ======================== **/
-    public User() {
+    protected User() {
     }
 
     public User(String userEmail, String userPassword, String userName) {

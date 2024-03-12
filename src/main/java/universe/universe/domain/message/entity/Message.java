@@ -24,7 +24,7 @@ public class Message extends BaseEntity {
 
     private String content;
 
-    public Message() {
+    protected Message() {
 
     }
 

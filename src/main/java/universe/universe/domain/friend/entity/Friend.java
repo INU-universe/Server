@@ -31,7 +31,7 @@ public class Friend extends BaseEntity {
 
     /** ======================== 생성자 ======================== **/
 
-    public Friend() {
+    protected Friend() {
 
     }
 
