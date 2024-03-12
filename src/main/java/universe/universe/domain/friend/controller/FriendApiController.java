@@ -26,7 +26,7 @@ public class FriendApiController {
         try {
             String userEmail = getUserEmail();
             FriendResponseDTO.FriendFindAllDTO result = friendService.findAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 목록 조회가 완료되었습니다.", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend findAll success", result));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
@@ -38,7 +38,7 @@ public class FriendApiController {
         try {
             String userEmail = getUserEmail();
             FriendResponseDTO.FriendFindInSchoolDTO result = friendService.findInSchool(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "등교 중인 친구 목록 조회가 완료되었습니다.", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend findInSchool success", result));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
@@ -49,7 +49,7 @@ public class FriendApiController {
         try {
             String userEmail = getUserEmail();
             friendService.delete(userEmail, userId);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 삭제가 완료되었습니다."));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend delete success"));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }

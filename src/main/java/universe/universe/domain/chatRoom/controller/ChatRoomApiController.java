@@ -26,7 +26,7 @@ public class ChatRoomApiController {
             log.info("[ChatRoomApiController]");
             String userEmail = getUserEmail();
             ChatRoomResponseDTO.ChatRoomCreateDTO result = chatRoomService.create(userEmail, chatRoomCreateDTO);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 생성 성공입니다.", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "chatRoom create success", result));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
@@ -37,7 +37,7 @@ public class ChatRoomApiController {
         try {
             String userEmail = getUserEmail();
             chatRoomService.delete(userEmail, chatRoomId);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 삭제 성공입니다."));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "chatRoom delete success"));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
@@ -48,7 +48,7 @@ public class ChatRoomApiController {
         try {
             String userEmail = getUserEmail();
             ChatRoomResponseDTO.ChatRoomFindAllDTO result = chatRoomService.findAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "채팅방 조회 성공입니다.", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "chatRoom findAll success", result));
         } catch (Exception500 e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
