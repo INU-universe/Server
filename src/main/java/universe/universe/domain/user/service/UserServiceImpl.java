@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public UserResponseDTO.UserJoinDTO join(UserRequestDTO.UserJoinDTO userJoinDTO) {
+        log.info("[UserServiceImpl] join");
         if (userRepository.existsByUserEmail(userJoinDTO.getUserEmail())) {
             throw new CustomException(ErrorCode.USER_EXIST);
         }
@@ -40,6 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(String userEmail) {
+        log.info("[UserServiceImpl] delete");
         if (!userRepository.existsByUserEmail(userEmail)) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO.UserFindDTO findOne(String userEmail) {
         try {
+            log.info("[UserServiceImpl] findOne");
             UserResponseDTO.UserFindDTO result = userRepository.findOne(userEmail);
             return result;
         } catch (Exception e) {

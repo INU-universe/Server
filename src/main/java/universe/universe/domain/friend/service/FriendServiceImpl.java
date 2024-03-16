@@ -25,6 +25,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public FriendResponseDTO.FriendFindAllDTO findAll(String userEmail) {
         try {
+            log.info("[FriendServiceImpl] findAll");
             User findUser = getUser_Email(userEmail);
             FriendResponseDTO.FriendFindAllDTO result = friendRepository.findAll(findUser.getId());
             return result;
@@ -36,6 +37,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public FriendResponseDTO.FriendFindInSchoolDTO findInSchool(String userEmail) {
         try {
+            log.info("[FriendServiceImpl] findInSchool");
             User findUser = getUser_Email(userEmail);
             FriendResponseDTO.FriendFindInSchoolDTO result = friendRepository.findInSchool(findUser.getId());
             return result;
@@ -48,6 +50,7 @@ public class FriendServiceImpl implements FriendService {
     @Transactional
     public void delete(String userEmail, Long userId) {
         try {
+            log.info("[FriendServiceImpl] delete");
             Result result = getFriend(userEmail, userId);
 
             friendRepository.delete(result.findRelation1.get());

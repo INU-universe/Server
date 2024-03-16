@@ -28,6 +28,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Override
     public RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO getAccessToken(RefreshTokenRequestDTO.RefreshTokenGetAccessTokenDTO tokenGetAccessTokenDTO) {
         try {
+            log.info("[RefreshTokenServiceImpl] getAccessToken");
             RefreshToken findRefreshToken = getRefreshToken(tokenGetAccessTokenDTO.getRefreshToken());
             User findUser = getUser_Id(findRefreshToken.getUserId());
 

@@ -31,6 +31,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public ChatRoomResponseDTO.ChatRoomCreateDTO create(String userEmail, ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
         try {
+            log.info("[ChatRoomServiceImpl] create");
             List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList = chatRoomCreateDTO.getUserList();
             List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList = new ArrayList<>();
             Long findUserId = getUser_Email(userEmail).getId();
@@ -57,6 +58,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public void delete(String userEmail, Long chatRoomId) {
         try {
+            log.info("[ChatRoomServiceImpl] delete");
             User findUser = getUser_Email(userEmail);
             ChatRoom findChatRoom = getChatRoom_Id(chatRoomId);
             ChatRoomRelation findChatRoomRelation = getChatRoomRelation(findUser, findChatRoom);
@@ -69,6 +71,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public ChatRoomResponseDTO.ChatRoomFindAllDTO findAll(String userEmail) {
         try {
+            log.info("[ChatRoomServiceImpl] findAll");
             User findUser = getUser_Email(userEmail);
             ChatRoomResponseDTO.ChatRoomFindAllDTO result = chatRoomRelationRepository.ChatRoomRelationFindAll(findUser.getId());
             return result;

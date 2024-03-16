@@ -25,6 +25,7 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     public LocationResponseDTO.LocationUpdateDTO update(LocationRequestDTO.LocationUpdateDTO locationUpdateDTO, String userEmail) {
         try {
+            log.info("[LocationServiceImpl] update");
             Location findLocation = getLocation_Email(userEmail);
             findLocation.updateLocation(locationUpdateDTO.getLatitude(), locationUpdateDTO.getLongitude());
 
@@ -37,6 +38,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationResponseDTO.LocationFindOneDTO findOne(String userEmail) {
         try {
+            log.info("[LocationServiceImpl] findOne");
             Long userId = getUser_Email(userEmail).getId();
             LocationResponseDTO.LocationFindOneDTO result = locationRepository.findOne(userId);
 
@@ -49,6 +51,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationResponseDTO.LocationFindAllDTO notFavoriteFindAll(String userEmail) {
         try {
+            log.info("[LocationServiceImpl] notFavoriteFindAll");
             User findUser = getUser_Email(userEmail);
             LocationResponseDTO.LocationFindAllDTO result = locationRepository.notFavoriteFindAll(findUser.getId());
             return result;
@@ -60,6 +63,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LocationResponseDTO.LocationFindAllDTO favoriteFindAll(String userEmail) {
         try {
+            log.info("[LocationServiceImpl] favoriteFindAll");
             User findUser = getUser_Email(userEmail);
             LocationResponseDTO.LocationFindAllDTO result = locationRepository.favoriteFindAll(findUser.getId());
             return result;

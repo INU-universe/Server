@@ -20,6 +20,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public void logout(String authHeader) {
         try {
+            log.info("[TokenServiceImpl] logout");
             Optional<String> optionalToken = extractToken(authHeader);
             if (optionalToken.isPresent()) {
                 String token = optionalToken.get();

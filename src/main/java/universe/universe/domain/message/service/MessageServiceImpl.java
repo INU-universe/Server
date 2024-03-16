@@ -36,6 +36,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageResponseDTO.MessageSaveDTO save(MessageRequestDTO.MessageSaveDTO messageSaveDTO, String userEmail) {
         try {
+            log.info("[MessageServiceImpl] save");
             User findUser = getUser_Email(userEmail);
             ChatRoom findChatRoom = getChatRoom_Id(messageSaveDTO.getChatRoomId());
             String messageContent = messageSaveDTO.getContent();
@@ -53,6 +54,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void delete(String userEmail, Long messageId) {
         try {
+            log.info("[MessageServiceImpl] delete");
             User findUser = getUser_Email(userEmail);
             Message findMessage = getMessage_Id(messageId);
             if(!Objects.equals(findUser.getId(), findMessage.getUser().getId())) {
@@ -67,6 +69,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageResponseDTO.MessageFindAllDTO findAll(String userEmail, Long chatRoomId) {
         try {
+            log.info("[MessageServiceImpl] findAll");
             User findUser = getUser_Email(userEmail);
             ChatRoom findChatRoom = getChatRoom_Id(chatRoomId);
 

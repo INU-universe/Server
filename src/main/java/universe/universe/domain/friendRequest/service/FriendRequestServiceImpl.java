@@ -37,6 +37,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public FriendRequestResponseDTO.FriendRequestGetURLDTO getURL(String userEmail) {
         try {
+            log.info("[FriendRequestServiceImpl] getURL");
             User findUser = getUser_Email(userEmail);
             String token = JWT.create()
                     .withSubject("accessToken")
@@ -57,6 +58,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public FriendRequestResponseDTO.FriendRequestAcceptURLDTO acceptURL(String userEmail, String token) {
         try {
+            log.info("[FriendRequestServiceImpl] acceptURL");
             Long fromUserId = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token).getClaim("userId").asLong();
             User fromUser = getUser_Id(fromUserId);
             User toUser = getUser_Email(userEmail);
