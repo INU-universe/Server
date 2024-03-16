@@ -1,8 +1,7 @@
 # UNIverse Server 입니다🤎
 
-
 ## 🖥️ 프로젝트 소개
-MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
+UNIverse는 인천대학교 내에서 학우들끼리 위치 공유를 할 수 있는 서비스입니다. 
 <br>
 
 ## 🕰️ 개발 기간
@@ -84,29 +83,7 @@ MEGA BOX를 참고하여 만든 영화 예매 사이트입니다.
         - PostRequestDTO
 
 ## 📌 API 명세서
-- 회원 API (/api/user)
-  - 로그인 POST (/login)
-  - 회원 가입 POST (/join)
-  - 회원 탈퇴 POST (/delete)
-  - 회원 수정 POST (/update)
-- 위치 API (/api/location)
-  - 위치 업데이트 POST (/update)
-  - 단일 위치 조회 GET (/findOne)
-  - 친구 위치 전체 조회 GET (/notFavorite/findAll)
-  - 친한 친구 위치 전체 조회 GET (/favorite/findAll)
-- 채팅방 API (/api/chatRoom)
-  - 채팅방 조회 GET (/findAll)
-  - 채팅방 생성 POST (/create)
-  - 채팅방 삭제 POST  (/delete/{chatRoomId})
-- 친구 요청 API (/api/friendRequest)
-  - 친구 요청 토글 POST (/toggle/{toUserId})
-  - 친구 요청 수락 POST (/accept/{toUserId})
-  - 친구 요청 거절 POST (/reject/{toUserId})
-  - 친구 요청 조회 GET (/findAll)
-- 친구 API (/api/friend)
-  - 친구 조회 GET (/findAll)
-  - 친구 삭제 POST (/delete/{toUserId})
-  - 친한 친구 토글 POST (/toggle/{toUserId})
+https://shade-match-d08.notion.site/09776810d5cd483090f2d30614407a40?pvs=4
 
 ## 📌 참고 자료
 - 도커 참고 자료
