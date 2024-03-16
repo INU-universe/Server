@@ -36,8 +36,8 @@ public class MyExceptionAdvice {
         return new ResponseEntity<>(e.body(), e.status());
     }
 
-    @ExceptionHandler(CustomException.class)
-    public ResponseEntity<?> customException(CustomException e){ return new ResponseEntity<>(e.body(), e.status());}
+//    @ExceptionHandler(CustomException.class)
+//    public ResponseEntity<?> customException(CustomException e){ return new ResponseEntity<>(e.body(), e.status());}
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> unknownServerError(Exception e){
