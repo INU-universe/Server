@@ -29,6 +29,7 @@ out/
 src/main/resources/application.yml
 applicaiton.yml
 .github/workflows/gradle.yml
+src/test
 
 ### NetBeans ###
 /nbproject/private/
