@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.global.common.exception.Exception400;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.chatRoom.dto.ChatRoomRequestDTO;
 import universe.universe.domain.chatRoom.dto.ChatRoomResponseDTO;
@@ -14,6 +14,7 @@ import universe.universe.domain.user.entity.User;
 import universe.universe.domain.chatRoomRelation.repository.ChatRoomRelationRepository;
 import universe.universe.domain.chatRoom.repository.ChatRoomRepository;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.global.common.reponse.ErrorCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
-            throw new Exception400("userEmail", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser;
     }
@@ -88,7 +89,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
-            throw new Exception400("userId", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser.get();
     }
@@ -96,14 +97,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private ChatRoom getChatRoom_Id(Long chatRoomId) {
         Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
         if(!findChatRoom.isPresent()) {
-            throw new Exception400("chatRoom", "해당 채팅방을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.CHATROOM_NOT_FOUND);
         }
         return findChatRoom.get();
     }
     private ChatRoomRelation getChatRoomRelation(User findUser, ChatRoom findChatRoom) {
         Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
         if(!findChatRoomRelation.isPresent()) {
-            throw new Exception400("chatRoomRelation", "해당 관계를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.CHATROOM_RELATION_NOT_FOUND);
         }
         return findChatRoomRelation.get();
     }
@@ -119,7 +120,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private static void checkRequestList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, Long findUserId) {
         for(ChatRoomRequestDTO.ChatRoomUserDTO user : requestList) {
             if(user.getUserId() == findUserId) {
-                throw new Exception400("requestList", "본인에게 채팅은 불가합니다.");
+                throw new CustomException(ErrorCode.CHAT_UNAVAILABLE);
             }
         }
     }

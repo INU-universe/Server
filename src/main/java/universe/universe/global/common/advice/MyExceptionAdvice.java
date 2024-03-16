@@ -11,8 +11,8 @@ import universe.universe.global.common.reponse.ApiResponse;
 @Slf4j
 @RestControllerAdvice
 public class MyExceptionAdvice {
-    @ExceptionHandler(Exception400.class)
-    public ResponseEntity<?> badRequest(Exception400 e){
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<?> badRequest(CustomException e){
         return new ResponseEntity<>(e.body(), e.status());
     }
 

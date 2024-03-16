@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.global.common.exception.Exception400;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.location.dto.LocationRequestDTO;
 import universe.universe.domain.location.dto.LocationResponseDTO;
@@ -12,6 +12,7 @@ import universe.universe.domain.location.entity.Location;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.location.repository.LocationRepository;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.global.common.reponse.ErrorCode;
 
 @Service
 @Transactional(readOnly = true)
@@ -70,7 +71,7 @@ public class LocationServiceImpl implements LocationService {
     private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
-            throw new Exception400("userEmail", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser;
     }
@@ -78,7 +79,7 @@ public class LocationServiceImpl implements LocationService {
     private Location getLocation_Email(String userEmail) {
         Location findLocation = getUser_Email(userEmail).getLocation();
         if(findLocation == null) {
-            throw new Exception400("location", "해당 위치를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.LOCATION_NOT_FOUND);
         }
         return findLocation;
     }

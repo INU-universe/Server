@@ -58,7 +58,7 @@ public class FriendRequestApiController {
 //            else {
 //                return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청이 완료되었습니다.", friendRequestToggleDTO));
 //            }
-//        } catch (Exception400 e) {
+//        } catch (CustomException e) {
 //            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
 //        } catch (Exception500 e) {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -72,7 +72,7 @@ public class FriendRequestApiController {
 //            String userEmail = getUserEmail();
 //            FriendRequestResponseDTO.FriendRequestAcceptDTO friendRequestAcceptDTO = friendRequestService.accept(userEmail, toUserId);
 //            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청 수락이 완료되었습니다.", friendRequestAcceptDTO));
-//        } catch (Exception400 e) {
+//        } catch (CustomException e) {
 //            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
 //        } catch (Exception500 e) {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -86,7 +86,7 @@ public class FriendRequestApiController {
 //            String userEmail = getUserEmail();
 //            FriendRequestResponseDTO.FriendRequestRejectDTO friendRequestRejectDTO = friendRequestService.reject(userEmail, toUserId);
 //            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청 거절이 완료되었습니다.", friendRequestRejectDTO));
-//        } catch (Exception400 e) {
+//        } catch (CustomException e) {
 //            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
 //        } catch (Exception500 e) {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -99,7 +99,7 @@ public class FriendRequestApiController {
 //            String userEmail = getUserEmail();
 //            FriendRequestResponseDTO.FriendRequestFindAllDTO friendRequestFindAllDTO = friendRequestService.findAll(userEmail);
 //            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 요청 목록 조회가 완료되었습니다.", friendRequestFindAllDTO));
-//        } catch (Exception400 e) {
+//        } catch (CustomException e) {
 //            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
 //        } catch (Exception500 e) {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));

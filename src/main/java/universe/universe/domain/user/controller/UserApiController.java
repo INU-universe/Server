@@ -61,7 +61,7 @@ public class UserApiController {
 //            String userEmail = getUserEmail();
 //            UserResponseDTO.UserUpdateDTO updateUser = userService.update(userUpdateDTO, userEmail);
 //            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 수정이 완료되었습니다.", updateUser));
-//        } catch (Exception400 e) {
+//        } catch (CustomException e) {
 //            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
 //        } catch (Exception500 e) {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));

@@ -5,12 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.global.common.exception.Exception400;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.user.dto.UserRequestDTO;
 import universe.universe.domain.user.dto.UserResponseDTO;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.global.common.reponse.ErrorCode;
 
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO.UserJoinDTO join(UserRequestDTO.UserJoinDTO userJoinDTO) {
         if (userRepository.existsByUserEmail(userJoinDTO.getUserEmail())) {
-            throw new Exception400("userEmail", "이미 가입된 이메일 주소입니다.");
+            throw new CustomException(ErrorCode.USER_EXIST);
         }
         try {
             userJoinDTO.setUserPassword(bCryptPasswordEncoder.encode(userJoinDTO.getUserPassword()));
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String userEmail) {
         if (!userRepository.existsByUserEmail(userEmail)) {
-            throw new Exception400("userEmail", "존재하지 않은 이메일입니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         try {
             Long findUserId = getUser_Email(userEmail).getId();
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
     //    @Override
 //    public UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail) {
 //        if(!userUpdateDTO.getUserEmail().equals(userEmail)) {
-//            throw new Exception400("userEmail", "회원이 맞지 않습니다.");
+//            throw new CustomException("userEmail", "회원이 맞지 않습니다.");
 //        }
 //
 //        try {
@@ -78,14 +79,15 @@ public class UserServiceImpl implements UserService {
     private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
-            throw new Exception400("userEmail", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser;
     }
+
     private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
-            throw new Exception400("userId", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser.get();
     }

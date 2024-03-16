@@ -14,7 +14,7 @@ import universe.universe.domain.user.dto.UserRequestDTO;
 import universe.universe.domain.user.dto.UserResponseDTO;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
-import universe.universe.global.common.exception.Exception400;
+import universe.universe.global.common.exception.CustomException;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -62,7 +62,7 @@ class UserServiceImplTest {
         userService.join(userJoinDTO);
 
         // then
-        assertThrows(Exception400.class, () -> userService.join(userJoinDTO));
+        assertThrows(CustomException.class, () -> userService.join(userJoinDTO));
     }
 
     @Test
@@ -84,7 +84,7 @@ class UserServiceImplTest {
     @Transactional
     @DisplayName("테스트 : 없는 회원 삭제")
     void 없는_회원_삭제() throws Exception {
-        assertThrows(Exception400.class, () -> userService.delete("test@test.com"));
+        assertThrows(CustomException.class, () -> userService.delete("test@test.com"));
     }
 
     @Test

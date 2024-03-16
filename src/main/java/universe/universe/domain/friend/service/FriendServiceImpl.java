@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.global.common.exception.Exception400;
-import universe.universe.global.common.exception.Exception404;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.friend.dto.FriendResponseDTO;
 import universe.universe.domain.friend.entity.Friend;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.friend.repository.FriendRepository;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.global.common.reponse.ErrorCode;
 
 import java.util.Optional;
 
@@ -88,7 +88,7 @@ public class FriendServiceImpl implements FriendService {
         Optional<Friend> findRelation2 = friendRepository.findByFromUserAndToUser(toUser, fromUser);
 
         if(!findRelation1.isPresent() || !findRelation2.isPresent()) {
-            throw new Exception404("해당 관계를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.FRIEND_NOT_FOUND);
         }
         Result result = new Result(findRelation1, findRelation2);
         return result;
@@ -100,7 +100,7 @@ public class FriendServiceImpl implements FriendService {
     private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
-            throw new Exception400("userEmail", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser;
     }
@@ -108,7 +108,7 @@ public class FriendServiceImpl implements FriendService {
     private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
-            throw new Exception400("userId", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser.get();
     }

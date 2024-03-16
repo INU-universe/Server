@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.global.auth.jwt.provider.JwtProvider;
-import universe.universe.global.common.exception.Exception400;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.token.dto.RefreshTokenRequestDTO;
 import universe.universe.domain.token.dto.RefreshTokenResponseDTO;
@@ -13,6 +13,7 @@ import universe.universe.domain.token.entity.RefreshToken;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.token.repository.RefreshTokenRepository;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.global.common.reponse.ErrorCode;
 
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     private User getUser_Id(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
-            throw new Exception400("userId", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser.get();
     }
@@ -50,7 +51,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     private RefreshToken getRefreshToken(String refreshToken) {
         Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findById(refreshToken);
         if(!findRefreshToken.isPresent()) {
-            throw new Exception400("refreshToken", "해당 refresh token을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.REFRESH_NOT_FOUND);
         }
         return findRefreshToken.get();
     }

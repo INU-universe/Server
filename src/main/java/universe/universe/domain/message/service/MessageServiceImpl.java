@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.global.common.exception.Exception400;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.message.dto.MessageRequestDTO;
 import universe.universe.domain.message.dto.MessageResponseDTO;
@@ -16,9 +16,13 @@ import universe.universe.domain.chatRoomRelation.repository.ChatRoomRelationRepo
 import universe.universe.domain.chatRoom.repository.ChatRoomRepository;
 import universe.universe.domain.message.repository.MessageRepository;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.global.common.reponse.ErrorCode;
 
 import java.util.Objects;
 import java.util.Optional;
+
+import static universe.universe.global.common.reponse.ErrorCode.ACCESS_DENIED;
+import static universe.universe.global.common.reponse.ErrorCode.MESSAGE_NOT_FOUND;
 
 @Service
 @Transactional
@@ -52,7 +56,7 @@ public class MessageServiceImpl implements MessageService {
             User findUser = getUser_Email(userEmail);
             Message findMessage = getMessage_Id(messageId);
             if(!Objects.equals(findUser.getId(), findMessage.getUser().getId())) {
-                throw new Exception400("userEmail", "회원이 맞지 않습니다.");
+                throw new CustomException(ACCESS_DENIED);
             }
             messageRepository.delete(findMessage);
         } catch (Exception e) {
@@ -78,36 +82,29 @@ public class MessageServiceImpl implements MessageService {
     private void checkChatRoomRelation(User findUser, ChatRoom findChatRoom) {
         Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
         if(!findChatRoomRelation.isPresent()) {
-            throw new Exception400("chatRoomRelation", "해당 유저는 채팅방에서 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.CHATROOM_RELATION_NOT_FOUND);
         }
     }
 
     private Message getMessage_Id(Long messageId) {
         Optional<Message> findMessage = messageRepository.findById(messageId);
         if(!findMessage.isPresent()) {
-            throw new Exception400("messageId", "해당 메세지를 찾을 수 없습니다.");
+            throw new CustomException(MESSAGE_NOT_FOUND);
         }
         return findMessage.get();
     }
     private ChatRoom getChatRoom_Id(Long chatRoomId) {
         Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
         if(!findChatRoom.isPresent()) {
-            throw new Exception400("chatRoomId", "해당 채팅방을 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.CHATROOM_NOT_FOUND);
         }
         return findChatRoom.get();
     }
     private User getUser_Email(String userEmail) {
         User findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
-            throw new Exception400("userEmail", "해당 유저를 찾을 수 없습니다.");
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
         return findUser;
-    }
-    private User getUser_Id(Long userId) {
-        Optional<User> findUser = userRepository.findById(userId);
-        if(!findUser.isPresent()) {
-            throw new Exception400("userId", "해당 유저를 찾을 수 없습니다.");
-        }
-        return findUser.get();
     }
 }
