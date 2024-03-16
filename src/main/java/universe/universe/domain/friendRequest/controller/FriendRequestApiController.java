@@ -26,6 +26,7 @@ public class FriendRequestApiController {
     @GetMapping("/get")
     public ResponseEntity<?> getURL() {
         try {
+            log.info("[FriendRequestApiController] getURL");
             String userEmail = getUserEmail();
             FriendRequestResponseDTO.FriendRequestGetURLDTO result = friendRequestService.getURL(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friendRequest getURL success", result));
@@ -37,6 +38,7 @@ public class FriendRequestApiController {
     @GetMapping("/accept")
     public ResponseEntity<?> acceptURL(@RequestParam("token") String token) {
         try {
+            log.info("[FriendRequestApiController] acceptURL");
             String userEmail = getUserEmail();
             FriendRequestResponseDTO.FriendRequestAcceptURLDTO result = friendRequestService.acceptURL(userEmail, token);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friendRequest acceptURL success", result));

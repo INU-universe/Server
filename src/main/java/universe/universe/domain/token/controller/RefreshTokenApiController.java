@@ -24,6 +24,7 @@ public class RefreshTokenApiController {
     @PostMapping("/getAccessToken")
     public ResponseEntity<?> getAccessToken(@RequestBody RefreshTokenRequestDTO.RefreshTokenGetAccessTokenDTO tokenGetAccessTokenDTO) {
         try {
+            log.info("[RefreshTokenApiController] getAccessToken");
             RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO result = refreshTokenService.getAccessToken(tokenGetAccessTokenDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "refreshToken getAccessToken success", result));
         }  catch (Exception500 e) {

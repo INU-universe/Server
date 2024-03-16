@@ -25,6 +25,7 @@ public class MessageApiController {
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody MessageRequestDTO.MessageSaveDTO messageSaveDTO) {
         try {
+            log.info("[MessageApiController] save");
             String userEmail = getUserEmail();
             MessageResponseDTO.MessageSaveDTO result = messageService.save(messageSaveDTO, userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message save success", result));
@@ -37,6 +38,7 @@ public class MessageApiController {
     @PostMapping("/delete/{messageId}")
     public ResponseEntity<?> delete(@PathVariable Long messageId) {
         try {
+            log.info("[MessageApiController] delete");
             String userEmail = getUserEmail();
             messageService.delete(userEmail, messageId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message delete success"));
@@ -49,6 +51,7 @@ public class MessageApiController {
     @GetMapping("/findAll/{chatRoomId}")
     public ResponseEntity<?> findAll(@PathVariable Long chatRoomId) {
         try {
+            log.info("[MessageApiController] findAll");
             String userEmail = getUserEmail();
             MessageResponseDTO.MessageFindAllDTO result = messageService.findAll(userEmail, chatRoomId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message findAll success", result));

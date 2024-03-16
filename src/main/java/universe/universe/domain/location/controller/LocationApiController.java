@@ -26,6 +26,7 @@ public class LocationApiController {
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody LocationRequestDTO.LocationUpdateDTO locationUpdateDTO) {
         try {
+            log.info("[LocationApiController] update");
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationUpdateDTO result = locationService.update(locationUpdateDTO, userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location update success", result));
@@ -37,6 +38,7 @@ public class LocationApiController {
     @GetMapping("/findOne")
     public ResponseEntity<?> findOne() {
         try {
+            log.info("[LocationApiController] findOne");
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationFindOneDTO result = locationService.findOne(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location findOne success", result));
@@ -47,6 +49,7 @@ public class LocationApiController {
     @GetMapping("notFavorite/findAll")
     public ResponseEntity<?> notFavoriteFindAll() {
         try {
+            log.info("[LocationApiController] notFavoriteFindAll");
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationFindAllDTO result = locationService.notFavoriteFindAll(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location notFavoriteFindAll success", result));
@@ -58,6 +61,7 @@ public class LocationApiController {
     @GetMapping("favorite/findAll")
     public ResponseEntity<?> favoriteFindAll() {
         try {
+            log.info("[LocationApiController] favoriteFindAll");
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationFindAllDTO result = locationService.favoriteFindAll(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location favoriteFindAll success", result));

@@ -24,6 +24,7 @@ public class FriendApiController {
     @GetMapping("/findAll")
     public ResponseEntity<?> findAll() {
         try {
+            log.info("[FriendApiController] findAll");
             String userEmail = getUserEmail();
             FriendResponseDTO.FriendFindAllDTO result = friendService.findAll(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend findAll success", result));
@@ -36,6 +37,7 @@ public class FriendApiController {
     @GetMapping("/findInSchool")
     public ResponseEntity<?> findInSchool() {
         try {
+            log.info("[FriendApiController] findInSchool");
             String userEmail = getUserEmail();
             FriendResponseDTO.FriendFindInSchoolDTO result = friendService.findInSchool(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend findInSchool success", result));
@@ -47,6 +49,7 @@ public class FriendApiController {
     @PostMapping("/delete/{userId}")
     public ResponseEntity<?> delete(@PathVariable Long userId) {
         try {
+            log.info("[FriendApiController] delete");
             String userEmail = getUserEmail();
             friendService.delete(userEmail, userId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend delete success"));

@@ -23,7 +23,7 @@ public class ChatRoomApiController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
         try {
-            log.info("[ChatRoomApiController]");
+            log.info("[ChatRoomApiController] create");
             String userEmail = getUserEmail();
             ChatRoomResponseDTO.ChatRoomCreateDTO result = chatRoomService.create(userEmail, chatRoomCreateDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "chatRoom create success", result));
@@ -35,6 +35,7 @@ public class ChatRoomApiController {
     @PostMapping("/delete/{chatRoomId}")
     public ResponseEntity<?> delete(@PathVariable Long chatRoomId) {
         try {
+            log.info("[ChatRoomApiController] delete");
             String userEmail = getUserEmail();
             chatRoomService.delete(userEmail, chatRoomId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "chatRoom delete success"));
@@ -46,6 +47,7 @@ public class ChatRoomApiController {
     @GetMapping("/findAll")
     public ResponseEntity<?> findAll() {
         try {
+            log.info("[ChatRoomApiController] findAll");
             String userEmail = getUserEmail();
             ChatRoomResponseDTO.ChatRoomFindAllDTO result = chatRoomService.findAll(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "chatRoom findAll success", result));

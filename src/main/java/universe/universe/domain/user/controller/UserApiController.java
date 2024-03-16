@@ -25,6 +25,7 @@ public class UserApiController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody UserRequestDTO.UserJoinDTO userJoinDTO) {
         try {
+            log.info("[UserApiController] join");
             UserResponseDTO.UserJoinDTO result = userService.join(userJoinDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user join success", result));
         }  catch (Exception500 e) {
@@ -36,6 +37,7 @@ public class UserApiController {
     @PostMapping("/delete")
     public ResponseEntity<?> delete() {
         try {
+            log.info("[UserApiController] delete");
             String userEmail = getUserEmail();
             userService.delete(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user delete success"));
@@ -46,6 +48,7 @@ public class UserApiController {
     @GetMapping("/findOne")
     public ResponseEntity<?> findOne() {
         try {
+            log.info("[UserApiController] findOne");
             String userEmail = getUserEmail();
             UserResponseDTO.UserFindDTO result = userService.findOne(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user findOne success", result));
