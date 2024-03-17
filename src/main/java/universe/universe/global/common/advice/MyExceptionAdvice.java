@@ -12,10 +12,11 @@ import universe.universe.global.common.reponse.ApiResponse;
 @RestControllerAdvice
 public class MyExceptionAdvice {
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<?> badRequest(CustomException e){
+    public ResponseEntity<?> customException(CustomException e) { return new ResponseEntity<>(e.body(), e.status());}
+    @ExceptionHandler(Exception400.class)
+    public ResponseEntity<?> badRequest(Exception400 e){
         return new ResponseEntity<>(e.body(), e.status());
     }
-
     @ExceptionHandler(Exception401.class)
     public ResponseEntity<?> unAuthorized(Exception401 e){
         return new ResponseEntity<>(e.body(), e.status());

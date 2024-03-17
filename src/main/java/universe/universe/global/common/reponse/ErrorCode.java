@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+    /** Exception40x **/
     INVALID_TOKEN(401, "토큰이 유효하지 않습니다."),
     ACCESS_DENIED(403, "접근 권한이 없습니다."),
 
@@ -24,7 +25,10 @@ public enum ErrorCode {
     FRIEND_UNAVAILABLE(400, "본인에게 친구 추가 불가합니다."),
     AUTHENTICATION_FAILED(401, "아이디 또는 비밀번호가 옳지 않습니다."),
 
+    /** Exception500 **/
     SERVER_ERROR(500, "서버 에러입니다.");
+
+    /** Success **/
 
     private final int code;
     private final String msg;
