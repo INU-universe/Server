@@ -35,9 +35,12 @@ public class UserServiceImpl implements UserService {
             User user = userJoinDTO.toEntity();
             userRepository.save(user);
             return new UserResponseDTO.UserJoinDTO(user);
+        } catch (CustomException ce){
+            log.info("[CustomException] UserServiceImpl join");
+            throw ce;
         } catch (Exception e){
             log.info("[Exception500] UserServiceImpl join");
-            throw new Exception500("user join fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR);
         }
     }
 
@@ -51,6 +54,9 @@ public class UserServiceImpl implements UserService {
 
             Long findUserId = getUser_Email(userEmail).getId();
             userRepository.delete(findUserId);
+        } catch (CustomException ce){
+            log.info("[CustomException] UserServiceImpl delete");
+            throw ce;
         } catch (Exception e){
             log.info("[Exception500] UserServiceImpl delete");
             throw new Exception500("user delete fail : " + e.getMessage());
@@ -63,6 +69,9 @@ public class UserServiceImpl implements UserService {
             log.info("[UserServiceImpl] findOne");
             UserResponseDTO.UserFindDTO result = userRepository.findOne(userEmail);
             return result;
+        } catch (CustomException ce){
+            log.info("[CustomException] UserServiceImpl delete");
+            throw ce;
         } catch (Exception e) {
             log.info("[Exception500] UserServiceImpl findOne");
             throw new Exception500("user findOne fail : " + e.getMessage());
