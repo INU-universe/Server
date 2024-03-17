@@ -6,14 +6,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.global.common.exception.CustomException;
-import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.user.dto.UserRequestDTO;
 import universe.universe.domain.user.dto.UserResponseDTO;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.global.common.reponse.ErrorCode;
-
-import java.util.Optional;
+import universe.universe.global.common.CommonMethod;
 
 @Service
 @Transactional
@@ -21,6 +19,7 @@ import java.util.Optional;
 @Slf4j
 public class UserServiceImpl implements UserService {
     final private UserRepository userRepository;
+    final private CommonMethod commonMethod;
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public UserResponseDTO.UserJoinDTO join(UserRequestDTO.UserJoinDTO userJoinDTO) {
@@ -52,7 +51,7 @@ public class UserServiceImpl implements UserService {
                 throw new CustomException(ErrorCode.USER_NOT_FOUND);
             }
 
-            Long findUserId = getUser("email" ,userEmail).getId();
+            Long findUserId = commonMethod.getUser("email" ,userEmail).getId();
             userRepository.delete(findUserId);
         } catch (CustomException ce){
             log.info("[CustomException] UserServiceImpl delete");
@@ -92,19 +91,4 @@ public class UserServiceImpl implements UserService {
 //            throw new Exception500("회원 수정 실패 : "+e.getMessage());
 //        }
 //    }
-
-    private User getUser(String identifier, Object value) throws CustomException {
-        Optional<User> findUser = null;
-        if (identifier.equals("email")) {
-            findUser = userRepository.findByUserEmail((String) value);
-        } else if (identifier.equals("id")) {
-            findUser = userRepository.findById((Long) value);
-        }
-
-        if (findUser == null || !findUser.isPresent()) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        return findUser.get();
-    }
 }

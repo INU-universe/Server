@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.global.auth.jwt.JwtProperties;
 import universe.universe.global.common.exception.CustomException;
-import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.friendRequest.dto.FriendRequestResponseDTO;
 import universe.universe.domain.friend.entity.Friend;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.friend.repository.FriendRepository;
-import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.global.common.reponse.ErrorCode;
+import universe.universe.global.common.CommonMethod;
 
 import java.util.Date;
 import java.util.Objects;
@@ -28,9 +27,8 @@ import static universe.universe.domain.friend.entity.FriendStatus.NOT_FAVORITE;
 @RequiredArgsConstructor
 @Slf4j
 public class FriendRequestServiceImpl implements FriendRequestService {
-    final private UserRepository userRepository;
-    final private FriendRepository friendRepository;
-//    final private FriendRequestRepository friendRequestRepository;
+    private final FriendRepository friendRepository;
+    private final CommonMethod commonMethod;
     @Value(("${jwt.secret}"))
     private String secretKey;
 
@@ -38,7 +36,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     public FriendRequestResponseDTO.FriendRequestGetURLDTO getURL(String userEmail) {
         try {
             log.info("[FriendRequestServiceImpl] getURL");
-            User findUser = getUser("email", userEmail);
+            User findUser = commonMethod.getUser("email", userEmail);
             String token = JWT.create()
                     .withSubject("accessToken")
                     .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
@@ -63,8 +61,8 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         try {
             log.info("[FriendRequestServiceImpl] acceptURL");
             Long fromUserId = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token).getClaim("userId").asLong();
-            User fromUser = getUser("id", fromUserId);
-            User toUser = getUser("email", userEmail);
+            User fromUser = commonMethod.getUser("id", fromUserId);
+            User toUser = commonMethod.getUser("email", userEmail);
 
             Optional<Friend> friendExist = friendRepository.findByFromUserAndToUser(fromUser, toUser);
 
@@ -183,19 +181,4 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 //            throw new Exception500("findAll fail : " + e.getMessage());
 //        }
 //    }
-
-    private User getUser(String type, Object value) throws CustomException {
-        Optional<User> findUser = null;
-        if (type.equals("email")) {
-            findUser = userRepository.findByUserEmail((String) value);
-        } else if (type.equals("id")) {
-            findUser = userRepository.findById((Long) value);
-        }
-
-        if (findUser == null || !findUser.isPresent()) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        return findUser.get();
-    }
 }

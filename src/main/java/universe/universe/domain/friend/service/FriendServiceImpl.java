@@ -10,8 +10,8 @@ import universe.universe.domain.friend.dto.FriendResponseDTO;
 import universe.universe.domain.friend.entity.Friend;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.friend.repository.FriendRepository;
-import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.global.common.reponse.ErrorCode;
+import universe.universe.global.common.CommonMethod;
 
 import java.util.Optional;
 
@@ -20,13 +20,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class FriendServiceImpl implements FriendService {
-    final private UserRepository userRepository;
-    final private FriendRepository friendRepository;
+    private final FriendRepository friendRepository;
+    private final CommonMethod commonMethod;
     @Override
     public FriendResponseDTO.FriendFindAllDTO findAll(String userEmail) {
         try {
             log.info("[FriendServiceImpl] findAll");
-            User findUser = getUser("email", userEmail);
+            User findUser = commonMethod.getUser("email", userEmail);
             FriendResponseDTO.FriendFindAllDTO result = friendRepository.findAll(findUser.getId());
             return result;
         } catch (CustomException ce){
@@ -42,7 +42,7 @@ public class FriendServiceImpl implements FriendService {
     public FriendResponseDTO.FriendFindInSchoolDTO findInSchool(String userEmail) {
         try {
             log.info("[FriendServiceImpl] findInSchool");
-            User findUser = getUser("email", userEmail);
+            User findUser = commonMethod.getUser("email", userEmail);
             FriendResponseDTO.FriendFindInSchoolDTO result = friendRepository.findInSchool(findUser.getId());
             return result;
         } catch (CustomException ce){
@@ -96,34 +96,19 @@ public class FriendServiceImpl implements FriendService {
 //        }
 //    }
 
-    private record Result(Optional<Friend> findRelation1, Optional<Friend> findRelation2) {
+    public record Result(Optional<Friend> findRelation1, Optional<Friend> findRelation2) {
     }
 
-    private Result getFriend(String userEmail, Long userId) throws CustomException {
-        User fromUser = getUser("email", userEmail);
-        User toUser = getUser("id", userId);
+    public FriendServiceImpl.Result getFriend(String userEmail, Long userId) throws CustomException {
+        User fromUser = commonMethod.getUser("email", userEmail);
+        User toUser = commonMethod.getUser("id", userId);
         Optional<Friend> findRelation1 = friendRepository.findByFromUserAndToUser(fromUser, toUser);
         Optional<Friend> findRelation2 = friendRepository.findByFromUserAndToUser(toUser, fromUser);
 
         if(!findRelation1.isPresent() || !findRelation2.isPresent()) {
             throw new CustomException(ErrorCode.FRIEND_NOT_FOUND);
         }
-        Result result = new Result(findRelation1, findRelation2);
+        FriendServiceImpl.Result result = new FriendServiceImpl.Result(findRelation1, findRelation2);
         return result;
-    }
-
-    private User getUser(String type, Object value) throws CustomException {
-        Optional<User> findUser = null;
-        if (type.equals("email")) {
-            findUser = userRepository.findByUserEmail((String) value);
-        } else if (type.equals("id")) {
-            findUser = userRepository.findById((Long) value);
-        }
-
-        if (findUser == null || !findUser.isPresent()) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        return findUser.get();
     }
 }

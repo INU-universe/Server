@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.global.common.exception.CustomException;
-import universe.universe.global.common.exception.Exception500;
 import universe.universe.domain.chatRoom.dto.ChatRoomRequestDTO;
 import universe.universe.domain.chatRoom.dto.ChatRoomResponseDTO;
 import universe.universe.domain.chatRoom.entity.ChatRoom;
@@ -15,6 +14,7 @@ import universe.universe.domain.chatRoomRelation.repository.ChatRoomRelationRepo
 import universe.universe.domain.chatRoom.repository.ChatRoomRepository;
 import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.global.common.reponse.ErrorCode;
+import universe.universe.global.common.CommonMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +26,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class ChatRoomServiceImpl implements ChatRoomService {
-    final private UserRepository userRepository;
-    final private ChatRoomRepository chatRoomRepository;
-    final private ChatRoomRelationRepository chatRoomRelationRepository;
+    private final UserRepository userRepository;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatRoomRelationRepository chatRoomRelationRepository;
+    private final CommonMethod commonMethod;
     @Override
     @Transactional
     public ChatRoomResponseDTO.ChatRoomCreateDTO create(String userEmail, ChatRoomRequestDTO.ChatRoomCreateDTO chatRoomCreateDTO) {
@@ -67,8 +68,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         try {
             log.info("[ChatRoomServiceImpl] delete");
             User findUser = getUser("email", userEmail);
-            ChatRoom findChatRoom = getChatRoom_Id(chatRoomId);
-            ChatRoomRelation findChatRoomRelation = getChatRoomRelation(findUser, findChatRoom);
+            ChatRoom findChatRoom = commonMethod.getChatRoom_Id(chatRoomId);
+            ChatRoomRelation findChatRoomRelation = commonMethod.getChatRoomRelation(findUser, findChatRoom);
             chatRoomRelationRepository.delete(findChatRoomRelation);
         } catch (CustomException ce){
             log.info("[CustomException] ChatRoomServiceImpl delete");
@@ -109,21 +110,6 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         }
 
         return findUser.get();
-    }
-
-    private ChatRoom getChatRoom_Id(Long chatRoomId) throws CustomException {
-        Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
-        if(!findChatRoom.isPresent()) {
-            throw new CustomException(ErrorCode.CHATROOM_NOT_FOUND);
-        }
-        return findChatRoom.get();
-    }
-    private ChatRoomRelation getChatRoomRelation(User findUser, ChatRoom findChatRoom) throws CustomException {
-        Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
-        if(!findChatRoomRelation.isPresent()) {
-            throw new CustomException(ErrorCode.CHATROOM_RELATION_NOT_FOUND);
-        }
-        return findChatRoomRelation.get();
     }
 
     private void addResponseList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList, ChatRoom chatRoom) throws Exception {
