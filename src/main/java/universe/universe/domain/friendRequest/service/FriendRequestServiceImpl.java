@@ -50,8 +50,11 @@ public class FriendRequestServiceImpl implements FriendRequestService {
             FriendRequestResponseDTO.FriendRequestGetURLDTO result = new FriendRequestResponseDTO.FriendRequestGetURLDTO();
             result.setFriendRequestURL(friendRequestURL);
             return result;
+        } catch (CustomException ce){
+            log.info("[CustomException] FriendRequestServiceImpl getURL");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("friendRequest send fail : " + e.getMessage());
+            throw new Exception500("FriendRequestServiceImpl send fail : " + e.getMessage());
         }
     }
 
@@ -79,8 +82,11 @@ public class FriendRequestServiceImpl implements FriendRequestService {
                 friendRepository.save(friend2);
                 return new FriendRequestResponseDTO.FriendRequestAcceptURLDTO(fromUser, toUser);
             }
+        } catch (CustomException ce){
+            log.info("[CustomException] FriendRequestServiceImpl acceptURL");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("friendRequest acceptURL fail : " + e.getMessage());
+            throw new Exception500("FriendRequestServiceImpl acceptURL fail : " + e.getMessage());
         }
     }
 

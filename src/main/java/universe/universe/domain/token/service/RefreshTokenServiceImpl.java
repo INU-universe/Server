@@ -37,6 +37,9 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
             RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO result = new RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO(accessToken, findRefreshToken.getRefreshToken());
 
             return result;
+        } catch (CustomException ce){
+            log.info("[CustomException] RefreshTokenServiceImpl getAccessToken");
+            throw ce;
         } catch (Exception e) {
             throw new Exception500("refreshToken getAccessToken fail : " + e.getMessage());
         }
@@ -56,7 +59,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         return findUser.get();
     }
 
-    private RefreshToken getRefreshToken(String refreshToken) {
+    private RefreshToken getRefreshToken(String refreshToken) throws CustomException {
         Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findById(refreshToken);
         if(!findRefreshToken.isPresent()) {
             throw new CustomException(ErrorCode.REFRESH_NOT_FOUND);

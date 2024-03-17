@@ -32,8 +32,12 @@ public class LocationServiceImpl implements LocationService {
             findLocation.updateLocation(locationUpdateDTO.getLatitude(), locationUpdateDTO.getLongitude());
 
             return new LocationResponseDTO.LocationUpdateDTO(findLocation);
+        } catch (CustomException ce){
+            log.info("[CustomException] LocationServiceImpl update");
+            throw ce;
         } catch (Exception e){
-            throw new Exception500("Location update fail : "+e.getMessage());
+            log.info("[Exception500] LocationServiceImpl update");
+            throw new Exception500("LocationServiceImpl update fail : "+e.getMessage());
         }
     }
 
@@ -45,8 +49,12 @@ public class LocationServiceImpl implements LocationService {
             LocationResponseDTO.LocationFindOneDTO result = locationRepository.findOne(userId);
 
             return result;
+        } catch (CustomException ce){
+            log.info("[CustomException] LocationServiceImpl findOne");
+            throw ce;
         } catch (Exception e){
-            throw new Exception500("Location findOne fail : "+e.getMessage());
+            log.info("[Exception500] LocationServiceImpl findOne");
+            throw new Exception500("LocationServiceImpl findOne fail : "+e.getMessage());
         }
     }
 
@@ -58,7 +66,8 @@ public class LocationServiceImpl implements LocationService {
             LocationResponseDTO.LocationFindAllDTO result = locationRepository.notFavoriteFindAll(findUser.getId());
             return result;
         } catch (Exception e) {
-            throw new Exception500("Location findAll fail : "+e.getMessage());
+            log.info("[Exception500] LocationServiceImpl notFavoriteFindAll");
+            throw new Exception500("LocationServiceImpl notFavoriteFindAll fail : "+e.getMessage());
         }
     }
 
@@ -70,7 +79,8 @@ public class LocationServiceImpl implements LocationService {
             LocationResponseDTO.LocationFindAllDTO result = locationRepository.favoriteFindAll(findUser.getId());
             return result;
         } catch (Exception e) {
-            throw new Exception500("Location findAll fail : "+e.getMessage());
+            log.info("[Exception500] LocationServiceImpl favoriteFindAll");
+            throw new Exception500("LocationServiceImpl favoriteFindAll fail : "+e.getMessage());
         }
     }
 
@@ -89,7 +99,7 @@ public class LocationServiceImpl implements LocationService {
         return findUser.get();
     }
 
-    private Location getLocation_Email(String userEmail) throws Exception {
+    private Location getLocation_Email(String userEmail) throws CustomException  {
         Location findLocation = getUser("email", userEmail).getLocation();
         if(findLocation == null) {
             throw new CustomException(ErrorCode.LOCATION_NOT_FOUND);

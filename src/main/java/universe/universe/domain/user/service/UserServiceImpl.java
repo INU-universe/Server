@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] UserServiceImpl delete");
-            throw new Exception500("user delete fail : " + e.getMessage());
+            throw new Exception500("UserServiceImpl delete fail : " + e.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
             throw ce;
         } catch (Exception e) {
             log.info("[Exception500] UserServiceImpl findOne");
-            throw new Exception500("user findOne fail : " + e.getMessage());
+            throw new Exception500("UserServiceImpl findOne fail : " + e.getMessage());
         }
     }
 

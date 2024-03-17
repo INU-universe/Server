@@ -46,8 +46,11 @@ public class MessageServiceImpl implements MessageService {
             Message message = new Message(findUser, findChatRoom, messageContent);
             messageRepository.save(message);
             return new MessageResponseDTO.MessageSaveDTO(message);
+        } catch (CustomException ce){
+            log.info("[CustomException] MessageServiceImpl save");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("Message save fail : " + e.getMessage());
+            throw new Exception500("MessageServiceImpl save fail : " + e.getMessage());
         }
     }
 
@@ -61,8 +64,11 @@ public class MessageServiceImpl implements MessageService {
                 throw new CustomException(ACCESS_DENIED);
             }
             messageRepository.delete(findMessage);
+        } catch (CustomException ce){
+            log.info("[CustomException] MessageServiceImpl delete");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("Message delete fail : " + e.getMessage());
+            throw new Exception500("MessageServiceImpl delete fail : " + e.getMessage());
         }
     }
 
@@ -77,26 +83,29 @@ public class MessageServiceImpl implements MessageService {
 
             MessageResponseDTO.MessageFindAllDTO result = messageRepository.findAll(chatRoomId);
             return result;
+        } catch (CustomException ce){
+            log.info("[CustomException] MessageServiceImpl findAll");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("Message findAll fail : " + e.getMessage());
+            throw new Exception500("MessageServiceImpl findAll fail : " + e.getMessage());
         }
     }
 
-    private void checkChatRoomRelation(User findUser, ChatRoom findChatRoom) throws Exception {
+    private void checkChatRoomRelation(User findUser, ChatRoom findChatRoom) throws CustomException {
         Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
         if(!findChatRoomRelation.isPresent()) {
             throw new CustomException(ErrorCode.CHATROOM_RELATION_NOT_FOUND);
         }
     }
 
-    private Message getMessage_Id(Long messageId) throws Exception {
+    private Message getMessage_Id(Long messageId) throws CustomException {
         Optional<Message> findMessage = messageRepository.findById(messageId);
         if(!findMessage.isPresent()) {
             throw new CustomException(MESSAGE_NOT_FOUND);
         }
         return findMessage.get();
     }
-    private ChatRoom getChatRoom_Id(Long chatRoomId) throws Exception {
+    private ChatRoom getChatRoom_Id(Long chatRoomId) throws CustomException {
         Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
         if(!findChatRoom.isPresent()) {
             throw new CustomException(ErrorCode.CHATROOM_NOT_FOUND);

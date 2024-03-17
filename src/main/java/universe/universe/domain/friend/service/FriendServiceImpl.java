@@ -16,7 +16,7 @@ import universe.universe.global.common.reponse.ErrorCode;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class FriendServiceImpl implements FriendService {
@@ -29,8 +29,11 @@ public class FriendServiceImpl implements FriendService {
             User findUser = getUser("email", userEmail);
             FriendResponseDTO.FriendFindAllDTO result = friendRepository.findAll(findUser.getId());
             return result;
+        } catch (CustomException ce){
+            log.info("[CustomException] FriendServiceImpl findAll");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("friend findAll fail : " + e.getMessage());
+            throw new Exception500("FriendServiceImpl findAll fail : " + e.getMessage());
         }
     }
 
@@ -41,8 +44,11 @@ public class FriendServiceImpl implements FriendService {
             User findUser = getUser("email", userEmail);
             FriendResponseDTO.FriendFindInSchoolDTO result = friendRepository.findInSchool(findUser.getId());
             return result;
+        } catch (CustomException ce){
+            log.info("[CustomException] FriendServiceImpl findInSchool");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("friend findInSchool fail : " + e.getMessage());
+            throw new Exception500("FriendServiceImpl findInSchool fail : " + e.getMessage());
         }
     }
 
@@ -55,8 +61,11 @@ public class FriendServiceImpl implements FriendService {
 
             friendRepository.delete(result.findRelation1.get());
             friendRepository.delete(result.findRelation2.get());
+        } catch (CustomException ce){
+            log.info("[CustomException] FriendServiceImpl delete");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("friend delete fail : " + e.getMessage());
+            throw new Exception500("FriendServiceImpl delete fail : " + e.getMessage());
         }
     }
 
@@ -84,7 +93,10 @@ public class FriendServiceImpl implements FriendService {
 //        }
 //    }
 
-    private Result getFriend(String userEmail, Long userId) throws Exception {
+    private record Result(Optional<Friend> findRelation1, Optional<Friend> findRelation2) {
+    }
+
+    private Result getFriend(String userEmail, Long userId) throws CustomException {
         User fromUser = getUser("email", userEmail);
         User toUser = getUser("id", userId);
         Optional<Friend> findRelation1 = friendRepository.findByFromUserAndToUser(fromUser, toUser);
@@ -95,9 +107,6 @@ public class FriendServiceImpl implements FriendService {
         }
         Result result = new Result(findRelation1, findRelation2);
         return result;
-    }
-
-    private record Result(Optional<Friend> findRelation1, Optional<Friend> findRelation2) {
     }
 
     private User getUser(String type, Object value) throws CustomException {
