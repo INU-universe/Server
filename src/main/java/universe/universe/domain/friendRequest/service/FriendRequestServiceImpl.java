@@ -54,7 +54,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
             log.info("[CustomException] FriendRequestServiceImpl getURL");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("FriendRequestServiceImpl send fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "FriendRequestServiceImpl send : " + e.getMessage());
         }
     }
 
@@ -86,7 +86,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
             log.info("[CustomException] FriendRequestServiceImpl acceptURL");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("FriendRequestServiceImpl acceptURL fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "FriendRequestServiceImpl acceptURL : " + e.getMessage());
         }
     }
 

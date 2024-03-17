@@ -41,7 +41,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
             log.info("[CustomException] RefreshTokenServiceImpl getAccessToken");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("refreshToken getAccessToken fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "RefreshTokenServiceImpl getAccessToken : " + e.getMessage());
         }
     }
     private User getUser(String type, Object value) throws CustomException {

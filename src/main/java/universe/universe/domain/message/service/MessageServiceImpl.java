@@ -50,7 +50,7 @@ public class MessageServiceImpl implements MessageService {
             log.info("[CustomException] MessageServiceImpl save");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("MessageServiceImpl save fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "MessageServiceImpl save : " + e.getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class MessageServiceImpl implements MessageService {
             log.info("[CustomException] MessageServiceImpl delete");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("MessageServiceImpl delete fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "MessageServiceImpl delete : " + e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class MessageServiceImpl implements MessageService {
             log.info("[CustomException] MessageServiceImpl findAll");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("MessageServiceImpl findAll fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "MessageServiceImpl findAll : " + e.getMessage());
         }
     }
 

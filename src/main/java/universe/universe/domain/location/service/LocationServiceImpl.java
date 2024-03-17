@@ -37,7 +37,7 @@ public class LocationServiceImpl implements LocationService {
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] LocationServiceImpl update");
-            throw new Exception500("LocationServiceImpl update fail : "+e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "LocationServiceImpl update : " + e.getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ public class LocationServiceImpl implements LocationService {
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] LocationServiceImpl findOne");
-            throw new Exception500("LocationServiceImpl findOne fail : "+e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "LocationServiceImpl findOne : " + e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class LocationServiceImpl implements LocationService {
             return result;
         } catch (Exception e) {
             log.info("[Exception500] LocationServiceImpl notFavoriteFindAll");
-            throw new Exception500("LocationServiceImpl notFavoriteFindAll fail : "+e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "LocationServiceImpl notFavoriteFindAll : " + e.getMessage());
         }
     }
 
@@ -80,7 +80,7 @@ public class LocationServiceImpl implements LocationService {
             return result;
         } catch (Exception e) {
             log.info("[Exception500] LocationServiceImpl favoriteFindAll");
-            throw new Exception500("LocationServiceImpl favoriteFindAll fail : "+e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "LocationServiceImpl favoriteFindAll : " + e.getMessage());
         }
     }
 

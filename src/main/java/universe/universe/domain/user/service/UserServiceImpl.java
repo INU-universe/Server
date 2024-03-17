@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] UserServiceImpl join");
-            throw new CustomException(ErrorCode.SERVER_ERROR);
+            throw new CustomException(ErrorCode.SERVER_ERROR, "UserServiceImpl join : " + e.getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] UserServiceImpl delete");
-            throw new Exception500("UserServiceImpl delete fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "UserServiceImpl delete : " + e.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
             throw ce;
         } catch (Exception e) {
             log.info("[Exception500] UserServiceImpl findOne");
-            throw new Exception500("UserServiceImpl findOne fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "UserServiceImpl findOne : " + e.getMessage());
         }
     }
 

@@ -33,7 +33,8 @@ public class FriendServiceImpl implements FriendService {
             log.info("[CustomException] FriendServiceImpl findAll");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("FriendServiceImpl findAll fail : " + e.getMessage());
+
+            throw new CustomException(ErrorCode.SERVER_ERROR, "FriendServiceImpl findAll : " + e.getMessage());
         }
     }
 
@@ -48,6 +49,7 @@ public class FriendServiceImpl implements FriendService {
             log.info("[CustomException] FriendServiceImpl findInSchool");
             throw ce;
         } catch (Exception e) {
+            log.info("[Exception500] FriendServiceImpl findInSchool");
             throw new Exception500("FriendServiceImpl findInSchool fail : " + e.getMessage());
         }
     }
@@ -65,7 +67,8 @@ public class FriendServiceImpl implements FriendService {
             log.info("[CustomException] FriendServiceImpl delete");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("FriendServiceImpl delete fail : " + e.getMessage());
+            log.info("[Exception500] FriendServiceImpl delete");
+            throw new Exception500("FriendServiceImpl findInSchool delete : " + e.getMessage());
         }
     }
 

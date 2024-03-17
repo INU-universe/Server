@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception404;
 import universe.universe.global.common.exception.Exception500;
+import universe.universe.global.common.reponse.ErrorCode;
 
 import java.util.Optional;
 import java.util.Set;
@@ -29,8 +31,11 @@ public class TokenServiceImpl implements TokenService {
             } else {
                 throw new Exception404("해당 토큰을 찾을 수 없습니다.");
             }
+        } catch (CustomException ce){
+            log.info("[CustomException] TokenServiceImpl logout");
+            throw ce;
         } catch (Exception e) {
-            throw new Exception500("token logout fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "TokenServiceImpl logout : " + e.getMessage());
         }
     }
     public void blacklistToken(String token) {

@@ -34,10 +34,15 @@ import universe.universe.global.common.valid.Valid;
 @Getter
 public class CustomException extends RuntimeException {
 //    private String key;
+    private String msg;
     private ErrorCode errorCode;
 
     public CustomException(ErrorCode errorCode) {
         this.errorCode = errorCode;
+    }
+    public CustomException(ErrorCode errorCode, String msg) {
+        this.errorCode = errorCode;
+        this.msg = msg;
     }
 //    public CustomException(String key, ErrorCode errorCode) {
 //        super(errorCode.getMsg());

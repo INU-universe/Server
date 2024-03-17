@@ -56,7 +56,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             throw ce;
         }
         catch (Exception e) {
-            throw new Exception500("ChatRoomServiceImpl create fail : " + e.getMessage());
+            log.info("[Exception500] ChatRoomServiceImpl create");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "ChatRoomServiceImpl create : " + e.getMessage());
         }
     }
 
@@ -73,7 +74,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             log.info("[CustomException] ChatRoomServiceImpl delete");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("ChatRoomServiceImpl delete fail : " + e.getMessage());
+            log.info("[Exception500] ChatRoomServiceImpl delete");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "ChatRoomServiceImpl delete : " + e.getMessage());
         }
     }
 
@@ -88,7 +90,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             log.info("[CustomException] ChatRoomServiceImpl findAll");
             throw ce;
         } catch (Exception e) {
-            throw new Exception500("ChatRoomServiceImpl findAll fail : " + e.getMessage());
+            log.info("[Exception500] ChatRoomServiceImpl findAll");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "ChatRoomServiceImpl findAll : " + e.getMessage());
         }
     }
 
