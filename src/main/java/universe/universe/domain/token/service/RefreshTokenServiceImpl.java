@@ -30,7 +30,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         try {
             log.info("[RefreshTokenServiceImpl] getAccessToken");
             RefreshToken findRefreshToken = getRefreshToken(tokenGetAccessTokenDTO.getRefreshToken());
-            User findUser = getUser_Id(findRefreshToken.getUserId());
+            User findUser = getUser("id", findRefreshToken.getUserId());
 
             String accessToken = jwtProvider.generateToken(findUser);
 
@@ -41,11 +41,18 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
             throw new Exception500("refreshToken getAccessToken fail : " + e.getMessage());
         }
     }
-    private User getUser_Id(Long userId) {
-        Optional<User> findUser = userRepository.findById(userId);
-        if(!findUser.isPresent()) {
+    private User getUser(String type, Object value) throws CustomException {
+        Optional<User> findUser = null;
+        if (type.equals("email")) {
+            findUser = userRepository.findByUserEmail((String) value);
+        } else if (type.equals("id")) {
+            findUser = userRepository.findById((Long) value);
+        }
+
+        if (findUser == null || !findUser.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
+
         return findUser.get();
     }
 

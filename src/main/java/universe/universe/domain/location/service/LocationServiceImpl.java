@@ -41,7 +41,7 @@ public class LocationServiceImpl implements LocationService {
     public LocationResponseDTO.LocationFindOneDTO findOne(String userEmail) {
         try {
             log.info("[LocationServiceImpl] findOne");
-            Long userId = getUser_Email(userEmail).getId();
+            Long userId = getUser("email", userEmail).getId();
             LocationResponseDTO.LocationFindOneDTO result = locationRepository.findOne(userId);
 
             return result;
@@ -54,7 +54,7 @@ public class LocationServiceImpl implements LocationService {
     public LocationResponseDTO.LocationFindAllDTO notFavoriteFindAll(String userEmail) {
         try {
             log.info("[LocationServiceImpl] notFavoriteFindAll");
-            User findUser = getUser_Email(userEmail);
+            User findUser = getUser("email", userEmail);
             LocationResponseDTO.LocationFindAllDTO result = locationRepository.notFavoriteFindAll(findUser.getId());
             return result;
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class LocationServiceImpl implements LocationService {
     public LocationResponseDTO.LocationFindAllDTO favoriteFindAll(String userEmail) {
         try {
             log.info("[LocationServiceImpl] favoriteFindAll");
-            User findUser = getUser_Email(userEmail);
+            User findUser = getUser("email", userEmail);
             LocationResponseDTO.LocationFindAllDTO result = locationRepository.favoriteFindAll(findUser.getId());
             return result;
         } catch (Exception e) {
@@ -74,16 +74,23 @@ public class LocationServiceImpl implements LocationService {
         }
     }
 
-    private User getUser_Email(String userEmail) throws Exception {
-        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
-        if(findUser == null) {
+    private User getUser(String type, Object value) throws CustomException {
+        Optional<User> findUser = null;
+        if (type.equals("email")) {
+            findUser = userRepository.findByUserEmail((String) value);
+        } else if (type.equals("id")) {
+            findUser = userRepository.findById((Long) value);
+        }
+
+        if (findUser == null || !findUser.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
+
         return findUser.get();
     }
 
     private Location getLocation_Email(String userEmail) throws Exception {
-        Location findLocation = getUser_Email(userEmail).getLocation();
+        Location findLocation = getUser("email", userEmail).getLocation();
         if(findLocation == null) {
             throw new CustomException(ErrorCode.LOCATION_NOT_FOUND);
         }

@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
                 throw new CustomException(ErrorCode.USER_NOT_FOUND);
             }
 
-            Long findUserId = getUser_Email(userEmail).getId();
+            Long findUserId = getUser("email" ,userEmail).getId();
             userRepository.delete(findUserId);
         } catch (CustomException ce){
             log.info("[CustomException] UserServiceImpl delete");
@@ -93,19 +93,18 @@ public class UserServiceImpl implements UserService {
 //        }
 //    }
 
-    private User getUser_Email(String userEmail) throws Exception {
-        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
-        if(findUser == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+    private User getUser(String identifier, Object value) throws CustomException {
+        Optional<User> findUser = null;
+        if (identifier.equals("email")) {
+            findUser = userRepository.findByUserEmail((String) value);
+        } else if (identifier.equals("id")) {
+            findUser = userRepository.findById((Long) value);
         }
-        return findUser.get();
-    }
 
-    private User getUser_Id(Long userId) throws Exception {
-        Optional<User> findUser = userRepository.findById(userId);
-        if(!findUser.isPresent()) {
+        if (findUser == null || !findUser.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
+
         return findUser.get();
     }
 }

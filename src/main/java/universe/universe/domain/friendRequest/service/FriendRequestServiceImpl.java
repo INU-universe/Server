@@ -38,7 +38,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     public FriendRequestResponseDTO.FriendRequestGetURLDTO getURL(String userEmail) {
         try {
             log.info("[FriendRequestServiceImpl] getURL");
-            User findUser = getUser_Email(userEmail);
+            User findUser = getUser("email", userEmail);
             String token = JWT.create()
                     .withSubject("accessToken")
                     .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.ACCESS_EXPIRATION_TIME)) // 만료 시간 10분
@@ -60,8 +60,8 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         try {
             log.info("[FriendRequestServiceImpl] acceptURL");
             Long fromUserId = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token).getClaim("userId").asLong();
-            User fromUser = getUser_Id(fromUserId);
-            User toUser = getUser_Email(userEmail);
+            User fromUser = getUser("id", fromUserId);
+            User toUser = getUser("email", userEmail);
 
             Optional<Friend> friendExist = friendRepository.findByFromUserAndToUser(fromUser, toUser);
 
@@ -178,19 +178,18 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 //        }
 //    }
 
-    private User getUser_Email(String userEmail) throws Exception {
-        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
-        if(findUser == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+    private User getUser(String type, Object value) throws CustomException {
+        Optional<User> findUser = null;
+        if (type.equals("email")) {
+            findUser = userRepository.findByUserEmail((String) value);
+        } else if (type.equals("id")) {
+            findUser = userRepository.findById((Long) value);
         }
-        return findUser.get();
-    }
 
-    private User getUser_Id(Long userId) throws Exception {
-        Optional<User> findUser = userRepository.findById(userId);
-        if(!findUser.isPresent()) {
+        if (findUser == null || !findUser.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
+
         return findUser.get();
     }
 }

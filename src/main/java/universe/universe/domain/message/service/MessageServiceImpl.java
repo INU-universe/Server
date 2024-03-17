@@ -37,7 +37,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageResponseDTO.MessageSaveDTO save(MessageRequestDTO.MessageSaveDTO messageSaveDTO, String userEmail) {
         try {
             log.info("[MessageServiceImpl] save");
-            User findUser = getUser_Email(userEmail);
+            User findUser = getUser("email", userEmail);
             ChatRoom findChatRoom = getChatRoom_Id(messageSaveDTO.getChatRoomId());
             String messageContent = messageSaveDTO.getContent();
 
@@ -55,7 +55,7 @@ public class MessageServiceImpl implements MessageService {
     public void delete(String userEmail, Long messageId) {
         try {
             log.info("[MessageServiceImpl] delete");
-            User findUser = getUser_Email(userEmail);
+            User findUser = getUser("email", userEmail);
             Message findMessage = getMessage_Id(messageId);
             if(!Objects.equals(findUser.getId(), findMessage.getUser().getId())) {
                 throw new CustomException(ACCESS_DENIED);
@@ -70,7 +70,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageResponseDTO.MessageFindAllDTO findAll(String userEmail, Long chatRoomId) {
         try {
             log.info("[MessageServiceImpl] findAll");
-            User findUser = getUser_Email(userEmail);
+            User findUser = getUser("email", userEmail);
             ChatRoom findChatRoom = getChatRoom_Id(chatRoomId);
 
             checkChatRoomRelation(findUser, findChatRoom);
@@ -103,19 +103,18 @@ public class MessageServiceImpl implements MessageService {
         }
         return findChatRoom.get();
     }
-    private User getUser_Email(String userEmail) throws Exception {
-        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
-        if(findUser == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+    private User getUser(String type, Object value) throws CustomException {
+        Optional<User> findUser = null;
+        if (type.equals("email")) {
+            findUser = userRepository.findByUserEmail((String) value);
+        } else if (type.equals("id")) {
+            findUser = userRepository.findById((Long) value);
         }
-        return findUser.get();
-    }
 
-    private User getUser_Id(Long userId) throws Exception {
-        Optional<User> findUser = userRepository.findById(userId);
-        if(!findUser.isPresent()) {
+        if (findUser == null || !findUser.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
+
         return findUser.get();
     }
 }
