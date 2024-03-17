@@ -24,17 +24,19 @@ public class UserServiceImpl implements UserService {
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public UserResponseDTO.UserJoinDTO join(UserRequestDTO.UserJoinDTO userJoinDTO) {
-        log.info("[UserServiceImpl] join");
-        if (userRepository.existsByUserEmail(userJoinDTO.getUserEmail())) {
-            throw new CustomException(ErrorCode.USER_EXIST);
-        }
         try {
+            log.info("[UserServiceImpl] join");
+            if (userRepository.existsByUserEmail(userJoinDTO.getUserEmail())) {
+                throw new CustomException(ErrorCode.USER_EXIST);
+            }
+
             userJoinDTO.setUserPassword(bCryptPasswordEncoder.encode(userJoinDTO.getUserPassword()));
 
             User user = userJoinDTO.toEntity();
             userRepository.save(user);
             return new UserResponseDTO.UserJoinDTO(user);
         } catch (Exception e){
+            log.info("[Exception500] UserServiceImpl join");
             throw new Exception500("user join fail : " + e.getMessage());
         }
     }
@@ -42,13 +44,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String userEmail) {
         log.info("[UserServiceImpl] delete");
-        if (!userRepository.existsByUserEmail(userEmail)) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
         try {
+            if (!userRepository.existsByUserEmail(userEmail)) {
+                throw new CustomException(ErrorCode.USER_NOT_FOUND);
+            }
+
             Long findUserId = getUser_Email(userEmail).getId();
             userRepository.delete(findUserId);
         } catch (Exception e){
+            log.info("[Exception500] UserServiceImpl delete");
             throw new Exception500("user delete fail : " + e.getMessage());
         }
     }
@@ -60,6 +64,7 @@ public class UserServiceImpl implements UserService {
             UserResponseDTO.UserFindDTO result = userRepository.findOne(userEmail);
             return result;
         } catch (Exception e) {
+            log.info("[Exception500] UserServiceImpl findOne");
             throw new Exception500("user findOne fail : " + e.getMessage());
         }
     }
@@ -79,7 +84,7 @@ public class UserServiceImpl implements UserService {
 //        }
 //    }
 
-    private User getUser_Email(String userEmail) {
+    private User getUser_Email(String userEmail) throws Exception {
         Optional<User> findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
@@ -87,7 +92,7 @@ public class UserServiceImpl implements UserService {
         return findUser.get();
     }
 
-    private User getUser_Id(Long userId) {
+    private User getUser_Id(Long userId) throws Exception {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);

@@ -82,32 +82,40 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
-    private void checkChatRoomRelation(User findUser, ChatRoom findChatRoom) {
+    private void checkChatRoomRelation(User findUser, ChatRoom findChatRoom) throws Exception {
         Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
         if(!findChatRoomRelation.isPresent()) {
             throw new CustomException(ErrorCode.CHATROOM_RELATION_NOT_FOUND);
         }
     }
 
-    private Message getMessage_Id(Long messageId) {
+    private Message getMessage_Id(Long messageId) throws Exception {
         Optional<Message> findMessage = messageRepository.findById(messageId);
         if(!findMessage.isPresent()) {
             throw new CustomException(MESSAGE_NOT_FOUND);
         }
         return findMessage.get();
     }
-    private ChatRoom getChatRoom_Id(Long chatRoomId) {
+    private ChatRoom getChatRoom_Id(Long chatRoomId) throws Exception {
         Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
         if(!findChatRoom.isPresent()) {
             throw new CustomException(ErrorCode.CHATROOM_NOT_FOUND);
         }
         return findChatRoom.get();
     }
-    private User getUser_Email(String userEmail) {
-        User findUser = userRepository.findByUserEmail(userEmail);
+    private User getUser_Email(String userEmail) throws Exception {
+        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        return findUser;
+        return findUser.get();
+    }
+
+    private User getUser_Id(Long userId) throws Exception {
+        Optional<User> findUser = userRepository.findById(userId);
+        if(!findUser.isPresent()) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        return findUser.get();
     }
 }

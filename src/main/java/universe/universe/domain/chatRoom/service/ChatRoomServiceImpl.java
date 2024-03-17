@@ -81,15 +81,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
 
-    private User getUser_Email(String userEmail) {
-        User findUser = userRepository.findByUserEmail(userEmail);
+    private User getUser_Email(String userEmail) throws Exception {
+        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        return findUser;
+        return findUser.get();
     }
 
-    private User getUser_Id(Long userId) {
+    private User getUser_Id(Long userId) throws Exception {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
@@ -97,14 +97,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return findUser.get();
     }
 
-    private ChatRoom getChatRoom_Id(Long chatRoomId) {
+    private ChatRoom getChatRoom_Id(Long chatRoomId) throws Exception {
         Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
         if(!findChatRoom.isPresent()) {
             throw new CustomException(ErrorCode.CHATROOM_NOT_FOUND);
         }
         return findChatRoom.get();
     }
-    private ChatRoomRelation getChatRoomRelation(User findUser, ChatRoom findChatRoom) {
+    private ChatRoomRelation getChatRoomRelation(User findUser, ChatRoom findChatRoom) throws Exception {
         Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
         if(!findChatRoomRelation.isPresent()) {
             throw new CustomException(ErrorCode.CHATROOM_RELATION_NOT_FOUND);
@@ -112,7 +112,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return findChatRoomRelation.get();
     }
 
-    private void addResponseList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList, ChatRoom chatRoom) {
+    private void addResponseList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, List<ChatRoomResponseDTO.ChatRoomUserDTO> responseList, ChatRoom chatRoom) throws Exception {
         for(ChatRoomRequestDTO.ChatRoomUserDTO user : requestList) {
             User findUser = getUser_Id(user.getUserId());
             ChatRoomRelation chatRoomRelation = chatRoomRelationRepository.save(new ChatRoomRelation(findUser, chatRoom));
@@ -120,7 +120,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         }
     }
 
-    private static void checkRequestList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, Long findUserId) {
+    private static void checkRequestList(List<ChatRoomRequestDTO.ChatRoomUserDTO> requestList, Long findUserId) throws Exception {
         for(ChatRoomRequestDTO.ChatRoomUserDTO user : requestList) {
             if(user.getUserId() == findUserId) {
                 throw new CustomException(ErrorCode.CHAT_UNAVAILABLE);

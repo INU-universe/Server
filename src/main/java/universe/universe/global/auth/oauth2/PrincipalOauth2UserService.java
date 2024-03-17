@@ -42,7 +42,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         log.info("userInfoName: {}", userInfoName);
         log.info("userInfoImg: {}", userInfoImg);
 
-        User user = userRepository.findByUserEmail(userInfoEmail);
+        User user = userRepository.findByUserEmail(userInfoEmail).get();
+
         if (user != null) {
             log.info("로그인을 이미 했음, 자동 회원가입이 되어있다.");
         }  else {

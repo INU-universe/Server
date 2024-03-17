@@ -178,15 +178,15 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 //        }
 //    }
 
-    private User getUser_Email(String userEmail) {
-        User findUser = userRepository.findByUserEmail(userEmail);
+    private User getUser_Email(String userEmail) throws Exception {
+        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        return findUser;
+        return findUser.get();
     }
 
-    private User getUser_Id(Long userId) {
+    private User getUser_Id(Long userId) throws Exception {
         Optional<User> findUser = userRepository.findById(userId);
         if(!findUser.isPresent()) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);

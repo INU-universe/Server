@@ -14,6 +14,8 @@ import universe.universe.domain.location.repository.LocationRepository;
 import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.global.common.reponse.ErrorCode;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -72,15 +74,15 @@ public class LocationServiceImpl implements LocationService {
         }
     }
 
-    private User getUser_Email(String userEmail) {
-        User findUser = userRepository.findByUserEmail(userEmail);
+    private User getUser_Email(String userEmail) throws Exception {
+        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
         if(findUser == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
-        return findUser;
+        return findUser.get();
     }
 
-    private Location getLocation_Email(String userEmail) {
+    private Location getLocation_Email(String userEmail) throws Exception {
         Location findLocation = getUser_Email(userEmail).getLocation();
         if(findLocation == null) {
             throw new CustomException(ErrorCode.LOCATION_NOT_FOUND);
