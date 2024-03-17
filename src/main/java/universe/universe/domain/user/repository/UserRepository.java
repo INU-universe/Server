@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import universe.universe.domain.user.entity.User;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
-    User findByUserEmail(String userEmail);
+    Optional<User> findByUserEmail(String userEmail);
     boolean existsByUserEmail(String userEmail);
 }
