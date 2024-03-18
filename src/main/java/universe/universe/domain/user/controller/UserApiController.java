@@ -29,6 +29,7 @@ public class UserApiController {
             UserResponseDTO.UserJoinDTO result = userService.join(userJoinDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user join success", result));
         }  catch (Exception500 e) {
+            log.info("[Exception500] UserApiController join");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -42,6 +43,7 @@ public class UserApiController {
             userService.delete(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user delete success"));
         }  catch (Exception500 e) {
+            log.info("[Exception500] UserApiController delete");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -53,6 +55,7 @@ public class UserApiController {
             UserResponseDTO.UserFindDTO result = userService.findOne(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user findOne success", result));
         }  catch (Exception500 e) {
+            log.info("[Exception500] UserApiController findOne");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }

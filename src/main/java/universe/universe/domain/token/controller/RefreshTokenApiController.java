@@ -28,6 +28,7 @@ public class RefreshTokenApiController {
             RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO result = refreshTokenService.getAccessToken(tokenGetAccessTokenDTO);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "refreshToken getAccessToken success", result));
         }  catch (Exception500 e) {
+            log.info("[Exception500] RefreshTokenApiController getAccessToken");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }

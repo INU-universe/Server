@@ -29,6 +29,7 @@ public class FriendApiController {
             FriendResponseDTO.FriendFindAllDTO result = friendService.findAll(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend findAll success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] FriendApiController findAll");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -42,6 +43,7 @@ public class FriendApiController {
             FriendResponseDTO.FriendFindInSchoolDTO result = friendService.findInSchool(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend findInSchool success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] FriendApiController findInSchool");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -54,6 +56,7 @@ public class FriendApiController {
             friendService.delete(userEmail, userId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend delete success"));
         } catch (Exception500 e) {
+            log.info("[Exception500] FriendApiController delete");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }

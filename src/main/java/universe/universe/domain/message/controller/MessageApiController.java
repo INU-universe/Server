@@ -30,6 +30,7 @@ public class MessageApiController {
             MessageResponseDTO.MessageSaveDTO result = messageService.save(messageSaveDTO, userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message save success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] MessageApiController save");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -43,6 +44,7 @@ public class MessageApiController {
             messageService.delete(userEmail, messageId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message delete success"));
         } catch (Exception500 e) {
+            log.info("[Exception500] MessageApiController delete");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -56,6 +58,7 @@ public class MessageApiController {
             MessageResponseDTO.MessageFindAllDTO result = messageService.findAll(userEmail, chatRoomId);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message findAll success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] MessageApiController findAll");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }

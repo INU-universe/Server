@@ -31,6 +31,7 @@ public class LocationApiController {
             LocationResponseDTO.LocationUpdateDTO result = locationService.update(locationUpdateDTO, userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location update success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] LocationApiController update");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -43,6 +44,7 @@ public class LocationApiController {
             LocationResponseDTO.LocationFindOneDTO result = locationService.findOne(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location findOne success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] LocationApiController findOne");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -54,6 +56,7 @@ public class LocationApiController {
             LocationResponseDTO.LocationFindAllDTO result = locationService.notFavoriteFindAll(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location notFavoriteFindAll success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] LocationApiController notFavoriteFindAll");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -66,6 +69,7 @@ public class LocationApiController {
             LocationResponseDTO.LocationFindAllDTO result = locationService.favoriteFindAll(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location favoriteFindAll success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] LocationApiController favoriteFindAll");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }

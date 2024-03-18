@@ -31,6 +31,7 @@ public class FriendRequestApiController {
             FriendRequestResponseDTO.FriendRequestGetURLDTO result = friendRequestService.getURL(userEmail);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friendRequest getURL success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] FriendRequestApiController getURL");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
@@ -43,6 +44,7 @@ public class FriendRequestApiController {
             FriendRequestResponseDTO.FriendRequestAcceptURLDTO result = friendRequestService.acceptURL(userEmail, token);
             return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friendRequest acceptURL success", result));
         } catch (Exception500 e) {
+            log.info("[Exception500] FriendRequestApiController acceptURL");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
