@@ -2,10 +2,12 @@ package universe.universe.global.auth.jwt.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,13 +16,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import universe.universe.global.auth.PrincipalDetails;
 import universe.universe.global.auth.jwt.JwtProperties;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception404;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.domain.token.service.TokenServiceImpl;
+import universe.universe.global.common.reponse.ErrorCode;
 
 import java.io.IOException;
 
+@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UserRepository userRepository;
     private TokenServiceImpl tokenService;
@@ -39,26 +44,47 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String jwtHeader = request.getHeader(JwtProperties.HEADER_STRING);
 
-        if(jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
+        if (jwtHeader == null || !jwtHeader.startsWith(JwtProperties.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
             return;
         }
 
-        String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
-        String userEmail = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(jwtToken).getClaim("userEmail").asString();
+        try {
+            String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
+            String userEmail = JWT.require(Algorithm.HMAC512(secretKey)).build().verify(jwtToken).getClaim("userEmail").asString();
 
-        // 블랙리스트에 토큰이 있는지 확인
-        if (tokenService.isTokenBlacklisted(jwtToken)) {
-            throw new Exception404("블랙리스트에 해당하는 토큰입니다.");
+            // 블랙리스트에 토큰이 있는지 확인
+            if (tokenService.isTokenBlacklisted(jwtToken)) {
+                sendErrorResponse(response, ErrorCode.BLACKLIST_TOKEN);
+                return;
+            }
+
+            if (userEmail != null) {
+                User Entity = userRepository.findByUserEmail(userEmail).get();
+
+                PrincipalDetails principalDetails = new PrincipalDetails(Entity);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, principalDetails.getPassword(), principalDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+            chain.doFilter(request, response);
+        } catch (TokenExpiredException e) {
+            log.info("[JwtAuthorizationFilter] EXPIRED_ACCESS_TOKEN");
+            sendErrorResponse(response, ErrorCode.EXPIRED_ACCESS_TOKEN);
+        } catch (Exception e) {
+            log.info("[JwtAuthorizationFilter] INVALID_ACCESS_TOKEN");
+            sendErrorResponse(response, ErrorCode.INVALID_ACCESS_TOKEN);
         }
+    }
 
-        if (userEmail != null) {
-            User Entity = userRepository.findByUserEmail(userEmail).get();
-
-            PrincipalDetails principalDetails = new PrincipalDetails(Entity);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, principalDetails.getPassword(), principalDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-        chain.doFilter(request, response);
+    private void sendErrorResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        String errorMessage = "{\"code\": \"" + HttpServletResponse.SC_UNAUTHORIZED + "\", \"message\": \"" + errorCode.getMsg() + "\", \"status\": \"FAIL\"}";
+        response.getOutputStream().write(errorMessage.getBytes("UTF-8"));
     }
 }
+// {
+//    "code": 409,
+//    "message": "CustomException : 이미 가입된 이메일입니다.",
+//    "status": "FAIL"
+//}

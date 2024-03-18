@@ -43,7 +43,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
                     .withClaim("userId", findUser.getId())
                     .sign(Algorithm.HMAC512(secretKey)); // 고유한 값
 
-            String friendRequestURL = "http://localhost:8080/api/friendRequest/accept?token=" + token;
+            String friendRequestURL = "http://universe.greenecho.shop:8080/api/friendRequest/accept?token=" + token;
 
             FriendRequestResponseDTO.FriendRequestGetURLDTO result = new FriendRequestResponseDTO.FriendRequestGetURLDTO();
             result.setFriendRequestURL(friendRequestURL);

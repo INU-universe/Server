@@ -1,5 +1,6 @@
 package universe.universe.domain.token.service;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,10 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         } catch (CustomException ce){
             log.info("[CustomException] RefreshTokenServiceImpl getAccessToken");
             throw ce;
+        } catch (TokenExpiredException te) {
+            throw new CustomException(ErrorCode.EXPIRED_REFRESH_TOKEN);
         } catch (Exception e) {
-            throw new CustomException(ErrorCode.SERVER_ERROR, "RefreshTokenServiceImpl getAccessToken : " + e.getMessage());
+            throw new CustomException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
     }
 }
