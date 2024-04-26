@@ -2,11 +2,11 @@ package universe.universe.domain.friendRequest.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import universe.universe.global.auth.jwt.JwtProperties;
 import universe.universe.global.common.exception.CustomException;
 import universe.universe.domain.friendRequest.dto.FriendRequestResponseDTO;
@@ -43,7 +43,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
                     .withClaim("userId", findUser.getId())
                     .sign(Algorithm.HMAC512(secretKey)); // 고유한 값
 
-            String friendRequestURL = "http://universe.greenecho.shop:8080/api/v1/user/friendRequest/accept?token=" + token;
+            String friendRequestURL = token;
 
             FriendRequestResponseDTO.FriendRequestGetURLDTO result = new FriendRequestResponseDTO.FriendRequestGetURLDTO();
             result.setFriendRequestURL(friendRequestURL);
