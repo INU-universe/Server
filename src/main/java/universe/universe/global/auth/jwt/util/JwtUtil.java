@@ -28,10 +28,9 @@ public class JwtUtil {
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("accessToken", accessToken);
         tokenMap.put("refreshToken", refreshToken);
+        tokenMap.put("userEmail", principalDetails.getEmail());
+        tokenMap.put("userName", principalDetails.getUsername());
         response.setContentType("application/json");
-
-//        log.info("Access Token : " + accessToken);
-//        log.info("Refresh Token : " + refreshToken);
 
         new ObjectMapper().writeValue(response.getOutputStream(), tokenMap);
     }

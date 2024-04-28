@@ -29,7 +29,7 @@ public class TokenServiceImpl implements TokenService {
                 blacklistToken(token);
                 log.error("Logout 성공");
             } else {
-                throw new Exception404("해당 토큰을 찾을 수 없습니다.");
+                throw new CustomException(ErrorCode.TOKEN_NOT_FOUND);
             }
         } catch (CustomException ce){
             log.info("[CustomException] TokenServiceImpl logout");
