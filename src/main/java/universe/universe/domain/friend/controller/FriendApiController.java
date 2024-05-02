@@ -27,7 +27,7 @@ public class FriendApiController {
             log.info("[FriendApiController] findAll");
             String userEmail = getUserEmail();
             FriendResponseDTO.FriendFindAllDTO result = friendService.findAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend findAll success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] FriendApiController findAll", result));
         } catch (Exception500 e) {
             log.info("[Exception500] FriendApiController findAll");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -41,7 +41,7 @@ public class FriendApiController {
             log.info("[FriendApiController] findInSchool");
             String userEmail = getUserEmail();
             FriendResponseDTO.FriendFindInSchoolDTO result = friendService.findInSchool(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend findInSchool success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] FriendApiController findInSchool", result));
         } catch (Exception500 e) {
             log.info("[Exception500] FriendApiController findInSchool");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -54,7 +54,7 @@ public class FriendApiController {
             log.info("[FriendApiController] delete");
             String userEmail = getUserEmail();
             friendService.delete(userEmail, userId);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "friend delete success"));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] FriendApiController delete"));
         } catch (Exception500 e) {
             log.info("[Exception500] FriendApiController delete");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));

@@ -29,7 +29,7 @@ public class LocationApiController {
             log.info("[LocationApiController] update");
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationUpdateDTO result = locationService.update(locationUpdateDTO, userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location update success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] LocationApiController update", result));
         } catch (Exception500 e) {
             log.info("[Exception500] LocationApiController update");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -42,7 +42,7 @@ public class LocationApiController {
             log.info("[LocationApiController] findOne");
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationFindOneDTO result = locationService.findOne(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location findOne success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] LocationApiController findOne", result));
         } catch (Exception500 e) {
             log.info("[Exception500] LocationApiController findOne");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -54,7 +54,7 @@ public class LocationApiController {
             log.info("[LocationApiController] notFavoriteFindAll");
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationFindAllDTO result = locationService.notFavoriteFindAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location notFavoriteFindAll success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] LocationApiController notFavoriteFindAll", result));
         } catch (Exception500 e) {
             log.info("[Exception500] LocationApiController notFavoriteFindAll");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -67,7 +67,7 @@ public class LocationApiController {
             log.info("[LocationApiController] favoriteFindAll");
             String userEmail = getUserEmail();
             LocationResponseDTO.LocationFindAllDTO result = locationService.favoriteFindAll(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "location favoriteFindAll success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] LocationApiController favoriteFindAll", result));
         } catch (Exception500 e) {
             log.info("[Exception500] LocationApiController favoriteFindAll");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));

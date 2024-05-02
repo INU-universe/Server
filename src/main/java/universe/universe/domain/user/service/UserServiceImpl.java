@@ -39,26 +39,27 @@ public class UserServiceImpl implements UserService {
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] UserServiceImpl join");
-            throw new CustomException(ErrorCode.SERVER_ERROR, "UserServiceImpl join : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] UserServiceImpl join : " + e.getMessage());
         }
     }
 
     @Override
-    public void delete(String userEmail) {
+    public UserResponseDTO.UserDeleteDTO delete(String userEmail) {
         log.info("[UserServiceImpl] delete");
         try {
             if (!userRepository.existsByUserEmail(userEmail)) {
                 throw new CustomException(ErrorCode.USER_NOT_FOUND);
             }
 
-            Long findUserId = commonMethod.getUser("email" ,userEmail).getId();
-            userRepository.delete(findUserId);
+            User findUser = commonMethod.getUser("email" ,userEmail);
+            userRepository.delete(findUser.getId());
+            return new UserResponseDTO.UserDeleteDTO(findUser);
         } catch (CustomException ce){
             log.info("[CustomException] UserServiceImpl delete");
             throw ce;
         } catch (Exception e){
             log.info("[Exception500] UserServiceImpl delete");
-            throw new CustomException(ErrorCode.SERVER_ERROR, "UserServiceImpl delete : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] UserServiceImpl delete : " + e.getMessage());
         }
     }
 
@@ -66,14 +67,13 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO.UserFindDTO findOne(String userEmail) {
         try {
             log.info("[UserServiceImpl] findOne");
-            UserResponseDTO.UserFindDTO result = userRepository.findOne(userEmail);
-            return result;
+            return userRepository.findOne(userEmail);
         } catch (CustomException ce){
             log.info("[CustomException] UserServiceImpl delete");
             throw ce;
         } catch (Exception e) {
             log.info("[Exception500] UserServiceImpl findOne");
-            throw new CustomException(ErrorCode.SERVER_ERROR, "UserServiceImpl findOne : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] UserServiceImpl findOne : " + e.getMessage());
         }
     }
 

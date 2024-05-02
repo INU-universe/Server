@@ -8,7 +8,7 @@ public interface UserService {
     UserResponseDTO.UserJoinDTO join(UserRequestDTO.UserJoinDTO userJoinDTO);
 
     // 회원 탈퇴
-    void delete(String userEmail);
+    UserResponseDTO.UserDeleteDTO delete(String userEmail);
 
 //    // 회원 수정
 //    UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail);

@@ -27,7 +27,7 @@ public class UserApiController {
         try {
             log.info("[UserApiController] join");
             UserResponseDTO.UserJoinDTO result = userService.join(userJoinDTO);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user join success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] UserApiController join", result));
         }  catch (Exception500 e) {
             log.info("[Exception500] UserApiController join");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -41,7 +41,7 @@ public class UserApiController {
             log.info("[UserApiController] delete");
             String userEmail = getUserEmail();
             userService.delete(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user delete success"));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] UserApiController delete"));
         }  catch (Exception500 e) {
             log.info("[Exception500] UserApiController delete");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -53,7 +53,7 @@ public class UserApiController {
             log.info("[UserApiController] findOne");
             String userEmail = getUserEmail();
             UserResponseDTO.UserFindDTO result = userService.findOne(userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "user findOne success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] UserApiController findOne", result));
         }  catch (Exception500 e) {
             log.info("[Exception500] UserApiController findOne");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));

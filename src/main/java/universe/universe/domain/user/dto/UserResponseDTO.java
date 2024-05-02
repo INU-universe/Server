@@ -44,17 +44,38 @@ public class UserResponseDTO {
         }
     }
 
-    @Setter
-    @Getter
+    @Data
     public static class UserUpdateDTO {
+        private Long id;
         private String userEmail;
         private String userName;
         private String role;
-
+        private String userImg;
+        private UserStatus userStatus;
         public UserUpdateDTO(User user) {
+            this.id = user.getId();
             this.userEmail = user.getUserEmail();
             this.userName = user.getUserName();
+            this.userImg = user.getUserImg();
             this.role = user.getRole();
+            this.userStatus = user.getUserStatus();
+        }
+    }
+    @Data
+    public static class UserDeleteDTO {
+        private Long id;
+        private String userEmail;
+        private String userName;
+        private String role;
+        private String userImg;
+        private UserStatus userStatus;
+        public UserDeleteDTO(User user) {
+            this.id = user.getId();
+            this.userEmail = user.getUserEmail();
+            this.userName = user.getUserName();
+            this.userImg = user.getUserImg();
+            this.role = user.getRole();
+            this.userStatus = user.getUserStatus();
         }
     }
 }

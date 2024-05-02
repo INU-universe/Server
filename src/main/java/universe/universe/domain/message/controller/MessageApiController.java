@@ -28,7 +28,7 @@ public class MessageApiController {
             log.info("[MessageApiController] save");
             String userEmail = getUserEmail();
             MessageResponseDTO.MessageSaveDTO result = messageService.save(messageSaveDTO, userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message save success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] MessageApiController save", result));
         } catch (Exception500 e) {
             log.info("[Exception500] MessageApiController save");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -42,7 +42,7 @@ public class MessageApiController {
             log.info("[MessageApiController] delete");
             String userEmail = getUserEmail();
             messageService.delete(userEmail, messageId);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message delete success"));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] MessageApiController delete"));
         } catch (Exception500 e) {
             log.info("[Exception500] MessageApiController delete");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
@@ -56,7 +56,7 @@ public class MessageApiController {
             log.info("[MessageApiController] findAll");
             String userEmail = getUserEmail();
             MessageResponseDTO.MessageFindAllDTO result = messageService.findAll(userEmail, chatRoomId);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "message findAll success", result));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] MessageApiController findAll", result));
         } catch (Exception500 e) {
             log.info("[Exception500] MessageApiController findAll");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));

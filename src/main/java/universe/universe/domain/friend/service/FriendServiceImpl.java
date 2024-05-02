@@ -27,14 +27,13 @@ public class FriendServiceImpl implements FriendService {
         try {
             log.info("[FriendServiceImpl] findAll");
             User findUser = commonMethod.getUser("email", userEmail);
-            FriendResponseDTO.FriendFindAllDTO result = friendRepository.findAll(findUser.getId());
-            return result;
+            return friendRepository.findAll(findUser.getId());
         } catch (CustomException ce){
             log.info("[CustomException] FriendServiceImpl findAll");
             throw ce;
         } catch (Exception e) {
-
-            throw new CustomException(ErrorCode.SERVER_ERROR, "FriendServiceImpl findAll : " + e.getMessage());
+            log.info("[Exception500] FriendServiceImpl findAll");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] FriendServiceImpl findOne : " + e.getMessage());
         }
     }
 
@@ -43,14 +42,13 @@ public class FriendServiceImpl implements FriendService {
         try {
             log.info("[FriendServiceImpl] findInSchool");
             User findUser = commonMethod.getUser("email", userEmail);
-            FriendResponseDTO.FriendFindInSchoolDTO result = friendRepository.findInSchool(findUser.getId());
-            return result;
+            return friendRepository.findInSchool(findUser.getId());
         } catch (CustomException ce){
             log.info("[CustomException] FriendServiceImpl findInSchool");
             throw ce;
         } catch (Exception e) {
             log.info("[Exception500] FriendServiceImpl findInSchool");
-            throw new Exception500("FriendServiceImpl findInSchool fail : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] FriendServiceImpl findInSchool : " + e.getMessage());
         }
     }
 
@@ -68,7 +66,7 @@ public class FriendServiceImpl implements FriendService {
             throw ce;
         } catch (Exception e) {
             log.info("[Exception500] FriendServiceImpl delete");
-            throw new Exception500("FriendServiceImpl findInSchool delete : " + e.getMessage());
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] FriendServiceImpl delete : " + e.getMessage());
         }
     }
 

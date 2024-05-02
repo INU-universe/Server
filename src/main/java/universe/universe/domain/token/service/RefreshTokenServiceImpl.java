@@ -30,15 +30,15 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
             String accessToken = jwtProvider.generateToken(findUser);
 
-            RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO result = new RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO(accessToken, findRefreshToken.getRefreshToken());
-
-            return result;
+            return new RefreshTokenResponseDTO.RefreshTokenGetAccessTokenDTO(accessToken, findRefreshToken.getRefreshToken());
         } catch (CustomException ce){
             log.info("[CustomException] RefreshTokenServiceImpl getAccessToken");
             throw ce;
         } catch (TokenExpiredException te) {
+            log.info("[TokenExpiredException] RefreshTokenServiceImpl getAccessToken");
             throw new CustomException(ErrorCode.EXPIRED_REFRESH_TOKEN);
         } catch (Exception e) {
+            log.info("[TokenExpiredException] RefreshTokenServiceImpl getAccessToken");
             throw new CustomException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
     }

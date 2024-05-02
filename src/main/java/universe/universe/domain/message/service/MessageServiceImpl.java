@@ -46,7 +46,8 @@ public class MessageServiceImpl implements MessageService {
             log.info("[CustomException] MessageServiceImpl save");
             throw ce;
         } catch (Exception e) {
-            throw new CustomException(ErrorCode.SERVER_ERROR, "MessageServiceImpl save : " + e.getMessage());
+            log.info("[Exception500] MessageServiceImpl save");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] MessageServiceImpl save : " + e.getMessage());
         }
     }
 
@@ -64,7 +65,8 @@ public class MessageServiceImpl implements MessageService {
             log.info("[CustomException] MessageServiceImpl delete");
             throw ce;
         } catch (Exception e) {
-            throw new CustomException(ErrorCode.SERVER_ERROR, "MessageServiceImpl delete : " + e.getMessage());
+            log.info("[Exception500] MessageServiceImpl save");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] MessageServiceImpl delete : " + e.getMessage());
         }
     }
 
@@ -77,13 +79,13 @@ public class MessageServiceImpl implements MessageService {
 
             checkChatRoomRelation(findUser, findChatRoom);
 
-            MessageResponseDTO.MessageFindAllDTO result = messageRepository.findAll(chatRoomId);
-            return result;
+            return messageRepository.findAll(chatRoomId);
         } catch (CustomException ce){
             log.info("[CustomException] MessageServiceImpl findAll");
             throw ce;
         } catch (Exception e) {
-            throw new CustomException(ErrorCode.SERVER_ERROR, "MessageServiceImpl findAll : " + e.getMessage());
+            log.info("[Exception500] MessageServiceImpl findAll");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] MessageServiceImpl findAll : " + e.getMessage());
         }
     }
 
