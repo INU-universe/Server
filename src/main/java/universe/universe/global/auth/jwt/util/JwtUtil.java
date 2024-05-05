@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import universe.universe.global.auth.PrincipalDetails;
-import universe.universe.global.auth.jwt.JwtProperties;
 import universe.universe.domain.token.entity.RefreshToken;
 import universe.universe.domain.token.repository.RefreshTokenRepository;
 

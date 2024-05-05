@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import universe.universe.global.auth.jwt.JwtProperties;
+import universe.universe.global.auth.jwt.util.JwtProperties;
 import universe.universe.global.common.exception.CustomException;
 import universe.universe.domain.friendRequest.dto.FriendRequestResponseDTO;
 import universe.universe.domain.friend.entity.Friend;

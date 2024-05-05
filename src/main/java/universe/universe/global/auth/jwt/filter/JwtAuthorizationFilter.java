@@ -15,7 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import universe.universe.global.auth.PrincipalDetails;
-import universe.universe.global.auth.jwt.JwtProperties;
+import universe.universe.global.auth.jwt.util.JwtProperties;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.domain.token.service.token.TokenServiceImpl;

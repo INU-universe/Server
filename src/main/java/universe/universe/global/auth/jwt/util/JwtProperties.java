@@ -1,4 +1,4 @@
-package universe.universe.global.auth.jwt;
+package universe.universe.global.auth.jwt.util;
 
 public interface JwtProperties {
     int ACCESS_EXPIRATION_TIME = 60000*10;
