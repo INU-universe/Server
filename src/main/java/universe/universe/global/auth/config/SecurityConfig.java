@@ -21,7 +21,7 @@ import universe.universe.global.auth.oauth2.handler.Oauth2LoginSuccessHandler;
 import universe.universe.global.auth.oauth2.PrincipalOauth2UserService;
 import universe.universe.domain.token.repository.RefreshTokenRepository;
 import universe.universe.domain.user.repository.UserRepository;
-import universe.universe.domain.token.service.TokenServiceImpl;
+import universe.universe.domain.token.service.token.TokenServiceImpl;
 
 @Configuration
 @EnableWebSecurity // 시큐리티 활성화 -> 기본 스프링 필터체인에 등록

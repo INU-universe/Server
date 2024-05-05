@@ -1,12 +1,10 @@
-package universe.universe.domain.token.service;
+package universe.universe.domain.token.service.token;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import universe.universe.global.common.exception.CustomException;
-import universe.universe.global.common.exception.Exception404;
-import universe.universe.global.common.exception.Exception500;
 import universe.universe.global.common.reponse.ErrorCode;
 
 import java.util.Optional;

@@ -12,7 +12,7 @@ import universe.universe.global.common.exception.Exception500;
 import universe.universe.global.common.reponse.ApiResponse;
 import universe.universe.domain.token.dto.RefreshTokenRequestDTO;
 import universe.universe.domain.token.dto.RefreshTokenResponseDTO;
-import universe.universe.domain.token.service.RefreshTokenServiceImpl;
+import universe.universe.domain.token.service.refreshToken.RefreshTokenServiceImpl;
 
 @RestController
 @RequestMapping("/api/token")
