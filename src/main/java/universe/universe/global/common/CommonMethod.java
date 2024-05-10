@@ -4,14 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import universe.universe.domain.chatRoom.entity.ChatRoom;
-import universe.universe.domain.chatRoom.repository.ChatRoomRepository;
-import universe.universe.domain.chatRoomRelation.entity.ChatRoomRelation;
-import universe.universe.domain.chatRoomRelation.repository.ChatRoomRelationRepository;
 import universe.universe.domain.friend.repository.FriendRepository;
 import universe.universe.domain.location.entity.Location;
-import universe.universe.domain.message.entity.Message;
-import universe.universe.domain.message.repository.MessageRepository;
 import universe.universe.domain.token.entity.RefreshToken;
 import universe.universe.domain.token.repository.RefreshTokenRepository;
 import universe.universe.domain.user.entity.User;
@@ -30,9 +24,6 @@ import static universe.universe.global.common.reponse.ErrorCode.MESSAGE_NOT_FOUN
 public class CommonMethod {
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final ChatRoomRepository chatRoomRepository;
-    private final ChatRoomRelationRepository chatRoomRelationRepository;
-    private final MessageRepository messageRepository;
     public final FriendRepository friendRepository;
 
     /** User Method **/
@@ -60,32 +51,6 @@ public class CommonMethod {
         return findRefreshToken.get();
     }
 
-    /** Message Method **/
-    public Message getMessage_Id(Long messageId) throws CustomException {
-        Optional<Message> findMessage = messageRepository.findById(messageId);
-        if(!findMessage.isPresent()) {
-            throw new CustomException(MESSAGE_NOT_FOUND);
-        }
-        return findMessage.get();
-    }
-
-    /** ChatRoom Method **/
-    public ChatRoom getChatRoom_Id(Long chatRoomId) throws CustomException {
-        Optional<ChatRoom> findChatRoom = chatRoomRepository.findById(chatRoomId);
-        if(!findChatRoom.isPresent()) {
-            throw new CustomException(ErrorCode.CHATROOM_NOT_FOUND);
-        }
-        return findChatRoom.get();
-    }
-
-    /** ChatRoomRelation Method **/
-    public ChatRoomRelation getChatRoomRelation(User findUser, ChatRoom findChatRoom) throws CustomException {
-        Optional<ChatRoomRelation> findChatRoomRelation = chatRoomRelationRepository.findByUserAndChatRoom(findUser, findChatRoom);
-        if(!findChatRoomRelation.isPresent()) {
-            throw new CustomException(ErrorCode.CHATROOM_RELATION_NOT_FOUND);
-        }
-        return findChatRoomRelation.get();
-    }
 
     /** Location Method **/
     public Location getLocation_Email(String userEmail) throws CustomException  {

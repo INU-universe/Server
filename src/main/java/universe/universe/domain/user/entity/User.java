@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
-import universe.universe.domain.chatRoomRelation.entity.ChatRoomRelation;
 import universe.universe.global.common.BaseEntity;
 import universe.universe.domain.location.entity.Location;
 
@@ -25,10 +24,6 @@ public class User extends BaseEntity {
     private String userPassword;
     private String userName;
     private String userImg;
-
-    /** Oauth2 Login **/
-//    private String provider;
-//    private String providerId;
 
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus = UserStatus.NOT_SCHOOL;
@@ -84,7 +79,5 @@ public class User extends BaseEntity {
         this.userPassword = userPassword;
         this.role = role;
         this.location = new Location();
-//        this.provider = provider;
-//        this.providerId = providerId;
     }
 }
