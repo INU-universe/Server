@@ -10,11 +10,11 @@ public interface UserService {
     // 회원 탈퇴
     UserResponseDTO.UserDeleteDTO delete(String userEmail);
 
-//    // 회원 수정
-//    UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail);
-
     // 회원 학교 상태 수정
     UserResponseDTO.UserUpdateSchoolDTO updateSchool(UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO, String userEmail);
+
+    // 회원 학교 상태 수정
+    UserResponseDTO.userUpdateNotSchoolDTO updateNotSchool(UserRequestDTO.UserUpdateNotSchoolDTO userUpdateNotSchoolDTO, String userEmail);
 
     // 회원 조회
     UserResponseDTO.UserFindDTO findOne(String userEmail);

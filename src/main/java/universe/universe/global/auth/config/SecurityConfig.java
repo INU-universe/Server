@@ -16,9 +16,6 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import universe.universe.global.auth.jwt.filter.JwtAuthenticationFilter;
 import universe.universe.global.auth.jwt.filter.JwtAuthorizationFilter;
 import universe.universe.global.common.config.CorsConfig;
-import universe.universe.global.auth.oauth2.handler.Oauth2LoginFailureHandler;
-import universe.universe.global.auth.oauth2.handler.Oauth2LoginSuccessHandler;
-import universe.universe.global.auth.oauth2.PrincipalOauth2UserService;
 import universe.universe.domain.token.repository.RefreshTokenRepository;
 import universe.universe.domain.user.repository.UserRepository;
 import universe.universe.domain.token.service.token.TokenServiceImpl;
@@ -33,11 +30,6 @@ public class SecurityConfig {
     private final TokenServiceImpl tokenService;
     @Value(("${jwt.secret}"))
     private String secretKey;
-
-    /** Oauth2 로그인 구현 **/
-    private final PrincipalOauth2UserService principalOauth2UserService;
-    private final Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
-    private final Oauth2LoginFailureHandler oauth2LoginFailureHandler;
     private final LogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
@@ -78,24 +70,11 @@ public class SecurityConfig {
                         .access("hasRole('ROLE_ADMIN')")
 //                        .anyRequest().permitAll()
                 )
-
-                /** Oauth2 로그인 구현 **/
-                .oauth2Login(login -> login
-                        .successHandler(oauth2LoginSuccessHandler)
-                        .failureHandler(oauth2LoginFailureHandler)
-                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                                .userService(principalOauth2UserService))
-                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessHandler(logoutSuccessHandler)
                         .deleteCookies("JSESSIONID")
                 )
-//                .formLogin(login -> login
-//                        .loginPage("/loginForm")
-//                        .loginProcessingUrl("/loginProc") // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해준다.
-//                        .defaultSuccessUrl("/") // 로그인이 완료되면 일로 이동한다.
-//                )
                 .build();
     }
 }

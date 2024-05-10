@@ -30,4 +30,10 @@ public class UserRequestDTO {
     public static class UserUpdateSchoolDTO {
         private String userStatus;
     }
+
+    @Setter
+    @Getter
+    public static class UserUpdateNotSchoolDTO {
+        private String userStatus;
+    }
 }

@@ -19,6 +19,7 @@ public enum ErrorCode {
     USER_NOT_FOUND(404, HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."),
     TOKEN_NOT_FOUND(404, HttpStatus.NOT_FOUND, "존재하지 않는 토큰입니다."),
     FRIEND_NOT_FOUND(404, HttpStatus.NOT_FOUND, "존재하지 않는 친구입니다."),
+    USER_STATUS_NOT_FOUND(404, HttpStatus.NOT_FOUND, "존재하지 않는 회원 상태입니다."),
     CHATROOM_NOT_FOUND(404, HttpStatus.NOT_FOUND, "존재하지 않는 채팅방입니다."),
     CHATROOM_RELATION_NOT_FOUND(404, HttpStatus.NOT_FOUND, "존재하지 않는 채팅 관계입니다."),
     LOCATION_NOT_FOUND(404, HttpStatus.NOT_FOUND, "존재하지 않는 위치입니다."),

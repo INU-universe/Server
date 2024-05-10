@@ -15,6 +15,7 @@ import universe.universe.global.common.exception.Exception500;
 import universe.universe.global.common.reponse.ErrorCode;
 import universe.universe.global.common.CommonMethod;
 
+import static universe.universe.domain.user.entity.UserStatus.NOT_SCHOOL;
 import static universe.universe.domain.user.entity.UserStatus.SCHOOL;
 
 @Service
@@ -73,14 +74,39 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponseDTO.UserUpdateSchoolDTO updateSchool(UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO, String userEmail) {
         try {
+            log.info("[UserServiceImpl] updateSchool");
             User findUser = commonMethod.getUser("email", userEmail);
-            if(!userUpdateSchoolDTO.getUserStatus().equals(SCHOOL)) {
-                return null;
+            if(!userUpdateSchoolDTO.getUserStatus().equals("SCHOOL")) {
+                throw new CustomException(ErrorCode.USER_STATUS_NOT_FOUND);
             }
             findUser.updateUserStatus(SCHOOL);
             return new UserResponseDTO.UserUpdateSchoolDTO(findUser);
+        } catch (CustomException ce){
+            log.info("[CustomException] UserServiceImpl updateSchool");
+            throw ce;
         } catch (Exception e){
-            throw new Exception500("회원 수정 실패 : "+e.getMessage());
+            log.info("[Exception500] UserServiceImpl updateSchool");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] UserServiceImpl updateSchool : " + e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public UserResponseDTO.userUpdateNotSchoolDTO updateNotSchool(UserRequestDTO.UserUpdateNotSchoolDTO userUpdateNotSchoolDTO, String userEmail) {
+        try {
+            log.info("[UserServiceImpl] updateNotSchool");
+            User findUser = commonMethod.getUser("email", userEmail);
+            if(!userUpdateNotSchoolDTO.getUserStatus().equals("NOT_SCHOOL")) {
+                throw new CustomException(ErrorCode.USER_STATUS_NOT_FOUND);
+            }
+            findUser.updateUserStatus(NOT_SCHOOL);
+            return new UserResponseDTO.userUpdateNotSchoolDTO(findUser);
+        } catch (CustomException ce){
+            log.info("[CustomException] UserServiceImpl updateNotSchool");
+            throw ce;
+        } catch (Exception e){
+            log.info("[Exception500] UserServiceImpl updateNotSchool");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] UserServiceImpl updateNotSchool : " + e.getMessage());
         }
     }
 
@@ -97,19 +123,4 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] UserServiceImpl findOne : " + e.getMessage());
         }
     }
-
-    //    @Override
-//    public UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail) {
-//        if(!userUpdateDTO.getUserEmail().equals(userEmail)) {
-//            throw new CustomException("userEmail", "회원이 맞지 않습니다.");
-//        }
-//
-//        try {
-//            User findUser = userRepository.findByUserEmail(userEmail);
-//            findUser.updateUserImg(userUpdateDTO.getUserImg());
-//            return new UserResponseDTO.UserUpdateDTO(findUser);
-//        } catch (Exception e){
-//            throw new Exception500("회원 수정 실패 : "+e.getMessage());
-//        }
-//    }
 }

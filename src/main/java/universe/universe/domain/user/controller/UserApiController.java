@@ -61,29 +61,30 @@ public class UserApiController {
         }
     }
 
-//    // 회원 수정
-//    @PostMapping("/update")
-//    public ResponseEntity<?> update(@RequestBody UserRequestDTO.UserUpdateDTO userUpdateDTO) {
-//        try {
-//            String userEmail = getUserEmail();
-//            UserResponseDTO.UserUpdateDTO updateUser = userService.update(userUpdateDTO, userEmail);
-//            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "회원 수정이 완료되었습니다.", updateUser));
-//        } catch (CustomException e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-//        } catch (Exception500 e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-//        }
-//    }
-
     // 회원 학교 상태 수정
     @PostMapping("/updateSchool")
     public ResponseEntity<?> updateSchool(@RequestBody UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO) {
         try {
+            log.info("[UserApiController] updateSchool");
             String userEmail = getUserEmail();
             UserResponseDTO.UserUpdateSchoolDTO result = userService.updateSchool(userUpdateSchoolDTO, userEmail);
-            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] UserApiController updateSchool"));
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] UserApiController updateSchool", result));
         } catch (Exception500 e) {
             log.info("[Exception500] UserApiController updateSchool");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
+
+    // 회원 학교 상태 수정
+    @PostMapping("/updateNotSchool")
+    public ResponseEntity<?> updateNotSchool(@RequestBody UserRequestDTO.UserUpdateNotSchoolDTO userUpdateNotSchoolDTO) {
+        try {
+            log.info("[UserApiController] updateNotSchool");
+            String userEmail = getUserEmail();
+            UserResponseDTO.userUpdateNotSchoolDTO result = userService.updateNotSchool(userUpdateNotSchoolDTO, userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] UserApiController userUpdateNotSchoolDTO", result));
+        } catch (Exception500 e) {
+            log.info("[Exception500] UserApiController updateNotSchool");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
         }
     }
