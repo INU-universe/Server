@@ -4,10 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import universe.universe.domain.user.dto.UserResponseDTO;
-
-import static universe.universe.domain.chatRoomRelation.entity.QChatRoomRelation.chatRoomRelation;
 import static universe.universe.domain.friend.entity.QFriend.friend;
-import static universe.universe.domain.message.entity.QMessage.message;
 import static universe.universe.domain.user.entity.QUser.user;
 
 public class UserRepositoryImpl implements UserRepositoryCustom {
@@ -39,13 +36,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     @Override
     public void delete(Long userId) {
         queryFactory
-                .delete(chatRoomRelation).where(chatRoomRelation.user.id.eq(userId)).execute();
-        queryFactory
                 .delete(friend).where(friend.fromUser.id.eq(userId)).execute();
         queryFactory
                 .delete(friend).where(friend.toUser.id.eq(userId)).execute();
-        queryFactory
-                .delete(message).where(message.user.id.eq(userId)).execute();
         queryFactory
                 .delete(user).where(user.id.eq(userId)).execute();
     }
