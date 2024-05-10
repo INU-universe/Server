@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import universe.universe.global.common.exception.CustomException;
 import universe.universe.global.common.exception.Exception500;
 import universe.universe.global.common.reponse.ApiResponse;
 import universe.universe.domain.user.dto.UserRequestDTO;
@@ -73,6 +74,19 @@ public class UserApiController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
 //        }
 //    }
+
+    // 회원 학교 상태 수정
+    @PostMapping("/updateSchool")
+    public ResponseEntity<?> updateSchool(@RequestBody UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO) {
+        try {
+            String userEmail = getUserEmail();
+            UserResponseDTO.UserUpdateSchoolDTO result = userService.updateSchool(userUpdateSchoolDTO, userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] UserApiController updateSchool"));
+        } catch (Exception500 e) {
+            log.info("[Exception500] UserApiController updateSchool");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
 
     private String getUserEmail() {
         User user = authenticationService.getCurrentAuthenticatedUser();

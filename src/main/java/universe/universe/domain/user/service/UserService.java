@@ -13,6 +13,9 @@ public interface UserService {
 //    // 회원 수정
 //    UserResponseDTO.UserUpdateDTO update(UserRequestDTO.UserUpdateDTO userUpdateDTO, String userEmail);
 
+    // 회원 학교 상태 수정
+    UserResponseDTO.UserUpdateSchoolDTO updateSchool(UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO, String userEmail);
+
     // 회원 조회
     UserResponseDTO.UserFindDTO findOne(String userEmail);
 }

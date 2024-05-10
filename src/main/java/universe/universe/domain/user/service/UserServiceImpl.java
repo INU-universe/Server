@@ -5,16 +5,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import universe.universe.domain.user.entity.UserStatus;
 import universe.universe.global.common.exception.CustomException;
 import universe.universe.domain.user.dto.UserRequestDTO;
 import universe.universe.domain.user.dto.UserResponseDTO;
 import universe.universe.domain.user.entity.User;
 import universe.universe.domain.user.repository.UserRepository;
+import universe.universe.global.common.exception.Exception500;
 import universe.universe.global.common.reponse.ErrorCode;
 import universe.universe.global.common.CommonMethod;
 
+import static universe.universe.domain.user.entity.UserStatus.SCHOOL;
+
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -22,6 +26,7 @@ public class UserServiceImpl implements UserService {
     final private CommonMethod commonMethod;
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
+    @Transactional
     public UserResponseDTO.UserJoinDTO join(UserRequestDTO.UserJoinDTO userJoinDTO) {
         try {
             log.info("[UserServiceImpl] join");
@@ -44,6 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponseDTO.UserDeleteDTO delete(String userEmail) {
         log.info("[UserServiceImpl] delete");
         try {
@@ -60,6 +66,21 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e){
             log.info("[Exception500] UserServiceImpl delete");
             throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] UserServiceImpl delete : " + e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public UserResponseDTO.UserUpdateSchoolDTO updateSchool(UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO, String userEmail) {
+        try {
+            User findUser = commonMethod.getUser("email", userEmail);
+            if(!userUpdateSchoolDTO.getUserStatus().equals(SCHOOL)) {
+                return null;
+            }
+            findUser.updateUserStatus(SCHOOL);
+            return new UserResponseDTO.UserUpdateSchoolDTO(findUser);
+        } catch (Exception e){
+            throw new Exception500("회원 수정 실패 : "+e.getMessage());
         }
     }
 

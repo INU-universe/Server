@@ -24,4 +24,10 @@ public class UserRequestDTO {
         private String userEmail;
         private String userImg;
     }
+
+    @Setter
+    @Getter
+    public static class UserUpdateSchoolDTO {
+        private String userStatus;
+    }
 }
