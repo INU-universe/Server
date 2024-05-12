@@ -24,6 +24,7 @@ public class User extends BaseEntity {
     private String userPassword;
     private String userName;
     private String userImg;
+    private String userEmotion = "1";
 
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus = UserStatus.NOT_SCHOOL;
@@ -41,6 +42,7 @@ public class User extends BaseEntity {
     public void updateUserStatus(UserStatus userStatus) {
         this.userStatus = userStatus;
     }
+    public void updateUserEmotion(String userEmotion) { this.userEmotion = userEmotion; }
     public void updateUserImg(String userImg) {
         this.userImg = userImg;
     }

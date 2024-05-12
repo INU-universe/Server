@@ -10,6 +10,9 @@ public interface UserService {
     // 회원 탈퇴
     UserResponseDTO.UserDeleteDTO delete(String userEmail);
 
+    // 회원 이모션 수정
+    UserResponseDTO.UserUpdateEmotionDTO updateEmotion(UserRequestDTO.UserUpdateEmotionDTO userUpdateEmotionDTO, String userEmail);
+
     // 회원 학교 상태 수정
     UserResponseDTO.UserUpdateSchoolDTO updateSchool(UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO, String userEmail);
 

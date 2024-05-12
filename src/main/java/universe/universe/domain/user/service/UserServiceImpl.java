@@ -72,6 +72,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public UserResponseDTO.UserUpdateEmotionDTO updateEmotion(UserRequestDTO.UserUpdateEmotionDTO userUpdateEmotionDTO, String userEmail) {
+        try {
+            log.info("[UserServiceImpl] updateSchool");
+            User findUser = commonMethod.getUser("email", userEmail);
+            String findUserEmotion = userUpdateEmotionDTO.getUserEmotion();
+            findUser.updateUserEmotion(findUserEmotion);
+            return new UserResponseDTO.UserUpdateEmotionDTO(findUser);
+        } catch (CustomException ce){
+            log.info("[CustomException] UserServiceImpl updateSchool");
+            throw ce;
+        } catch (Exception e){
+            log.info("[Exception500] UserServiceImpl updateSchool");
+            throw new CustomException(ErrorCode.SERVER_ERROR, "[Exception500] UserServiceImpl updateSchool : " + e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
     public UserResponseDTO.UserUpdateSchoolDTO updateSchool(UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO, String userEmail) {
         try {
             log.info("[UserServiceImpl] updateSchool");

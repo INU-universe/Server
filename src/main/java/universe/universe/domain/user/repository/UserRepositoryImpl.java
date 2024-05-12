@@ -21,6 +21,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                         user.userName,
                         user.role,
                         user.userImg,
+                        user.userEmotion,
                         user.userStatus
                 ))
                 .from(user)

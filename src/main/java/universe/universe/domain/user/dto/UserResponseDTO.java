@@ -32,15 +32,37 @@ public class UserResponseDTO {
         private String userName;
         private String role;
         private String userImg;
+        private String userEmotion;
         private UserStatus userStatus;
 
-        public UserFindDTO(Long id, String userEmail, String userName, String role, String userImg, UserStatus userStatus) {
+        public UserFindDTO(Long id, String userEmail, String userName, String role, String userImg, String userEmotion, UserStatus userStatus) {
             this.id = id;
             this.userEmail = userEmail;
             this.userName = userName;
             this.role = role;
             this.userImg = userImg;
+            this.userEmotion = userEmotion;
             this.userStatus = userStatus;
+        }
+    }
+
+    @Data
+    public static class UserUpdateEmotionDTO {
+        private Long id;
+        private String userEmail;
+        private String userName;
+        private String role;
+        private String userImg;
+        private String userEmotion;
+        private UserStatus userStatus;
+        public UserUpdateEmotionDTO(User user) {
+            this.id = user.getId();
+            this.userEmail = user.getUserEmail();
+            this.userName = user.getUserName();
+            this.userImg = user.getUserImg();
+            this.role = user.getRole();
+            this.userEmotion = user.getUserEmotion();
+            this.userStatus = user.getUserStatus();
         }
     }
 
@@ -51,6 +73,7 @@ public class UserResponseDTO {
         private String userName;
         private String role;
         private String userImg;
+        private String userEmotion;
         private UserStatus userStatus;
         public UserUpdateSchoolDTO(User user) {
             this.id = user.getId();
@@ -58,6 +81,7 @@ public class UserResponseDTO {
             this.userName = user.getUserName();
             this.userImg = user.getUserImg();
             this.role = user.getRole();
+            this.userEmotion = user.getUserEmotion();
             this.userStatus = user.getUserStatus();
         }
     }
@@ -69,6 +93,7 @@ public class UserResponseDTO {
         private String userName;
         private String role;
         private String userImg;
+        private String userEmotion;
         private UserStatus userStatus;
         public userUpdateNotSchoolDTO(User user) {
             this.id = user.getId();
@@ -76,6 +101,7 @@ public class UserResponseDTO {
             this.userName = user.getUserName();
             this.userImg = user.getUserImg();
             this.role = user.getRole();
+            this.userEmotion = user.getUserEmotion();
             this.userStatus = user.getUserStatus();
         }
     }
@@ -87,6 +113,7 @@ public class UserResponseDTO {
         private String userName;
         private String role;
         private String userImg;
+        private String userEmotion;
         private UserStatus userStatus;
         public UserUpdateDTO(User user) {
             this.id = user.getId();
@@ -94,6 +121,7 @@ public class UserResponseDTO {
             this.userName = user.getUserName();
             this.userImg = user.getUserImg();
             this.role = user.getRole();
+            this.userEmotion = user.getUserEmotion();
             this.userStatus = user.getUserStatus();
         }
     }
@@ -104,6 +132,7 @@ public class UserResponseDTO {
         private String userName;
         private String role;
         private String userImg;
+        private String userEmotion;
         private UserStatus userStatus;
         public UserDeleteDTO(User user) {
             this.id = user.getId();
@@ -111,6 +140,7 @@ public class UserResponseDTO {
             this.userName = user.getUserName();
             this.userImg = user.getUserImg();
             this.role = user.getRole();
+            this.userEmotion = user.getUserEmotion();
             this.userStatus = user.getUserStatus();
         }
     }

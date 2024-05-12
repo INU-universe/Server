@@ -40,6 +40,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath userEmail = createString("userEmail");
 
+    public final StringPath userEmotion = createString("userEmotion");
+
     public final StringPath userImg = createString("userImg");
 
     public final StringPath userName = createString("userName");

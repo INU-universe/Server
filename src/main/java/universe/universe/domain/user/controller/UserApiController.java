@@ -61,6 +61,20 @@ public class UserApiController {
         }
     }
 
+    // 회원 이모션 수정
+    @PostMapping("/updateEmotion")
+    public ResponseEntity<?> updateEmotion(@RequestBody UserRequestDTO.UserUpdateEmotionDTO userUpdateEmotionDTO) {
+        try {
+            log.info("[UserApiController] updateEmotion");
+            String userEmail = getUserEmail();
+            UserResponseDTO.UserUpdateEmotionDTO result = userService.updateEmotion(userUpdateEmotionDTO, userEmail);
+            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] UserApiController updateEmotion", result));
+        } catch (Exception500 e) {
+            log.info("[Exception500] UserApiController updateEmotion");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
+        }
+    }
+
     // 회원 학교 상태 수정
     @PostMapping("/updateSchool")
     public ResponseEntity<?> updateSchool(@RequestBody UserRequestDTO.UserUpdateSchoolDTO userUpdateSchoolDTO) {
