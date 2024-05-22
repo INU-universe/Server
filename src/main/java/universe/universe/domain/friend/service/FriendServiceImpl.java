@@ -70,30 +70,6 @@ public class FriendServiceImpl implements FriendService {
         }
     }
 
-//    @Override
-//    @Transactional
-//    public FriendResponseDTO.FriendToggleDTO toggle(String userEmail, Long userId) {
-//        try {
-//            Result result = getFriend(userEmail, userId);
-//
-//            if(result.findRelation1().get().getFriendStatus() == FriendStatus.FAVORITE && result.findRelation2().get().getFriendStatus() == FriendStatus.FAVORITE) {
-//                result.findRelation1().get().updateFriendStatus(FriendStatus.NOT_FAVORITE);
-//                result.findRelation2().get().updateFriendStatus(FriendStatus.NOT_FAVORITE);
-//            }
-//            else if (result.findRelation1().get().getFriendStatus() == FriendStatus.NOT_FAVORITE && result.findRelation2().get().getFriendStatus() == FriendStatus.NOT_FAVORITE) {
-//                result.findRelation1().get().updateFriendStatus(FriendStatus.FAVORITE);
-//                result.findRelation2().get().updateFriendStatus(FriendStatus.FAVORITE);
-//            }
-//            else {
-//                throw new Exception404("해당 관계에 문제가 있습니다.");
-//            }
-//            return new FriendResponseDTO.FriendToggleDTO(result.findRelation1().get());
-//
-//        } catch (Exception e) {
-//            throw new Exception500("toggle fail : " + e.getMessage());
-//        }
-//    }
-
     public record Result(Optional<Friend> findRelation1, Optional<Friend> findRelation2) {
     }
 

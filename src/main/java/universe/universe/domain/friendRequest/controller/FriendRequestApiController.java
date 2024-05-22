@@ -49,68 +49,6 @@ public class FriendRequestApiController {
         }
     }
 
-    /** 친구 토글 안 쓸 예정 **/
-//    // 친구 토글
-//    @PostMapping("/toggle/{toUserId}")
-//    public ResponseEntity<?> toggle(@PathVariable Long toUserId) {
-//        try {
-//            String userEmail = getUserEmail();
-//            FriendRequestResponseDTO.FriendRequestToggleDTO friendRequestToggleDTO = friendRequestService.toggle(userEmail, toUserId);
-//            if(friendRequestToggleDTO == null) {
-//                return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청이 취소되었습니다.", null));
-//            }
-//            else {
-//                return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청이 완료되었습니다.", friendRequestToggleDTO));
-//            }
-//        } catch (CustomException e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-//        } catch (Exception500 e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-//        }
-//    }
-//
-//    // 친구 수락
-//    @PostMapping("/accept/{toUserId}")
-//    public ResponseEntity<?> accept(@PathVariable Long toUserId) {
-//        try {
-//            String userEmail = getUserEmail();
-//            FriendRequestResponseDTO.FriendRequestAcceptDTO friendRequestAcceptDTO = friendRequestService.accept(userEmail, toUserId);
-//            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청 수락이 완료되었습니다.", friendRequestAcceptDTO));
-//        } catch (CustomException e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-//        } catch (Exception500 e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-//        }
-//    }
-//
-//    // 친구 거절
-//    @PostMapping("/reject/{toUserId}")
-//    public ResponseEntity<?> reject(@PathVariable Long toUserId) {
-//        try {
-//            String userEmail = getUserEmail();
-//            FriendRequestResponseDTO.FriendRequestRejectDTO friendRequestRejectDTO = friendRequestService.reject(userEmail, toUserId);
-//            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 신청 거절이 완료되었습니다.", friendRequestRejectDTO));
-//        } catch (CustomException e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-//        } catch (Exception500 e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-//        }
-//    }
-//    // 친구 요청 목록 조회
-//    @GetMapping("/findAll")
-//    public ResponseEntity<?> findAll() {
-//        try {
-//            String userEmail = getUserEmail();
-//            FriendRequestResponseDTO.FriendRequestFindAllDTO friendRequestFindAllDTO = friendRequestService.findAll(userEmail);
-//            return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "친구 요청 목록 조회가 완료되었습니다.", friendRequestFindAllDTO));
-//        } catch (CustomException e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.FAILURE(e.status().value(), e.getMessage()));
-//        } catch (Exception500 e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.ERROR(e.status().value(), e.getMessage()));
-//        }
-//    }
-
-
     private String getUserEmail() {
         User user = authenticationService.getCurrentAuthenticatedUser();
         String userEmail = user.getUserEmail();

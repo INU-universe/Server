@@ -63,16 +63,4 @@ public class FriendResponseDTO {
             this.friendList = friendList;
         }
     }
-    @Setter
-    @Getter
-    public static class FriendToggleDTO {
-        private Long id;
-        private Long toUserId;
-        private Long fromUserId;
-        public FriendToggleDTO(Friend friend) {
-            this.id = friend.getId();
-            this.toUserId = friend.getToUser().getId();
-            this.fromUserId = friend.getFromUser().getId();
-        }
-    }
 }
