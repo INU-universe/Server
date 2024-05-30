@@ -16,7 +16,7 @@ import universe.universe.global.common.reponse.ApiResponse;
 public class HealthCheckApiController {
     @GetMapping
     public ResponseEntity<?> healthCheck() {
-        String result = "202405222112 healthCheck 완료";
+        String result = "202405310036 healthCheck 완료";
         return ResponseEntity.ok().body(ApiResponse.SUCCESS(HttpStatus.CREATED.value(), "[SUCCESS] HealthCheckApiController healthCheck", result));
     }
 }
