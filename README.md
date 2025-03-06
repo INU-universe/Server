@@ -5,7 +5,7 @@ UNIverse는 인천대학교 내에서 학우들끼리 위치 공유를 할 수 �
 <br>
 
 ## 🕰️ 개발 기간
-* 24.01.01일 - 진행중
+* 23.06 - 24.06
 
 ## ⚙️ 개발 환경
 - `Java 17`
@@ -31,21 +31,7 @@ UNIverse는 인천대학교 내에서 학우들끼리 위치 공유를 할 수 �
     - Refactor: 코드 리팩토링
     - Test: 테스트 코드, 리팩토링 테스트 코드 추가
     - Chore: 빌드 업무 수정, 패키지 매니저 수정
-<br>
 
-- `issue 규칙`
-    - 템플릿
-        - issue 제목
-            - 예시: **feat: 이슈 정리**
-        - issue 템플릿
-            ```markdown
-            ## 📋 이슈 내용
-            
-            ## ✅ 체크리스트
-            
-            ## 📚 레퍼런스
-            
-            ```
 <br>
 
 - `branch 규칙`
@@ -63,27 +49,11 @@ UNIverse는 인천대학교 내에서 학우들끼리 위치 공유를 할 수 �
         - feat: 로그인 구현 - #2 
 <br>
 
-- `PR 규칙`
-    - PR 템플릿
-
-        ```markdown
-        ## 📋 이슈 번호
-        
-        ## 🛠 구현 사항
-        
-        ## 📚 기타
-        
-        ```
-        <br>
-
 - `DTO 규칙`
     - 엔티티명 + Response/Request + DTO
     - 예시
         - UserResponseDTO
         - PostRequestDTO
-
-## 📌 API 명세서
-https://shade-match-d08.notion.site/09776810d5cd483090f2d30614407a40?pvs=4
 
 ## 📌 참고 자료
 - 도커 참고 자료
